@@ -1,0 +1,44 @@
+rotation(interval = 1s)
+    :global {
+        animation: rotation interval infinite linear
+    }
+
+user-select()
+    -webkit-user-select: arguments
+    user-select: arguments
+
+maxWidth(width)
+    @media all and (max-width: width)
+        {block}
+
+minWidth(width)
+    @media all and (min-width: width)
+        {block}
+
+maxHeight(height)
+    @media all and (max-height: height)
+        {block}
+
+shadow(type = default)
+    if type == active
+        box-shadow: 0 2px 10px 0 rgba(0,0,0,0.5);
+    else if type == none
+        box-shadow: none
+    else if type == small
+        box-shadow: 0 0.5px 2px 0 rgba(0,0,0,0.4)
+    else
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.5)
+
+gradient(angle, firstColor, lastColor)
+    background: linear-gradient(angle, firstColor, lastColor);
+
+
+main-color = #1f2c3b;
+main-color-hover = main-color - #080808;
+action-color = #456a94;
+action-color-hover = action-color - #080808;
+white-color = #ffffff;
+dark-text-color = #404040;
+modal-z-index = 100;
+header-height = 40px;
+max-width = 1100px;
