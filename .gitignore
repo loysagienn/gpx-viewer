@@ -4,3 +4,4 @@ node_modules
 lib
 static
 src/config/private*
+.DS_Store

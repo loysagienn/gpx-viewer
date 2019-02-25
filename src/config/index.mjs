@@ -8,6 +8,7 @@ const config = isProductionMode ? productionConfig : developmentConfig;
 
 const YMAPS_JSONP_CALLBACK = '__YMAPS_JSONP_CALLBACK__';
 
+
 const {
     httpPort,
     dbUrl,

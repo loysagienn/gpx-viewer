@@ -13,14 +13,30 @@ class TrackMap extends Component {
 
     componentDidMount() {
         const {
-            props: {map: {Map}},
+            props: {
+                map: {Map, Polyline},
+                gpxContent: {track},
+            },
             mapRef: {current: node},
         } = this;
 
+        const [{lat: startLat, lon: startLon}] = track;
+
         this.map = new Map(node, {
-            center: [55.76, 37.64],
-            zoom: 10,
+            center: [startLat, startLon],
+            zoom: 14,
         });
+
+        const trackLine = new Polyline(
+            track.map(({lat, lon}) => ([lat, lon])),
+            {},
+            {
+                strokeWidth: 3,
+                strokeOpacity: 0.8,
+            },
+        );
+
+        this.map.geoObjects.add(trackLine);
     }
 
     render() {

@@ -2,7 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isProductionMode = process.env.NODE_ENV === 'production';
 
-const publicDir = isProductionMode ? '/Users/vajs/projects/wweb/gpx/static' : '/Users/vajs/projects/wweb/gpx/static';
+const publicDir = isProductionMode ? '/home/vajs/public/gpx-viewer' : '/Users/vajs/projects/wweb/gpx/static';
 
 module.exports = {
     mode: isProductionMode ? 'production' : 'development',
