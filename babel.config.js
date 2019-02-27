@@ -23,6 +23,9 @@ module.exports = (api) => {
     ];
     const plugins = [
         '@babel/plugin-proposal-object-rest-spread',
+        ['module-resolver', {
+            root: ['./src'],
+        }],
     ];
 
     if (!isWebpack) {

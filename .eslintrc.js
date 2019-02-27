@@ -9,8 +9,22 @@ module.exports = {
     },
     'plugins': [
         'flowtype',
-        'jest'
+        'jest',
+        'import'
     ],
+    settings: {
+        'import/resolver': {
+            node: {
+                extensions: [
+                    ".js",
+                    ".mjs"
+                ]
+            },
+            'babel-module': {
+                root: ['./src'],
+            }
+        }
+    },
     rules: {
         'max-len': ['error', {code: 120, ignoreStrings: true, ignoreTemplateLiterals: true}],
         'indent': ['error', 4],
@@ -21,7 +35,7 @@ module.exports = {
         'react/jsx-indent-props': ['error', 4],
         'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.mjs', '.js'] }],
         'react/sort-comp': 'off',
-        'import/no-unresolved': 'off',
+        // 'import/no-unresolved': 'off',
         'import/extensions': 'off',
         'import/prefer-default-export': 'off',
         'no-param-reassign': 'off',

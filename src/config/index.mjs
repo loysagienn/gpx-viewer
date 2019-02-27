@@ -8,6 +8,7 @@ const config = isProductionMode ? productionConfig : developmentConfig;
 
 const YMAPS_JSONP_CALLBACK = '__YMAPS_JSONP_CALLBACK__';
 
+const STRAVA_CLIENT_ID = '32976';
 
 const {
     httpPort,
@@ -19,6 +20,7 @@ const {
     reduxCdnUrl,
     reactReduxCdnUrl,
     reduxThunkCdnUrl,
+    DOMAIN,
 } = config;
 
 export {
@@ -32,4 +34,6 @@ export {
     reactReduxCdnUrl,
     reduxThunkCdnUrl,
     YMAPS_JSONP_CALLBACK,
+    STRAVA_CLIENT_ID,
+    DOMAIN,
 };

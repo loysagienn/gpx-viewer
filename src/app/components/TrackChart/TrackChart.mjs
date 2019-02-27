@@ -3,7 +3,8 @@
 import {createElement, Component, createRef} from 'react';
 import css from './TrackChart.styl';
 import {cn} from '../../../helpers';
-import {prepareSvgData} from './helpers';
+import getTrackMetrics from './helpers/getTrackMetrics';
+import getPolylinePoints from './helpers/getPolylinePoints';
 
 
 class TrackChart extends Component {
@@ -20,18 +21,20 @@ class TrackChart extends Component {
         const {className, track} = this.props;
         const svgWidth = 1000;
         const svgHeight = 300;
-        const points = prepareSvgData(track)
-            .map(({timePart, pase}) => `${timePart * svgWidth},${(pase / 10) * svgHeight}`)
-            .join(' ');
+        const trackMetrics = getTrackMetrics(track);
+        const polylinePoints = getPolylinePoints(trackMetrics, svgWidth, svgHeight);
 
         return (
             <div
                 className={cn(css.trackChart, className)}
                 ref={this.chartRef}
             >
-                <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className={css.svg}>
+                <svg
+                    viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+                    className={css.svg}
+                >
                     <polyline
-                        points={points}
+                        points={polylinePoints}
                     />
                 </svg>
             </div>
