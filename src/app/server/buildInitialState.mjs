@@ -2,7 +2,8 @@
 import fs from 'fs';
 import util from 'util';
 import path from 'path';
-import {parseGpx} from '../gpx';
+import {ROUTES_IDS} from 'router';
+import {parseGpx} from 'app/gpx';
 
 const readFile = util.promisify(fs.readFile);
 
@@ -17,9 +18,14 @@ const getYmaps = () => ({
     initialized: false,
 });
 
-export default async () => {
+export default async ({state}, next) => {
     const gpxContent = await getGpxcontent();
+
     const ymaps = getYmaps();
 
-    return {gpxContent, ymaps};
+    const {route} = state;
+
+    state.initialState = {gpxContent, ymaps, route};
+
+    return next();
 };

@@ -9,3 +9,5 @@ export const isObject = (val: mixed) => (typeof val === 'object') && (val !== nu
 export {default as cn} from './cn';
 
 export {default as generateRandomString} from './generateRandomString';
+
+export {default as normalizeUrl} from './normalizeUrl';

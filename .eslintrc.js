@@ -35,6 +35,11 @@ module.exports = {
         'react/jsx-indent-props': ['error', 4],
         'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.mjs', '.js'] }],
         'react/sort-comp': 'off',
+        'react/jsx-tag-spacing': {
+            beforeSelfClosing: 'never',
+        },
+        'react/require-default-props': 'off',
+        'react/prop-types': 'off',
         // 'import/no-unresolved': 'off',
         'import/extensions': 'off',
         'import/prefer-default-export': 'off',
@@ -44,11 +49,6 @@ module.exports = {
         'no-underscore-dangle': 'off',
         'function-paren-newline': 'off',
         'no-plusplus': 'off',
-        'react/jsx-tag-spacing': {
-            beforeSelfClosing: 'never',
-        },
-        'react/require-default-props': 'off',
-        'react/prop-types': 'off',
 
         'flowtype/use-flow-type': 1,
         'jsx-a11y/click-events-have-key-events': 'off',
@@ -58,6 +58,7 @@ module.exports = {
         {
             files: [
                 'src/app/**/*.mjs',
+                'src/helpers/**/*.mjs',
             ],
             env: {
                 'shared-node-browser': true,
