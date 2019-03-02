@@ -6,8 +6,14 @@ const gpxContent = (state = {}) => state;
 
 const route = (state = {}) => state;
 
+const meta = (state = {}) => state;
+
+const athlete = (state = {}) => state;
+
 export const rootReducer = combineReducers({
     gpxContent,
     ymaps,
     route,
+    athlete,
+    meta,
 });

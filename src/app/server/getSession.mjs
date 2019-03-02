@@ -26,6 +26,7 @@ export default async (koaCtx) => {
 
     const session = createSession(koaCtx);
 
+    // todo: обработка ошибок
     await koaCtx.db.addSession(session);
 
     cookies.set(

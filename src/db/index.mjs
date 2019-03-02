@@ -9,6 +9,7 @@ let dbApi = null;
 
 const DATABASE_ID = 'gpx-viewer';
 const SESSION_COLLECTION = 'sessions';
+const USER_CREDENTIALS = 'user-credentials';
 
 const getSession = (db, sessionId) => db
     .collection(SESSION_COLLECTION)
@@ -23,8 +24,31 @@ const addSession = async (db, session) => {
         throw new Error(`Session with id "${session.sessionId}" already exists`);
     }
 
-    db.collection(SESSION_COLLECTION).insertOne(session);
+    return db.collection(SESSION_COLLECTION).insertOne(session);
 };
+
+const getUserCredentials = (db, sessionId) => db
+    .collection(USER_CREDENTIALS)
+    .find({sessionId})
+    .toArray()
+    .then(([credentials]) => credentials);
+
+const removeUserCredentials = (db, sessionId) => db
+    .collection(USER_CREDENTIALS)
+    .deleteOne({sessionId});
+
+const addUserCredentials = async (db, credentials) => {
+    const {sessionId} = credentials;
+
+    const existingCredentials = await getUserCredentials(db, sessionId);
+
+    if (existingCredentials) {
+        removeUserCredentials(db, sessionId);
+    }
+
+    return db.collection(USER_CREDENTIALS).insertOne(credentials);
+};
+
 
 const createDbApi = (database) => {
     const gpxSessionDb = database.db(DATABASE_ID);
@@ -32,6 +56,8 @@ const createDbApi = (database) => {
     return {
         getSession: sessionId => getSession(gpxSessionDb, sessionId),
         addSession: session => addSession(gpxSessionDb, session),
+        getUserCredentials: sessionId => getUserCredentials(gpxSessionDb, sessionId),
+        addUserCredentials: credentials => addUserCredentials(gpxSessionDb, credentials),
     };
 };
 

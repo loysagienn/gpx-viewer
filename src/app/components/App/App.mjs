@@ -8,11 +8,15 @@ import css from './App.styl';
 import NotFound from '../NotFound';
 import StravaAuth from '../StravaAuth';
 
-const renderContent = (route) => {
+const renderContent = ({route, athlete}) => {
     if (route.id === ROUTES_IDS.NOT_FOUND) {
         return (
             <NotFound route={route}/>
         );
+    }
+
+    if (athlete) {
+        return `Добро пожаловать, ${athlete.firstname} ${athlete.lastname}`;
     }
 
     return (
@@ -20,12 +24,12 @@ const renderContent = (route) => {
     );
 };
 
-const App = ({route}) => (
+const App = props => (
     <div className={css.app}>
         {/* <TrackMap className={css.trackMap}/>
         <TrackChart className={css.trackChart}/> */}
         {
-            renderContent(route)
+            renderContent(props)
         }
     </div>
 );

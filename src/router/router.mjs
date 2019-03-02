@@ -1,5 +1,6 @@
 import UrlPattern from 'url-pattern';
-import {reduce, map, assoc, compose, split, toPairs} from 'ramda';
+import {reduce, map, assoc} from 'ramda';
+import {stringifyQueryParams, parseQueryParams} from 'helpers';
 
 export const ROUTE_TYPES = {
     HTML: 'HTML',
@@ -8,7 +9,7 @@ export const ROUTE_TYPES = {
 
 export const getRoutes = map(({id, pattern}) => ({id, pattern: new UrlPattern(pattern)}));
 
-export const getRoutesMap = reduce((acc, {id, pattern}) => assoc(id, {id, pattern}, acc, {}));
+export const getRoutesMap = reduce((acc, {id, pattern}) => assoc(id, {id, pattern}, acc), {});
 
 export const getRoutesIds = reduce((acc, {id}) => assoc(id, id, acc), {});
 
@@ -26,22 +27,6 @@ const matchRoute = (routes, path) => {
     return null;
 };
 
-const getQueryParams = compose(reduce((acc, [id, value]) => assoc(id, value, acc), {}), map(split('=')), split('&'));
-
-const stringifyQueryParams = (queryParams) => {
-    if (!queryParams) {
-        return '';
-    }
-
-    const queryParamsArr = toPairs(queryParams);
-
-    if (queryParamsArr.length === 0) {
-        return '';
-    }
-
-    return queryParamsArr.map(([key, value]) => `${key}=${value}`).join('&');
-};
-
 export const getRouteByUrl = (routes, url) => {
     const [path, queryString] = url.split('?');
 
@@ -53,7 +38,7 @@ export const getRouteByUrl = (routes, url) => {
 
     route.type = url.startsWith('/api') ? ROUTE_TYPES.JSON : ROUTE_TYPES.HTML;
 
-    route.queryParams = queryString ? getQueryParams(queryString) : {};
+    route.queryParams = queryString ? parseQueryParams(queryString) : {};
 
     return route;
 };

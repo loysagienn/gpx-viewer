@@ -1,20 +1,38 @@
 /** @jsx createElement */
 
 import {createElement} from 'react';
+import {stringifyQueryParams} from 'helpers';
+import {ROUTES_IDS, getUrlByRoute} from 'router';
 import Button from '../Button';
 import {STRAVA_CLIENT_ID} from '../../../config';
 import css from './StravaAuth.styl';
 
-const appUrl = 'http://localhost:3000/auth';
 
-const authUrl = `https://www.strava.com/oauth/authorize?client_id=${STRAVA_CLIENT_ID}&redirect_uri=${appUrl}&response_type=code&scope=read,read_all,profile:read_all,activity:read,activity:read_all`;
+const STRAVA_AUTHORIZE_URL = 'https://www.strava.com/oauth/authorize';
 
-const StravaAuth = () => (
+const scope = ['read', 'read_all', 'profile:read_all', 'activity:read', 'activity:read_all'];
+
+const getAuthUrl = (origin) => {
+    const callbackPath = getUrlByRoute({
+        id: ROUTES_IDS.STRAVA_AUTH,
+    });
+    const query = stringifyQueryParams({
+        client_id: STRAVA_CLIENT_ID,
+        redirect_uri: `${origin}${callbackPath}`,
+        response_type: 'code',
+        scope: scope.join(','),
+        state: 'default',
+    });
+
+    return `${STRAVA_AUTHORIZE_URL}?${query}`;
+};
+
+const StravaAuth = ({origin}) => (
     <div className={css.stravaAuth}>
         <div className={css.block}>
             <Button
                 className={css.loginBtn}
-                href={authUrl}
+                href={getAuthUrl(origin)}
             >
                 Войти в Strava
             </Button>
