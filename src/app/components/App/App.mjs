@@ -8,6 +8,12 @@ import css from './App.styl';
 import NotFound from '../NotFound';
 import StravaAuth from '../StravaAuth';
 
+const renderActivity = ({name, distance, startDate}) => (
+    <div className={css.activity}>
+        {`${name}, ${distance} метров, дата: ${startDate}`}
+    </div>
+);
+
 const renderContent = ({route, athlete}) => {
     if (route.id === ROUTES_IDS.NOT_FOUND) {
         return (
@@ -16,7 +22,18 @@ const renderContent = ({route, athlete}) => {
     }
 
     if (athlete) {
-        return `Добро пожаловать, ${athlete.firstname} ${athlete.lastname}`;
+        return (
+            <div>
+                <img src={athlete.info.profile} alt="user"/>
+                <div>
+                    {`Добро пожаловать, ${athlete.info.firstname} ${athlete.info.lastname}`}
+                </div>
+                <div>
+                    Последние 10 активностей:
+                </div>
+                {athlete.activities.map(renderActivity)}
+            </div>
+        );
     }
 
     return (

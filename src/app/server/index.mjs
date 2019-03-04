@@ -20,8 +20,8 @@ const handleHtmlRequest = async (koaCtx) => {
 export const initApp = (koaServer) => {
     koaServer.use(checkAuthorization);
     koaServer.use(initRoute);
-    koaServer.use(stravaCredentials);
     koaServer.use(authStrava);
+    koaServer.use(stravaCredentials);
     koaServer.use(buildInitialState);
     koaServer.use(handleHtmlRequest);
 };

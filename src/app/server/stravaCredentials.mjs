@@ -1,15 +1,40 @@
+import {mergeRight} from 'ramda';
+import {updateToken} from 'stravaApi';
 
+const EXPIRES_SHIFT = 60; // one minute
 
 export default async (koaCtx, next) => {
-    const {session} = koaCtx.state;
+    const {session: {athleteId}} = koaCtx.state;
 
-    const stravaCredentials = await koaCtx.db.getUserCredentials(session.sessionId);
-
-    if (!stravaCredentials) {
+    if (!athleteId) {
         return next();
     }
 
-    koaCtx.state.stravaCredentials = stravaCredentials;
+    const credentials = await koaCtx.db.getUserCredentials(athleteId);
+
+    if (!credentials) {
+        return next();
+    }
+
+    const {expiresAt, refreshToken} = credentials;
+
+    const now = Date.now() / 1000;
+
+    if (expiresAt - EXPIRES_SHIFT > now) {
+        koaCtx.state.stravaCredentials = credentials;
+
+        return next();
+    }
+
+    const result = await updateToken(refreshToken);
+
+    const newCredentials = mergeRight(credentials, result);
+
+    await koaCtx.db.addUserCredentials(newCredentials);
+
+    console.log('Strava credentials updated: ', newCredentials);
+
+    koaCtx.state.stravaCredentials = newCredentials;
 
     return next();
 };

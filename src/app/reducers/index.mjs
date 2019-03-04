@@ -8,7 +8,7 @@ const route = (state = {}) => state;
 
 const meta = (state = {}) => state;
 
-const athlete = (state = {}) => state;
+const athlete = (state = null) => state;
 
 export const rootReducer = combineReducers({
     gpxContent,

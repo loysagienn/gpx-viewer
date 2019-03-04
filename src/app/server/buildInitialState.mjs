@@ -3,6 +3,7 @@ import fs from 'fs';
 import util from 'util';
 import path from 'path';
 import {parseGpx} from 'app/gpx';
+import {getAthlete, getActivities} from 'stravaApi';
 
 const readFile = util.promisify(fs.readFile);
 
@@ -17,6 +18,21 @@ const getYmaps = () => ({
     initialized: false,
 });
 
+const getAthleteData = async ({state}) => {
+    const {stravaCredentials: credentials} = state;
+
+    if (!credentials) {
+        return null;
+    }
+
+    const [info, activities] = await Promise.all([
+        getAthlete(credentials),
+        getActivities(credentials),
+    ]);
+
+    return {info, activities};
+};
+
 export default async (koaCtx, next) => {
     const gpxContent = await getGpxcontent();
 
@@ -24,9 +40,9 @@ export default async (koaCtx, next) => {
 
     const ymaps = getYmaps();
 
-    const {route, stravaCredentials = {}} = state;
+    const {route} = state;
 
-    const {athlete = null} = stravaCredentials;
+    const athlete = await getAthleteData(koaCtx);
 
     state.initialState = {
         gpxContent,

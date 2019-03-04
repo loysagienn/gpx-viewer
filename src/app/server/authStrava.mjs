@@ -1,14 +1,19 @@
 
-import request from 'request-promise-native';
 import {ROUTES_IDS, getUrlByRoute} from 'router';
-import {STRAVA_CLIENT_ID} from 'config';
-import {STRAVA_CLIENT_SECRET} from 'config/private';
+import {authorize} from 'stravaApi';
 
-const stravaOauthTokenUrl = 'https://www.strava.com/oauth/token';
 
-const GRANT_TYPES = {
-    AUTHORIZATION_CODE: 'authorization_code',
-    REFRESH_TOKEN: 'refresh_token',
+const redirectToIndex = ctx => ctx.redirect(getUrlByRoute({id: ROUTES_IDS.INDEX}));
+
+const auth = async (koaCtx, sessionId, code, scope) => {
+    const {tokenType, accessToken, athlete, refreshToken, expiresAt} = await authorize(code);
+
+    const {id: athleteId} = athlete;
+
+    return Promise.all([
+        koaCtx.db.addUserCredentials({athleteId, tokenType, accessToken, refreshToken, expiresAt, scope}),
+        koaCtx.db.updateSession(sessionId, {athleteId}),
+    ]);
 };
 
 export default async (koaCtx, next) => {
@@ -23,60 +28,16 @@ export default async (koaCtx, next) => {
     if (error) {
         console.log('strava auth error:', error);
 
-        return koaCtx.redirect(getUrlByRoute({id: ROUTES_IDS.INDEX}));
+        return redirectToIndex(koaCtx);
     }
 
     const scope = scopeStr.split(',');
 
-    const options = {
-        method: 'POST',
-        uri: stravaOauthTokenUrl,
-        qs: {
-            code,
-            client_id: STRAVA_CLIENT_ID,
-            client_secret: STRAVA_CLIENT_SECRET,
-            grant_type: GRANT_TYPES.AUTHORIZATION_CODE,
-        },
-        json: true, // Automatically parses the JSON string in the response
-    };
-
-    let result;
-
     try {
-        result = await request(options);
+        await auth(koaCtx, sessionId, code, scope);
     } catch (err) {
         console.log('strava oauth failed: ', err);
-
-        return koaCtx.redirect(getUrlByRoute({id: ROUTES_IDS.INDEX}));
     }
 
-    const {
-        token_type: tokenType,
-        access_token: accessToken,
-        athlete,
-        refresh_token: refreshToken,
-        expires_at: expiresAt,
-    } = result;
-
-    await koaCtx.db.addUserCredentials({
-        sessionId,
-        tokenType,
-        accessToken,
-        athlete,
-        refreshToken,
-        expiresAt,
-        scope,
-    });
-
-    console.log('success strava oauth! ', {
-        sessionId,
-        tokenType,
-        accessToken,
-        athlete,
-        refreshToken,
-        expiresAt,
-        scope,
-    });
-
-    return koaCtx.redirect(getUrlByRoute({id: ROUTES_IDS.INDEX}));
+    return redirectToIndex(koaCtx);
 };

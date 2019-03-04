@@ -27,23 +27,27 @@ const addSession = async (db, session) => {
     return db.collection(SESSION_COLLECTION).insertOne(session);
 };
 
-const getUserCredentials = (db, sessionId) => db
+const updateSession = async (db, sessionId, update) => db
+    .collection(SESSION_COLLECTION)
+    .updateOne({sessionId}, {$set: update});
+
+const getUserCredentials = (db, athleteId) => db
     .collection(USER_CREDENTIALS)
-    .find({sessionId})
+    .find({athleteId})
     .toArray()
     .then(([credentials]) => credentials);
 
-const removeUserCredentials = (db, sessionId) => db
+const removeUserCredentials = (db, athleteId) => db
     .collection(USER_CREDENTIALS)
-    .deleteOne({sessionId});
+    .deleteOne({athleteId});
 
 const addUserCredentials = async (db, credentials) => {
-    const {sessionId} = credentials;
+    const {athleteId} = credentials;
 
-    const existingCredentials = await getUserCredentials(db, sessionId);
+    const existingCredentials = await getUserCredentials(db, athleteId);
 
     if (existingCredentials) {
-        removeUserCredentials(db, sessionId);
+        removeUserCredentials(db, athleteId);
     }
 
     return db.collection(USER_CREDENTIALS).insertOne(credentials);
@@ -56,7 +60,8 @@ const createDbApi = (database) => {
     return {
         getSession: sessionId => getSession(gpxSessionDb, sessionId),
         addSession: session => addSession(gpxSessionDb, session),
-        getUserCredentials: sessionId => getUserCredentials(gpxSessionDb, sessionId),
+        updateSession: (sessionId, update) => updateSession(gpxSessionDb, sessionId, update),
+        getUserCredentials: athleteId => getUserCredentials(gpxSessionDb, athleteId),
         addUserCredentials: credentials => addUserCredentials(gpxSessionDb, credentials),
     };
 };

@@ -15,3 +15,5 @@ export {default as normalizeUrl} from './normalizeUrl';
 export {default as stringifyQueryParams} from './stringifyQueryParams';
 
 export {default as parseQueryParams} from './parseQueryParams';
+
+export {default as toCamelCase} from './toCamelCase';
