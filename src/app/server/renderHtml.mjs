@@ -15,7 +15,7 @@ import {
 import {YMAPS_API_KEY} from '../../config/private';
 import {renderApp, getStore} from '../common';
 
-const bodyStyle = 'background-color: #1f2c3b;';
+const bodyStyle = 'background-color: #f0f0f0;';
 
 // const bundleRoot = isProductionMode ? '/static/' : 'http://localhost:8080/';
 const bundleRoot = isProductionMode ? '/static/' : '/static/';
@@ -31,17 +31,18 @@ const render = initialState => (
         : ''
 );
 
+// <meta name="apple-mobile-web-app-capable" content="yes">
+// <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 export default initialState => `<!DOCTYPE html>
 <html lang="ru-RU">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"/>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes/>
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="address=no">
-    <meta name="yandex-verification" content="fb9932a6a61b990b">
+    <meta name="theme-color" content="#1f2c3b">
     <link rel="stylesheet" href="${bundleRoot}app.css">
     <link rel="icon" type="image/png" href="/static/favicon.png" sizes="32x32">
 </head>

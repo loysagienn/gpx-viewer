@@ -4,6 +4,7 @@ import util from 'util';
 import path from 'path';
 import {parseGpx} from 'app/gpx';
 import {getAthlete, getActivities} from 'stravaApi';
+import {isProductionMode} from 'config';
 
 const readFile = util.promisify(fs.readFile);
 
@@ -18,7 +19,49 @@ const getYmaps = () => ({
     initialized: false,
 });
 
-const getAthleteData = async ({state}) => {
+const getAthleteInfo = async (credentials, db) => {
+    const {athleteId} = credentials;
+
+    // кэшируем в базе для тестирования, придумать решение получше, это отстой
+    if (!isProductionMode) {
+        const {info: athleteInfo} = (await db.getAthleteInfo(athleteId)) || {};
+
+        if (athleteInfo) {
+            return athleteInfo;
+        }
+    }
+
+    const info = await getAthlete(credentials);
+
+    if (!isProductionMode) {
+        await db.addAthleteInfo({athleteId, info});
+    }
+
+    return info;
+};
+
+const getAthleteActivities = async (credentials, db) => {
+    const {athleteId} = credentials;
+
+    // кэшируем в базе для тестирования, придумать решение получше, это отстой
+    if (!isProductionMode) {
+        const {activities: athleteActivities} = (await db.getAthleteActivities(athleteId)) || {};
+
+        if (athleteActivities) {
+            return athleteActivities;
+        }
+    }
+
+    const activities = await getActivities(credentials);
+
+    if (!isProductionMode) {
+        await db.addAthleteActivities({athleteId, activities});
+    }
+
+    return activities;
+};
+
+const getAthleteData = async ({state, db}) => {
     const {stravaCredentials: credentials} = state;
 
     if (!credentials) {
@@ -26,8 +69,8 @@ const getAthleteData = async ({state}) => {
     }
 
     const [info, activities] = await Promise.all([
-        getAthlete(credentials),
-        getActivities(credentials),
+        getAthleteInfo(credentials, db),
+        getAthleteActivities(credentials, db),
     ]);
 
     return {info, activities};

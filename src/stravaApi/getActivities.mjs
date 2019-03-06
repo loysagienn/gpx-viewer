@@ -15,8 +15,6 @@ export default async ({accessToken}) => {
         json: true,
     };
 
-    console.log(options);
-
     const result = await request(options);
 
     return toCamelCase(result);

@@ -1,0 +1,110 @@
+@import '../common.styl'
+
+.header
+    position: relative
+    padding: 0 30px
+    background-color: main-color
+    shadow: default
+    color: white
+    z-index: 10
+
+    +maxWidth(600px)
+        padding: 0 20px
+
+    +maxWidth(400px)
+        padding: 0 10px
+
+.headerInner
+    margin: 0 auto
+    display: flex
+    justify-content: space-between
+    max-width: max-width
+
+.headerButton
+    padding: 15px 0
+    cursor: pointer
+    &:hover
+        text-decoration: underline;
+
+.rightButtons
+    .headerButton
+        margin-left: 20px
+
+
+.activities
+    margin: 0 auto
+    margin-bottom: 50px
+    box-sizing: border-box
+    background-color: white
+    max-width: max-width
+    // shadow: default
+
+.title
+    padding: 30px
+
+    +maxWidth(600px)
+        padding: 20px
+
+    +maxWidth(400px)
+        padding: 20px 10px
+
+.activity
+    padding: 20px 30px
+    border-top: 1px solid background-gray-color
+    display: block
+    text-decoration: none
+    color: dark-text-color
+    &:hover
+        background-color: action-color-light
+        border-top-color: action-color-light
+        &+.activity
+            border-top-color: action-color-light
+    
+    +maxWidth(600px)
+        padding: 15px 20px
+
+    +maxWidth(400px)
+        padding: 15px 10px
+
+.activityInner
+    display: flex
+    justify-content: space-between
+    line-height: 20px
+
+    .activityName,
+    .activityDistance,
+    .activityTime
+        white-space: nowrap;
+
+    .activityName
+        flex-basis: 50%
+
+    .activityDistance
+        text-align: center
+
+    .activityTime
+        text-align: right
+    
+    +maxWidth(600px)
+        display: block
+    
+        .activityName,
+        .activityDistance,
+        .activityTime
+            white-space: wrap
+            text-align: left
+            display: inline-block
+
+        .activityName,
+        .activityDistance
+            &:after
+                content: '/'
+                margin: 0 10px
+
+
+.icon
+    width: 20px
+    height: 20px
+    margin-right: 5px
+    & path
+        fill: dark-text-color

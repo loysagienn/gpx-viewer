@@ -10,6 +10,8 @@ let dbApi = null;
 const DATABASE_ID = 'gpx-viewer';
 const SESSION_COLLECTION = 'sessions';
 const USER_CREDENTIALS = 'user-credentials';
+const ATHLETE_INFO = 'athlete-info';
+const ATHLETE_ACTIVITIES = 'athlete-activities';
 
 const getSession = (db, sessionId) => db
     .collection(SESSION_COLLECTION)
@@ -47,10 +49,54 @@ const addUserCredentials = async (db, credentials) => {
     const existingCredentials = await getUserCredentials(db, athleteId);
 
     if (existingCredentials) {
-        removeUserCredentials(db, athleteId);
+        await removeUserCredentials(db, athleteId);
     }
 
     return db.collection(USER_CREDENTIALS).insertOne(credentials);
+};
+
+const getAthleteInfo = (db, athleteId) => db
+    .collection(ATHLETE_INFO)
+    .find({athleteId})
+    .toArray()
+    .then(([athleteInfo]) => athleteInfo);
+
+const removeAthleteInfo = (db, athleteId) => db
+    .collection(ATHLETE_INFO)
+    .deleteOne({athleteId});
+
+const addAthleteInfo = async (db, athleteInfo) => {
+    const {athleteId} = athleteInfo;
+
+    const exsistingInfo = await getAthleteInfo(db, athleteId);
+
+    if (exsistingInfo) {
+        await removeAthleteInfo(db, athleteId);
+    }
+
+    return db.collection(ATHLETE_INFO).insertOne(athleteInfo);
+};
+
+const getAthleteActivities = (db, athleteId) => db
+    .collection(ATHLETE_ACTIVITIES)
+    .find({athleteId})
+    .toArray()
+    .then(([athleteActivities]) => athleteActivities);
+
+const removeAthleteActivities = (db, athleteId) => db
+    .collection(ATHLETE_ACTIVITIES)
+    .deleteOne({athleteId});
+
+const addAthleteActivities = async (db, athleteActivities) => {
+    const {athleteId} = athleteActivities;
+
+    const exsistingActivities = await getAthleteActivities(db, athleteId);
+
+    if (exsistingActivities) {
+        await removeAthleteActivities(db, athleteId);
+    }
+
+    return db.collection(ATHLETE_ACTIVITIES).insertOne(athleteActivities);
 };
 
 
@@ -63,6 +109,14 @@ const createDbApi = (database) => {
         updateSession: (sessionId, update) => updateSession(gpxSessionDb, sessionId, update),
         getUserCredentials: athleteId => getUserCredentials(gpxSessionDb, athleteId),
         addUserCredentials: credentials => addUserCredentials(gpxSessionDb, credentials),
+
+        addAthleteInfo: athleteInfo => addAthleteInfo(gpxSessionDb, athleteInfo),
+        getAthleteInfo: athleteId => getAthleteInfo(gpxSessionDb, athleteId),
+        removeAthleteInfo: athleteId => removeAthleteInfo(gpxSessionDb, athleteId),
+
+        addAthleteActivities: athleteActivities => addAthleteActivities(gpxSessionDb, athleteActivities),
+        getAthleteActivities: athleteId => getAthleteActivities(gpxSessionDb, athleteId),
+        removeAthleteActivities: athleteId => removeAthleteActivities(gpxSessionDb, athleteId),
     };
 };
 
