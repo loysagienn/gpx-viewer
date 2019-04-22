@@ -3,6 +3,7 @@ import request from 'request-promise-native';
 import {STRAVA_CLIENT_ID} from 'config';
 import {STRAVA_CLIENT_SECRET} from 'config/private';
 import {OAUTH_TOKEN_URL, GRANT_TYPES} from './constants';
+import processError from './processError';
 
 
 export default async (refreshToken) => {
@@ -18,7 +19,13 @@ export default async (refreshToken) => {
         json: true,
     };
 
-    const result = await request(options);
+    let result;
+
+    try {
+        result = await request(options);
+    } catch (err) {
+        processError(err);
+    }
 
     const {
         token_type: tokenType,

@@ -6,6 +6,7 @@
 import {getAthlete, getActivities} from 'stravaApi';
 import {ERRORS} from 'stravaApi/constants';
 import {isProductionMode} from 'config';
+import unauthorizeStravaUser from './unauthorizeStravaUser';
 
 // const readFile = util.promisify(fs.readFile);
 
@@ -60,14 +61,6 @@ const getAthleteActivities = async (credentials, db) => {
     }
 
     return activities;
-};
-
-const unauthorizeStravaUser = (db, credentials) => {
-    const {athleteId} = credentials;
-
-    console.log(`Unauthorize user ${athleteId}`);
-
-    return db.removeAthleteCredentials(athleteId);
 };
 
 const getAthleteData = async ({state, db}) => {
