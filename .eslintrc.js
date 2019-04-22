@@ -49,6 +49,7 @@ module.exports = {
         'no-underscore-dangle': 'off',
         'function-paren-newline': 'off',
         'no-plusplus': 'off',
+        'no-throw-literal': 'off',
 
         'flowtype/use-flow-type': 1,
         'jsx-a11y/click-events-have-key-events': 'off',

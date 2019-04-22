@@ -9,3 +9,8 @@ export const GRANT_TYPES = {
     AUTHORIZATION_CODE: 'authorization_code',
     REFRESH_TOKEN: 'refresh_token',
 };
+
+export const ERRORS = {
+    AUTHORIZATION_ERROR: 'AUTHORIZATION_ERROR',
+    UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+};

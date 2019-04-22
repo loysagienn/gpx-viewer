@@ -39,7 +39,7 @@ const getUserCredentials = (db, athleteId) => db
     .toArray()
     .then(([credentials]) => credentials);
 
-const removeUserCredentials = (db, athleteId) => db
+const removeAthleteCredentials = (db, athleteId) => db
     .collection(USER_CREDENTIALS)
     .deleteOne({athleteId});
 
@@ -49,7 +49,7 @@ const addUserCredentials = async (db, credentials) => {
     const existingCredentials = await getUserCredentials(db, athleteId);
 
     if (existingCredentials) {
-        await removeUserCredentials(db, athleteId);
+        await removeAthleteCredentials(db, athleteId);
     }
 
     return db.collection(USER_CREDENTIALS).insertOne(credentials);
@@ -109,6 +109,7 @@ const createDbApi = (database) => {
         updateSession: (sessionId, update) => updateSession(gpxSessionDb, sessionId, update),
         getUserCredentials: athleteId => getUserCredentials(gpxSessionDb, athleteId),
         addUserCredentials: credentials => addUserCredentials(gpxSessionDb, credentials),
+        removeAthleteCredentials: athleteId => removeAthleteCredentials(gpxSessionDb, athleteId),
 
         addAthleteInfo: athleteInfo => addAthleteInfo(gpxSessionDb, athleteInfo),
         getAthleteInfo: athleteId => getAthleteInfo(gpxSessionDb, athleteId),

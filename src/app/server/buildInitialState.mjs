@@ -1,19 +1,20 @@
 
-import fs from 'fs';
-import util from 'util';
-import path from 'path';
-import {parseGpx} from 'app/gpx';
+// import fs from 'fs';
+// import util from 'util';
+// import path from 'path';
+// import {parseGpx} from 'app/gpx';
 import {getAthlete, getActivities} from 'stravaApi';
+import {ERRORS} from 'stravaApi/constants';
 import {isProductionMode} from 'config';
 
-const readFile = util.promisify(fs.readFile);
+// const readFile = util.promisify(fs.readFile);
 
-const getGpxcontent = async () => {
-    const gpxBuffer = await readFile(path.join(__dirname, '../../../static/track.gpx'));
-    const gpxString = gpxBuffer.toString();
+// const getGpxcontent = async () => {
+//     const gpxBuffer = await readFile(path.join(__dirname, '../../../static/track.gpx'));
+//     const gpxString = gpxBuffer.toString();
 
-    return parseGpx(gpxString);
-};
+//     return parseGpx(gpxString);
+// };
 
 const getYmaps = () => ({
     initialized: false,
@@ -23,13 +24,13 @@ const getAthleteInfo = async (credentials, db) => {
     const {athleteId} = credentials;
 
     // кэшируем в базе для тестирования, придумать решение получше, это отстой
-    if (!isProductionMode) {
-        const {info: athleteInfo} = (await db.getAthleteInfo(athleteId)) || {};
+    // if (!isProductionMode) {
+    //     const {info: athleteInfo} = (await db.getAthleteInfo(athleteId)) || {};
 
-        if (athleteInfo) {
-            return athleteInfo;
-        }
-    }
+    //     if (athleteInfo) {
+    //         return athleteInfo;
+    //     }
+    // }
 
     const info = await getAthlete(credentials);
 
@@ -44,13 +45,13 @@ const getAthleteActivities = async (credentials, db) => {
     const {athleteId} = credentials;
 
     // кэшируем в базе для тестирования, придумать решение получше, это отстой
-    if (!isProductionMode) {
-        const {activities: athleteActivities} = (await db.getAthleteActivities(athleteId)) || {};
+    // if (!isProductionMode) {
+    //     const {activities: athleteActivities} = (await db.getAthleteActivities(athleteId)) || {};
 
-        if (athleteActivities) {
-            return athleteActivities;
-        }
-    }
+    //     if (athleteActivities) {
+    //         return athleteActivities;
+    //     }
+    // }
 
     const activities = await getActivities(credentials);
 
@@ -61,6 +62,14 @@ const getAthleteActivities = async (credentials, db) => {
     return activities;
 };
 
+const unauthorizeStravaUser = (db, credentials) => {
+    const {athleteId} = credentials;
+
+    console.log(`Unauthorize user ${athleteId}`);
+
+    return db.removeAthleteCredentials(athleteId);
+};
+
 const getAthleteData = async ({state, db}) => {
     const {stravaCredentials: credentials} = state;
 
@@ -68,16 +77,26 @@ const getAthleteData = async ({state, db}) => {
         return null;
     }
 
-    const [info, activities] = await Promise.all([
-        getAthleteInfo(credentials, db),
-        getAthleteActivities(credentials, db),
-    ]);
+    try {
+        const [info, activities] = await Promise.all([
+            getAthleteInfo(credentials, db),
+            getAthleteActivities(credentials, db),
+        ]);
 
-    return {info, activities};
+        return {info, activities};
+    } catch (err) {
+        console.log(err);
+
+        if (err.type === ERRORS.AUTHORIZATION_ERROR) {
+            await unauthorizeStravaUser(db, credentials);
+        }
+
+        return null;
+    }
 };
 
 export default async (koaCtx, next) => {
-    const gpxContent = await getGpxcontent();
+    // const gpxContent = await getGpxcontent();
 
     const {state, origin} = koaCtx;
 
@@ -88,7 +107,6 @@ export default async (koaCtx, next) => {
     const athlete = await getAthleteData(koaCtx);
 
     state.initialState = {
-        gpxContent,
         ymaps,
         route,
         athlete,

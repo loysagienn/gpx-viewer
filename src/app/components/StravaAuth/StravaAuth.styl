@@ -10,12 +10,22 @@
     justify-content: center
     align-items: center
     padding: 10px
+    background-color: main-color
 
 .block
     padding: 30px
     width: 100%
-    max-width: 300px
+    max-width: 400px
     background-color: white-color
-    border-radius: 3px
+    border-radius: 4px
     shadow: default
-    
+    +maxWidth(500px)
+        padding: 20px
+
+.btnWrapper
+    margin-top: 20px
+    display: flex
+    justify-content: center
+
+.textBlock
+    margin-bottom: 15px

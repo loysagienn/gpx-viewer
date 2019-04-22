@@ -30,12 +30,20 @@ const getAuthUrl = (origin) => {
 const StravaAuth = ({origin}) => (
     <div className={css.stravaAuth}>
         <div className={css.block}>
-            <Button
-                className={css.loginBtn}
-                href={getAuthUrl(origin)}
-            >
-                Войти в Strava
-            </Button>
+            <div className={css.textBlock}>
+                На этом сайте можно смотреть и анализировать свои пробежки в сервисе Strava
+            </div>
+            <div className={css.textBlock}>
+                Для того чтобы сделать это, откройте доступ к вашим тренировкам
+            </div>
+            <div className={css.btnWrapper}>
+                <Button
+                    className={css.loginBtn}
+                    href={getAuthUrl(origin)}
+                >
+                    Открыть доступ
+                </Button>
+            </div>
         </div>
     </div>
 );
