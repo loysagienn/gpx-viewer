@@ -96,7 +96,6 @@ class Day extends PureComponent {
 
         const activity = activities[timestamp];
 
-        console.log(activity);
         const activityNode = renderActivity(activity);
 
         if (isEmpty) {
