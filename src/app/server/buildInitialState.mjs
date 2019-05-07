@@ -25,13 +25,13 @@ const getAthleteInfo = async (credentials, db) => {
     const {athleteId} = credentials;
 
     // кэшируем в базе для тестирования, придумать решение получше, это отстой
-    // if (!isProductionMode) {
-    //     const {info: athleteInfo} = (await db.getAthleteInfo(athleteId)) || {};
+    if (!isProductionMode) {
+        const {info: athleteInfo} = (await db.getAthleteInfo(athleteId)) || {};
 
-    //     if (athleteInfo) {
-    //         return athleteInfo;
-    //     }
-    // }
+        if (athleteInfo) {
+            return athleteInfo;
+        }
+    }
 
     const info = await getAthlete(credentials);
 
@@ -46,13 +46,13 @@ const getAthleteActivities = async (credentials, db) => {
     const {athleteId} = credentials;
 
     // кэшируем в базе для тестирования, придумать решение получше, это отстой
-    // if (!isProductionMode) {
-    //     const {activities: athleteActivities} = (await db.getAthleteActivities(athleteId)) || {};
+    if (!isProductionMode) {
+        const {activities: athleteActivities} = (await db.getAthleteActivities(athleteId)) || {};
 
-    //     if (athleteActivities) {
-    //         return athleteActivities;
-    //     }
-    // }
+        if (athleteActivities) {
+            return athleteActivities;
+        }
+    }
 
     const activities = await getActivities(credentials);
 
@@ -98,6 +98,13 @@ export default async (koaCtx, next) => {
     const {route} = state;
 
     const athlete = await getAthleteData(koaCtx);
+
+    // const athlete = {
+    //     info: {
+    //         username: 'name',
+    //     },
+    //     activities: [],
+    // };
 
     state.initialState = {
         ymaps,

@@ -1,0 +1,129 @@
+@import '../common.styl'
+
+space = 10px
+halfSpace = space / 2
+
+.wrapper
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    overflow: auto
+
+.calendar
+    padding: 10px
+
+.month
+    padding-top: 10px
+    &:first-child
+        padding-top: 0
+
+.monthTitle
+    margin: 0 auto
+    // box-sizing: border-box
+    max-width: max-width
+    padding: space
+    font-size: 22px
+
+    +maxWidth(1000px)
+        font-size: 20px
+    
+    +maxWidth(800px)
+        font-size: 18px
+    
+    +maxWidth(600px)
+        font-size: 16px
+    
+    +maxWidth(400px)
+        font-size: 14px
+
+.monthDays
+    display: flex
+    flex-wrap: wrap
+    margin: 0 auto
+    box-sizing: border-box
+    max-width: max-width + (space * 2)
+    padding: (space / 2)
+
+.dayWrapper
+    position: relative
+    box-sizing: border-box
+    width: 14.28%
+    padding: (space / 2)
+    display: block
+
+.spacer
+    width: 100%
+    margin-bottom: 100%
+
+.day
+    position: absolute
+    left: halfSpace
+    right: halfSpace
+    top: halfSpace
+    bottom: halfSpace
+    background-color: #fafafa
+    padding: 12px
+    border-radius: 4px
+    font-size: 16px
+    color: #404040
+    text-decoration: none
+
+    +maxWidth(1000px)
+        padding: 10px
+        font-size: 14px
+    
+    +maxWidth(800px)
+        padding: 8px
+        font-size: 12px
+
+    +maxWidth(600px)
+        border-radius: 50%
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 18px
+        .activity
+            display: none
+
+    +maxWidth(500px)
+        font-size: 16px
+
+    +maxWidth(400px)
+        font-size: 14px
+
+    +maxWidth(350px)
+        font-size: 12px
+    
+    // +maxWidth(700px)
+    //     padding: 10px
+    //     font-size: 14px
+
+    &:hover
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.1);
+        background-color: #ffffff
+        // background-color: action-color-light
+
+    &.isWeekEnd
+        .dayTitle
+            color: #e04040
+
+    &.disabled
+        background-color: #eaeaea
+        box-shadow: none
+        color: #d0d0d0
+        .dayTitle
+            color: #d0d0d0
+
+.dayTitle
+    padding-bottom: 5px
+
+.activity
+    font-size: 14px
+
+    +maxWidth(1000px)
+        font-size: 12px
+
+    +maxWidth(800px)
+        font-size: 10px

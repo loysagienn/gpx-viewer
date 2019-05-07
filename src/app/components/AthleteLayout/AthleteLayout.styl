@@ -1,18 +1,32 @@
 @import '../common.styl'
 
+.athleteLayout
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    background-color: #f0f0f0
+    overflow: hidden
+
 .header
-    position: relative
-    padding: 0 30px
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    height: 50px
+    box-sizing: border-box
+    padding: 0 10px
     background-color: main-color
     shadow: default
     color: white
     z-index: 10
 
-    +maxWidth(600px)
-        padding: 0 20px
+    // +maxWidth(600px)
+    //     padding: 0 20px
 
-    +maxWidth(400px)
-        padding: 0 10px
+    // +maxWidth(400px)
+    //     padding: 0 10px
 
 .headerInner
     margin: 0 auto
@@ -22,6 +36,7 @@
 
 .headerButton
     padding: 15px 0
+    line-height: 20px
     cursor: pointer
     &:hover
         text-decoration: underline;
@@ -29,6 +44,14 @@
 .rightButtons
     .headerButton
         margin-left: 20px
+
+
+.calendar
+    position: absolute
+    left: 0
+    right: 0
+    top: 50px
+    bottom: 0
 
 
 .activities

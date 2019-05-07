@@ -4,6 +4,7 @@ import {createElement} from 'react';
 import {cn} from 'helpers';
 import Text from '../Text';
 import {SvgTimer, SvgDistance} from '../Svg';
+import Calendar from '../Calendar';
 import css from './AthleteLayout.styl';
 
 
@@ -87,7 +88,10 @@ const AthleteLayout = ({athleteInfo, activities}) => (
         className={css.athleteLayout}
     >
         <Header athleteInfo={athleteInfo}/>
-        <ActitityList activities={activities}/>
+        {/* <ActitityList activities={activities}/> */}
+        <div className={css.calendar}>
+            <Calendar />
+        </div>
     </div>
 );
 

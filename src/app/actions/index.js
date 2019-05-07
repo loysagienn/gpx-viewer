@@ -5,3 +5,18 @@ export const initYmaps = ymaps => ({
     type: 'INIT_YMAPS',
     ymaps,
 });
+
+export const CHANGE_MONTH = 'CHANGE_MONTH';
+
+export const changeMonth = month => (dispatch, getState) => {
+    const {activeMonth} = getState();
+
+    if (activeMonth === month) {
+        return;
+    }
+
+    dispatch({
+        type: CHANGE_MONTH,
+        month,
+    });
+};
