@@ -21,11 +21,11 @@ const getYmaps = () => ({
     initialized: false,
 });
 
-const getAthleteInfo = async (credentials, db) => {
+const getAthleteInfo = async (credentials, db, ignoreCache) => {
     const {athleteId} = credentials;
 
     // кэшируем в базе для тестирования, придумать решение получше, это отстой
-    if (!isProductionMode) {
+    if (!ignoreCache && !isProductionMode) {
         const {info: athleteInfo} = (await db.getAthleteInfo(athleteId)) || {};
 
         if (athleteInfo) {
@@ -42,11 +42,11 @@ const getAthleteInfo = async (credentials, db) => {
     return info;
 };
 
-const getAthleteActivities = async (credentials, db) => {
+const getAthleteActivities = async (credentials, db, ignoreCache) => {
     const {athleteId} = credentials;
 
     // кэшируем в базе для тестирования, придумать решение получше, это отстой
-    if (!isProductionMode) {
+    if (!ignoreCache && !isProductionMode) {
         const {activities: athleteActivities} = (await db.getAthleteActivities(athleteId)) || {};
 
         if (athleteActivities) {
@@ -64,7 +64,7 @@ const getAthleteActivities = async (credentials, db) => {
 };
 
 const getAthleteData = async ({state, db}) => {
-    const {stravaCredentials: credentials} = state;
+    const {stravaCredentials: credentials, route} = state;
 
     if (!credentials) {
         return null;
@@ -72,8 +72,8 @@ const getAthleteData = async ({state, db}) => {
 
     try {
         const [info, activities] = await Promise.all([
-            getAthleteInfo(credentials, db),
-            getAthleteActivities(credentials, db),
+            getAthleteInfo(credentials, db, route.queryParams.ignoreCache),
+            getAthleteActivities(credentials, db, route.queryParams.ignoreCache),
         ]);
 
         return {info, activities};
@@ -90,6 +90,7 @@ const getAthleteData = async ({state, db}) => {
 
 export default async (koaCtx, next) => {
     // const gpxContent = await getGpxcontent();
+    console.log(koaCtx.state);
 
     const {state, origin} = koaCtx;
 
