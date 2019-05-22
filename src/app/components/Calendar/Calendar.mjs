@@ -1,43 +1,52 @@
 /** @jsx createElement */
 
-import {createElement} from 'react';
-import {getMonth} from './helpers';
-import Day from './Day';
+import {createElement, PureComponent, createRef} from 'react';
+import Month from './Month';
 import css from './Calendar.styl';
 
 
-const renderMonth = (offset) => {
-    const {title, days} = getMonth(offset);
+const MIN_BOTTOM_SPACE = 200;
 
-    return (
-        <div className={css.month} key={offset}>
-            <div className={css.monthTitle}>
-                {title}
-            </div>
-            <div className={css.monthDays}>
-                {
-                    days.map(day => createElement(Day, {key: day.timestamp, ...day}))
-                }
-            </div>
-        </div>
-    );
-};
+class Calendar extends PureComponent {
+    constructor(props) {
+        super(props);
 
-const Calendar = () => {
-    const months = [];
-    for (let i = 0; i < 12; i++) {
-        months.push(i);
+        this.monthsOffset = [0, 1, 2];
+
+        this.scrollHandler = event => this.onScroll(event);
+        this.wrapperRef = createRef();
     }
 
-    return (
-        <div className={css.wrapper}>
-            <div className={css.calendar}>
-                {
-                    months.map(renderMonth)
-                }
+    onScroll() {
+        const {monthsOffset, wrapperRef} = this;
+        const {scrollHeight, clientHeight, scrollTop} = wrapperRef.current;
+
+        const bottomSpace = scrollHeight - clientHeight - scrollTop;
+
+        if (bottomSpace < MIN_BOTTOM_SPACE) {
+            monthsOffset.push(monthsOffset[monthsOffset.length - 1] + 1);
+
+            this.forceUpdate();
+        }
+    }
+
+    render() {
+        return (
+            <div
+                className={css.wrapper}
+                onScroll={this.scrollHandler}
+                ref={this.wrapperRef}
+            >
+                <div
+                    className={css.calendar}
+                >
+                    {
+                        this.monthsOffset.map(offset => <Month offset={offset} key={offset}/>)
+                    }
+                </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
 export default Calendar;

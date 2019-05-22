@@ -89,9 +89,6 @@ const getAthleteData = async ({state, db}) => {
 };
 
 export default async (koaCtx, next) => {
-    // const gpxContent = await getGpxcontent();
-    console.log(koaCtx.state);
-
     const {state, origin} = koaCtx;
 
     const ymaps = getYmaps();
@@ -99,13 +96,6 @@ export default async (koaCtx, next) => {
     const {route} = state;
 
     const athlete = await getAthleteData(koaCtx);
-
-    // const athlete = {
-    //     info: {
-    //         username: 'name',
-    //     },
-    //     activities: [],
-    // };
 
     state.initialState = {
         ymaps,

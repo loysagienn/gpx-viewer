@@ -4,7 +4,7 @@ import {createElement, PureComponent, Fragment} from 'react';
 import {cn} from 'helpers';
 import {connect} from 'react-redux';
 import {changeMonth as changeMonthAction} from 'app/actions';
-import css from './Calendar.styl';
+import css from './Day.styl';
 
 let cachedActivities = null;
 let cachedActivitiesByTimestamp = null;
@@ -129,32 +129,6 @@ class Day extends PureComponent {
                 <div className={css.spacer}/>
                 {dayNode}
             </div>
-        );
-
-        return createElement(
-            activity ? 'a' : 'div',
-            {
-                className: css.dayWrapper,
-                key: timestamp,
-                href: activity ? `https://www.strava.com/activities/${activity.id}` : undefined,
-            },
-            (
-                <Fragment>
-                    <div className={css.spacer}/>
-                    <div
-                        className={cn(
-                            css.day,
-                            isWeekEnd && css.isWeekEnd,
-                            isFutureDay && css.disabled,
-                        )}
-                    >
-                        <div className={css.dayTitle}>
-                            {title}
-                        </div>
-                        {activityNode}
-                    </div>
-                </Fragment>
-            ),
         );
     }
 }
