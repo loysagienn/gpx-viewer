@@ -1,21 +1,9 @@
 
-// import fs from 'fs';
-// import util from 'util';
-// import path from 'path';
-// import {parseGpx} from 'app/gpx';
 import {getAthlete, getActivities} from 'stravaApi';
 import {ERRORS} from 'stravaApi/constants';
 import {isProductionMode} from 'config';
 import unauthorizeStravaUser from './unauthorizeStravaUser';
 
-// const readFile = util.promisify(fs.readFile);
-
-// const getGpxcontent = async () => {
-//     const gpxBuffer = await readFile(path.join(__dirname, '../../../static/track.gpx'));
-//     const gpxString = gpxBuffer.toString();
-
-//     return parseGpx(gpxString);
-// };
 
 const getYmaps = () => ({
     initialized: false,
@@ -54,7 +42,7 @@ const getAthleteActivities = async (credentials, db, ignoreCache) => {
         }
     }
 
-    const activities = await getActivities(credentials);
+    const activities = await getActivities(credentials, 1, 20);
 
     if (!isProductionMode) {
         await db.addAthleteActivities({athleteId, activities});
