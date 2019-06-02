@@ -32,18 +32,20 @@ const getMonthDay = (date, {isEmpty = false, currentYear, currentMonth, currentM
     }
 
     const weekDay = date.getDay();
+    const monthDay = date.getDate();
     const year = date.getFullYear();
     const month = date.getMonth();
     const isCurrentYear = year === currentYear;
     const isCurrentMonth = isCurrentYear && month === currentMonth;
 
-    if (isCurrentMonth && (date.getDay() === 1) && date.getDate() > currentMonthDay) {
+    // Не показываем будущие недели
+    if (isCurrentMonth && (weekDay === 1) && monthDay > currentMonthDay) {
         return null;
     }
 
-    const isFutureDay = !isEmpty && isCurrentMonth && date.getDate() > currentMonthDay;
+    const isFutureDay = !isEmpty && isCurrentMonth && monthDay > currentMonthDay;
     // const title = date.toLocaleDateString('ru', {month: 'long', day: 'numeric'});
-    const title = date.getDate();
+    const title = monthDay;
 
     return daysCache[hash] = {
         timestamp,
