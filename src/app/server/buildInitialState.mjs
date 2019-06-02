@@ -2,6 +2,7 @@
 import {getAthlete, getActivities} from 'stravaApi';
 import {ERRORS} from 'stravaApi/constants';
 import {isProductionMode} from 'config';
+import {stringifyDateMonth} from 'helpers/date';
 import unauthorizeStravaUser from './unauthorizeStravaUser';
 
 
@@ -30,7 +31,7 @@ const getAthleteInfo = async (credentials, db, ignoreCache) => {
     return info;
 };
 
-const getAthleteActivities = async (credentials, db, ignoreCache) => {
+const getAthleteActivities = async (credentials, db, month, ignoreCache) => {
     const {athleteId} = credentials;
 
     // кэшируем в базе для тестирования, придумать решение получше, это отстой
@@ -42,13 +43,32 @@ const getAthleteActivities = async (credentials, db, ignoreCache) => {
         }
     }
 
-    const activities = await getActivities(credentials, 1, 20);
+    const activities = await getActivities(credentials, month);
 
     if (!isProductionMode) {
         await db.addAthleteActivities({athleteId, activities});
     }
 
     return activities;
+};
+
+const getActivitiesByMonth = async (state, db, monthCount = 1) => {
+    const {stravaCredentials: credentials, route} = state;
+
+    const date = new Date();
+    const months = [];
+
+    while (monthCount--) {
+        months.push(stringifyDateMonth(date));
+
+        date.setMonth(date.getMonth() - 1);
+    }
+
+    const activities = await Promise.all(
+        months.map(month => getAthleteActivities(credentials, db, month, route.queryParams.ignoreCache)),
+    );
+
+    return activities.reduce((acc, list, index) => Object.assign(acc, {[months[index]]: list}), {});
 };
 
 const getAthleteData = async ({state, db}) => {
@@ -58,10 +78,12 @@ const getAthleteData = async ({state, db}) => {
         return null;
     }
 
+    // const currentMonth = stringifyDateMonth(new Date());
+
     try {
         const [info, activities] = await Promise.all([
             getAthleteInfo(credentials, db, route.queryParams.ignoreCache),
-            getAthleteActivities(credentials, db, route.queryParams.ignoreCache),
+            getActivitiesByMonth(state, db, 3),
         ]);
 
         return {info, activities};

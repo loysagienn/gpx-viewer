@@ -6,9 +6,6 @@ import {connect} from 'react-redux';
 import {changeMonth as changeMonthAction} from 'app/actions';
 import css from './Day.styl';
 
-let cachedActivities = null;
-let cachedActivitiesByTimestamp = null;
-
 const renderDistance = (distance) => {
     distance = Math.round(distance);
 
@@ -41,29 +38,7 @@ const renderTime = (time) => {
     return `${hours}:${totalStr}`;
 };
 
-const getActivities = ({athlete: {activities}}) => {
-    if (cachedActivities === activities) {
-        return cachedActivitiesByTimestamp;
-    }
-
-    cachedActivities = activities;
-
-    return cachedActivitiesByTimestamp = activities.reduce((acc, activity) => {
-        const activityDate = new Date(activity.startDate);
-
-        activityDate.setHours(0, 0, 0, 0);
-
-        const timestamp = activityDate.getTime();
-
-        acc[timestamp] = activity;
-
-        return acc;
-    }, {});
-};
-
-const mapStateToProps = state => ({activities: getActivities(state)});
-
-const enhance = connect(mapStateToProps, {changeMonth: changeMonthAction});
+const enhance = connect(null, {changeMonth: changeMonthAction});
 
 const renderActivity = (activity) => {
     if (!activity) {

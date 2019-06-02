@@ -1,4 +1,6 @@
 
+import {stringifyDateMonth, getDateFromMonth} from 'helpers/date';
+
 const MONTH_NAMES = [
     'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
     'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
@@ -70,6 +72,8 @@ export const getMonth = (offset = 0) => {
     // устанавливаем первый день месяца
     date.setDate(1);
 
+    const monthKey = stringifyDateMonth(date);
+
     const title = `${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
 
     const activeMonth = date.getMonth();
@@ -97,5 +101,5 @@ export const getMonth = (offset = 0) => {
         date.setHours(24);
     }
 
-    return {title, days};
+    return {title, days, monthKey};
 };
