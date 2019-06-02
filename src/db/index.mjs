@@ -77,23 +77,23 @@ const addAthleteInfo = async (db, athleteInfo) => {
     return db.collection(ATHLETE_INFO).insertOne(athleteInfo);
 };
 
-const getAthleteActivities = (db, athleteId) => db
+const getAthleteActivities = (db, athleteId, monthKey) => console.log(athleteId, monthKey) || db
     .collection(ATHLETE_ACTIVITIES)
-    .find({athleteId})
+    .find({athleteId, monthKey})
     .toArray()
     .then(([athleteActivities]) => athleteActivities);
 
-const removeAthleteActivities = (db, athleteId) => db
+const removeAthleteActivities = (db, athleteId, monthKey) => db
     .collection(ATHLETE_ACTIVITIES)
-    .deleteOne({athleteId});
+    .deleteOne({athleteId, monthKey});
 
 const addAthleteActivities = async (db, athleteActivities) => {
-    const {athleteId} = athleteActivities;
+    const {athleteId, monthKey} = athleteActivities;
 
-    const exsistingActivities = await getAthleteActivities(db, athleteId);
+    const exsistingActivities = await getAthleteActivities(db, athleteId, monthKey);
 
     if (exsistingActivities) {
-        await removeAthleteActivities(db, athleteId);
+        await removeAthleteActivities(db, athleteId, monthKey);
     }
 
     return db.collection(ATHLETE_ACTIVITIES).insertOne(athleteActivities);
@@ -116,8 +116,8 @@ const createDbApi = (database) => {
         removeAthleteInfo: athleteId => removeAthleteInfo(gpxSessionDb, athleteId),
 
         addAthleteActivities: athleteActivities => addAthleteActivities(gpxSessionDb, athleteActivities),
-        getAthleteActivities: athleteId => getAthleteActivities(gpxSessionDb, athleteId),
-        removeAthleteActivities: athleteId => removeAthleteActivities(gpxSessionDb, athleteId),
+        getAthleteActivities: (athleteId, monthKey) => getAthleteActivities(gpxSessionDb, athleteId, monthKey),
+        removeAthleteActivities: (athleteId, monthKey) => removeAthleteActivities(gpxSessionDb, athleteId, monthKey),
     };
 };
 

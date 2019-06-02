@@ -1,17 +1,28 @@
 /** @jsx createElement */
 
 import {createElement, PureComponent, createRef} from 'react';
+import {DEFAULT_MONTH_COUNT} from 'constants';
 import Month from './Month';
 import css from './Calendar.styl';
 
 
 const MIN_BOTTOM_SPACE = 200;
 
+const getOffsets = (count) => {
+    const offsets = [];
+
+    for (let i = 0; i < count; i++) {
+        offsets.push(i);
+    }
+
+    return offsets;
+};
+
 class Calendar extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.monthsOffset = [0, 1, 2];
+        this.monthsOffset = getOffsets(DEFAULT_MONTH_COUNT);
 
         this.scrollHandler = event => this.onScroll(event);
         this.wrapperRef = createRef();

@@ -10,7 +10,6 @@ export default ({accessToken}, month, page = 1, countPerPage = 100) => {
     const date = getDateFromMonth(month);
     const startTimestamp = date.getTime() / 1000;
     const endTimestamp = date.setMonth(date.getMonth() + 1) / 1000;
-    console.log(month, startTimestamp, endTimestamp);
 
     return request({
         method: 'GET',
