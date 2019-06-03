@@ -4,6 +4,7 @@ import {ERRORS} from 'stravaApi/constants';
 import {isProductionMode} from 'config';
 import {DEFAULT_MONTH_COUNT} from 'constants';
 import {stringifyDateMonth} from 'helpers/date';
+import log from 'logger';
 import unauthorizeStravaUser from './unauthorizeStravaUser';
 
 
@@ -89,7 +90,7 @@ const getAthleteData = async ({state, db}) => {
 
         return {info, activities};
     } catch (err) {
-        console.log(err);
+        log.error(err);
 
         if (err.type === ERRORS.AUTHORIZATION_ERROR) {
             await unauthorizeStravaUser(db, credentials);

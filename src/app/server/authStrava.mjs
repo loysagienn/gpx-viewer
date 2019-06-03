@@ -1,6 +1,7 @@
 
 import {ROUTES_IDS, getUrlByRoute} from 'router';
 import {authorize} from 'stravaApi';
+import log from 'logger';
 
 
 const redirectToIndex = ctx => ctx.redirect(getUrlByRoute({id: ROUTES_IDS.INDEX}));
@@ -26,7 +27,7 @@ export default async (koaCtx, next) => {
     const {queryParams: {code, error, scope: scopeStr}} = route;
 
     if (error) {
-        console.log('strava auth error:', error);
+        log.error('strava auth error:', error);
 
         return redirectToIndex(koaCtx);
     }
@@ -36,7 +37,7 @@ export default async (koaCtx, next) => {
     try {
         await auth(koaCtx, sessionId, code, scope);
     } catch (err) {
-        console.log('strava oauth failed: ', err);
+        log.error('strava oauth failed: ', err);
     }
 
     return redirectToIndex(koaCtx);

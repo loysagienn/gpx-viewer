@@ -1,5 +1,6 @@
 import {mergeRight} from 'ramda';
 import {updateToken} from 'stravaApi';
+import log from 'logger';
 import unauthorizeStravaUser from './unauthorizeStravaUser';
 
 const EXPIRES_SHIFT = 60; // one minute
@@ -32,9 +33,9 @@ export default async (koaCtx, next) => {
     try {
         result = await updateToken(refreshToken);
     } catch (err) {
-        console.log(err);
+        log.error(err);
 
-        unauthorizeStravaUser(koaCtx.db, credentials);
+        await unauthorizeStravaUser(koaCtx.db, credentials);
 
         return next();
     }
@@ -43,7 +44,7 @@ export default async (koaCtx, next) => {
 
     await koaCtx.db.addAthleteCredentials(newCredentials);
 
-    console.log('Strava credentials updated: ', newCredentials);
+    log.info('Strava credentials updated: ', newCredentials);
 
     koaCtx.state.stravaCredentials = newCredentials;
 

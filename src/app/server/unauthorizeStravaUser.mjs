@@ -1,8 +1,9 @@
+import log from 'logger';
 
 export default (db, credentials) => {
     const {athleteId} = credentials;
 
-    console.log(`Unauthorize user ${athleteId}`);
+    log.info(`Unauthorize user ${athleteId}`);
 
     return db.removeAthleteCredentials(athleteId);
 };
