@@ -11,7 +11,7 @@ const auth = async (koaCtx, sessionId, code, scope) => {
     const {id: athleteId} = athlete;
 
     return Promise.all([
-        koaCtx.db.addUserCredentials({athleteId, tokenType, accessToken, refreshToken, expiresAt, scope}),
+        koaCtx.db.addAthleteCredentials({athleteId, tokenType, accessToken, refreshToken, expiresAt, scope}),
         koaCtx.db.updateSession(sessionId, {athleteId}),
     ]);
 };

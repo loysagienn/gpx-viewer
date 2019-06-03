@@ -11,7 +11,7 @@ export default async (koaCtx, next) => {
         return next();
     }
 
-    const credentials = await koaCtx.db.getUserCredentials(athleteId);
+    const credentials = await koaCtx.db.getAthleteCredentials(athleteId);
 
     if (!credentials) {
         return next();
@@ -41,7 +41,7 @@ export default async (koaCtx, next) => {
 
     const newCredentials = mergeRight(credentials, result);
 
-    await koaCtx.db.addUserCredentials(newCredentials);
+    await koaCtx.db.addAthleteCredentials(newCredentials);
 
     console.log('Strava credentials updated: ', newCredentials);
 
