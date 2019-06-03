@@ -2,103 +2,15 @@
 
 import mongodb from 'mongodb';
 import {dbUrl} from 'config';
+import {DATABASE_ID} from './constants';
+import {getSession, addSession, updateSession} from './session';
+import {getAthleteCredentials, removeAthleteCredentials, addAthleteCredentials} from './athleteCredentials';
+import {getAthleteInfo, removeAthleteInfo, addAthleteInfo} from './athleteInfo';
+import {getAthleteActivities, removeAthleteActivities, addAthleteActivities} from './athleteActivities';
 
 const {MongoClient} = mongodb;
 
 let dbApi = null;
-
-const DATABASE_ID = 'gpx-viewer';
-const SESSION_COLLECTION = 'sessions';
-const USER_CREDENTIALS = 'user-credentials';
-const ATHLETE_INFO = 'athlete-info';
-const ATHLETE_ACTIVITIES = 'athlete-activities';
-
-const getSession = (db, sessionId) => db
-    .collection(SESSION_COLLECTION)
-    .find({sessionId})
-    .toArray()
-    .then(([session]) => session);
-
-const addSession = async (db, session) => {
-    const existingSession = await getSession(db, session.sessionId);
-
-    if (existingSession) {
-        throw new Error(`Session with id "${session.sessionId}" already exists`);
-    }
-
-    return db.collection(SESSION_COLLECTION).insertOne(session);
-};
-
-const updateSession = async (db, sessionId, update) => db
-    .collection(SESSION_COLLECTION)
-    .updateOne({sessionId}, {$set: update});
-
-const getUserCredentials = (db, athleteId) => db
-    .collection(USER_CREDENTIALS)
-    .find({athleteId})
-    .toArray()
-    .then(([credentials]) => credentials);
-
-const removeAthleteCredentials = (db, athleteId) => db
-    .collection(USER_CREDENTIALS)
-    .deleteOne({athleteId});
-
-const addUserCredentials = async (db, credentials) => {
-    const {athleteId} = credentials;
-
-    const existingCredentials = await getUserCredentials(db, athleteId);
-
-    if (existingCredentials) {
-        await removeAthleteCredentials(db, athleteId);
-    }
-
-    return db.collection(USER_CREDENTIALS).insertOne(credentials);
-};
-
-const getAthleteInfo = (db, athleteId) => db
-    .collection(ATHLETE_INFO)
-    .find({athleteId})
-    .toArray()
-    .then(([athleteInfo]) => athleteInfo);
-
-const removeAthleteInfo = (db, athleteId) => db
-    .collection(ATHLETE_INFO)
-    .deleteOne({athleteId});
-
-const addAthleteInfo = async (db, athleteInfo) => {
-    const {athleteId} = athleteInfo;
-
-    const exsistingInfo = await getAthleteInfo(db, athleteId);
-
-    if (exsistingInfo) {
-        await removeAthleteInfo(db, athleteId);
-    }
-
-    return db.collection(ATHLETE_INFO).insertOne(athleteInfo);
-};
-
-const getAthleteActivities = (db, athleteId, monthKey) => console.log(athleteId, monthKey) || db
-    .collection(ATHLETE_ACTIVITIES)
-    .find({athleteId, monthKey})
-    .toArray()
-    .then(([athleteActivities]) => athleteActivities);
-
-const removeAthleteActivities = (db, athleteId, monthKey) => db
-    .collection(ATHLETE_ACTIVITIES)
-    .deleteOne({athleteId, monthKey});
-
-const addAthleteActivities = async (db, athleteActivities) => {
-    const {athleteId, monthKey} = athleteActivities;
-
-    const exsistingActivities = await getAthleteActivities(db, athleteId, monthKey);
-
-    if (exsistingActivities) {
-        await removeAthleteActivities(db, athleteId, monthKey);
-    }
-
-    return db.collection(ATHLETE_ACTIVITIES).insertOne(athleteActivities);
-};
-
 
 const createDbApi = (database) => {
     const gpxSessionDb = database.db(DATABASE_ID);
@@ -107,8 +19,9 @@ const createDbApi = (database) => {
         getSession: sessionId => getSession(gpxSessionDb, sessionId),
         addSession: session => addSession(gpxSessionDb, session),
         updateSession: (sessionId, update) => updateSession(gpxSessionDb, sessionId, update),
-        getUserCredentials: athleteId => getUserCredentials(gpxSessionDb, athleteId),
-        addUserCredentials: credentials => addUserCredentials(gpxSessionDb, credentials),
+
+        getAthleteCredentials: athleteId => getAthleteCredentials(gpxSessionDb, athleteId),
+        addAthleteCredentials: credentials => addAthleteCredentials(gpxSessionDb, credentials),
         removeAthleteCredentials: athleteId => removeAthleteCredentials(gpxSessionDb, athleteId),
 
         addAthleteInfo: athleteInfo => addAthleteInfo(gpxSessionDb, athleteInfo),

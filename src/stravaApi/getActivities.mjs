@@ -6,7 +6,7 @@ import {API_URL} from './constants';
 import processError from './processError';
 
 
-export default ({accessToken}, month, page = 1, countPerPage = 100) => {
+export default ({accessToken}, month, countPerPage = 100, page = 1) => {
     const date = getDateFromMonth(month);
     const startTimestamp = date.getTime() / 1000;
     const endTimestamp = date.setMonth(date.getMonth() + 1) / 1000;
