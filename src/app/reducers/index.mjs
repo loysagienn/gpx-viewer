@@ -1,6 +1,7 @@
 
 import {combineReducers} from 'redux';
-import {CHANGE_MONTH} from 'app/actions';
+import {CHANGE_MONTH, PUSH_MONTH} from 'app/actions';
+import {DEFAULT_MONTH_COUNT} from 'constants';
 import ymaps from './ymaps';
 
 // const gpxContent = (state = {}) => state;
@@ -21,6 +22,14 @@ const activeMonth = (state = getCurrentMonth(), action) => {
     return state;
 };
 
+const monthCount = (state = DEFAULT_MONTH_COUNT, action) => {
+    if (action.type === PUSH_MONTH) {
+        return state + 1;
+    }
+
+    return state;
+};
+
 export const rootReducer = combineReducers({
     // gpxContent,
     ymaps,
@@ -28,4 +37,5 @@ export const rootReducer = combineReducers({
     athlete,
     meta,
     activeMonth,
+    monthCount,
 });

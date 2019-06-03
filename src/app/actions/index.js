@@ -20,3 +20,7 @@ export const changeMonth = month => (dispatch, getState) => {
         month,
     });
 };
+
+export const PUSH_MONTH = 'PUSH_MONTH';
+
+export const pushMonth = () => ({type: PUSH_MONTH});

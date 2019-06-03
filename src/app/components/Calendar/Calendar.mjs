@@ -1,7 +1,8 @@
 /** @jsx createElement */
 
 import {createElement, PureComponent, createRef} from 'react';
-import {DEFAULT_MONTH_COUNT} from 'constants';
+import {connect} from 'react-redux';
+import {pushMonth as pushMonthAction} from 'app/actions';
 import Month from './Month';
 import css from './Calendar.styl';
 
@@ -22,26 +23,26 @@ class Calendar extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.monthsOffset = getOffsets(DEFAULT_MONTH_COUNT);
-
         this.scrollHandler = event => this.onScroll(event);
         this.wrapperRef = createRef();
     }
 
     onScroll() {
-        const {monthsOffset, wrapperRef} = this;
+        const {wrapperRef, props} = this;
         const {scrollHeight, clientHeight, scrollTop} = wrapperRef.current;
 
         const bottomSpace = scrollHeight - clientHeight - scrollTop;
 
         if (bottomSpace < MIN_BOTTOM_SPACE) {
-            monthsOffset.push(monthsOffset[monthsOffset.length - 1] + 1);
-
-            this.forceUpdate();
+            props.pushMonth();
         }
     }
 
     render() {
+        const {monthCount} = this.props;
+
+        const monthsOffset = getOffsets(monthCount);
+
         return (
             <div
                 className={css.wrapper}
@@ -52,7 +53,7 @@ class Calendar extends PureComponent {
                     className={css.calendar}
                 >
                     {
-                        this.monthsOffset.map(offset => <Month offset={offset} key={offset}/>)
+                        monthsOffset.map(offset => <Month offset={offset} key={offset}/>)
                     }
                 </div>
             </div>
@@ -60,4 +61,8 @@ class Calendar extends PureComponent {
     }
 }
 
-export default Calendar;
+const mapStateToProps = ({monthCount}) => ({monthCount});
+
+const enhance = connect(mapStateToProps, {pushMonth: pushMonthAction});
+
+export default enhance(Calendar);

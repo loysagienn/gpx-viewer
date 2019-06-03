@@ -39,6 +39,8 @@ class Month extends PureComponent {
     render() {
         const {title, days, activities} = this.props;
 
+        console.log(`render month ${this.props.monthKey}`);
+
         return (
             <div className={css.month}>
                 <div className={css.monthTitle}>
