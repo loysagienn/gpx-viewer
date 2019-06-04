@@ -13,6 +13,10 @@ export default [
         pattern: '/activity/:activityId',
     },
     {
+        id: 'API_GET_ACTIVITIES',
+        pattern: '/api/activities/:monthKey',
+    },
+    {
         id: 'NOT_FOUND',
         pattern: '*',
     },

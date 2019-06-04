@@ -4,17 +4,22 @@ import bodyParser from 'koa-bodyparser';
 import {initApp} from 'app/server';
 import {httpPort} from 'config';
 import {getDb} from 'db';
+import {getApi} from 'api';
 import log from 'logger';
 import {requestLogger, sendStatic} from 'koaMiddlewares';
 
 const createServer = async () => {
     const koaServer = new Koa();
 
-    koaServer.context.db = await getDb();
+    const db = await getDb();
+    const api = getApi(db);
+
+    koaServer.context.db = db;
+    koaServer.context.api = api;
 
     koaServer.use(bodyParser());
-    koaServer.use(requestLogger);
     koaServer.use(sendStatic);
+    koaServer.use(requestLogger);
 
     initApp(koaServer);
 
