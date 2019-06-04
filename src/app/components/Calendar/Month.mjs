@@ -26,7 +26,7 @@ const getActivitiesByTimestamp = (activities) => {
     }, {});
 };
 
-const mapStateToProps = ({athlete: {activities}}, {monthKey}) => ({
+const mapStateToProps = ({activities}, {monthKey}) => ({
     activities: getActivitiesByTimestamp(activities[monthKey]),
 });
 

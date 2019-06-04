@@ -4,7 +4,8 @@ import {compose} from 'recompose';
 import AthleteLayout from './AthleteLayout';
 
 const mapStateToProps = ({
-    athlete: {info: athleteInfo, activities},
+    athlete: athleteInfo,
+    activities,
 }) => ({
     athleteInfo,
     activities,

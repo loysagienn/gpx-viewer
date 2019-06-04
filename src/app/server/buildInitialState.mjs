@@ -33,7 +33,7 @@ const getAthleteData = async ({state, db, api}) => {
     const {stravaCredentials: credentials, route} = state;
 
     if (!credentials) {
-        return null;
+        return {};
     }
 
     try {
@@ -50,7 +50,7 @@ const getAthleteData = async ({state, db, api}) => {
             await unauthorizeStravaUser(db, credentials);
         }
 
-        return null;
+        return {};
     }
 };
 
@@ -61,12 +61,13 @@ export default async (koaCtx, next) => {
 
     const {route} = state;
 
-    const athlete = await getAthleteData(koaCtx);
+    const {info, activities} = await getAthleteData(koaCtx);
 
     state.initialState = {
         ymaps,
         route,
-        athlete,
+        athlete: info,
+        activities,
         meta: {origin},
     };
 

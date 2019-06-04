@@ -13,8 +13,8 @@ export const renderApp = store => (
     </Provider>
 );
 
-export const getStore = (initialState, composeEnhancers = compose) => createStore(
+export const getStore = (initialState, api = null, composeEnhancers = compose) => createStore(
     rootReducer,
     initialState,
-    composeEnhancers(applyMiddleware(thunk)),
+    composeEnhancers(applyMiddleware(thunk.withExtraArgument(api))),
 );
