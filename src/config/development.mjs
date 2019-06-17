@@ -9,4 +9,5 @@ export const recomposeCdnUrl = `${hostStatic}/Recompose.js`;
 export const reduxCdnUrl = `${hostStatic}/redux.js`;
 export const reactReduxCdnUrl = `${hostStatic}/react-redux.js`;
 export const reduxThunkCdnUrl = `${hostStatic}/redux-thunk.js`;
+export const reselectCdnUrl = `${hostStatic}/reselect.js`;
 export const DOMAIN = 'localhost';

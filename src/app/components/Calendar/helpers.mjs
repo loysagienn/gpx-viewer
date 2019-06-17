@@ -1,5 +1,6 @@
 
-import {stringifyDateMonth, getDateFromMonth} from 'helpers/date';
+import {stringifyDateMonth, stringifyDateDay} from 'helpers/date';
+import {memoizeByStringParam} from 'helpers';
 
 const MONTH_NAMES = [
     'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
@@ -25,9 +26,9 @@ const getToday = () => {
 };
 
 const getMonthDay = (date, {isEmpty = false, currentYear, currentMonth, currentMonthDay} = {}) => {
-    const timestamp = date.getTime();
+    const dayKey = stringifyDateDay(date);
 
-    const hash = `${timestamp}-${isEmpty}`;
+    const hash = `${dayKey}-${isEmpty}`;
 
     if (daysCache[hash]) {
         return daysCache[hash];
@@ -50,7 +51,7 @@ const getMonthDay = (date, {isEmpty = false, currentYear, currentMonth, currentM
     const title = monthDay;
 
     return daysCache[hash] = {
-        timestamp,
+        dayKey,
         title,
         isFutureDay,
         // суббота или воскресенье
@@ -103,3 +104,5 @@ export const getMonth = (offset = 0) => {
 
     return {title, days, monthKey};
 };
+
+export const memoizedGetMonth = memoizeByStringParam(getMonth);

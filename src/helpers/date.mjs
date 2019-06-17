@@ -6,3 +6,5 @@ export const getDateFromMonth = (str) => {
 
     return new Date(year, month);
 };
+
+export const stringifyDateDay = date => `${stringifyDateMonth(date)}-${date.getDate()}`;

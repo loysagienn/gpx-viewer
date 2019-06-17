@@ -10,6 +10,7 @@ import {
     reactReduxCdnUrl,
     reduxThunkCdnUrl,
     isProductionMode,
+    reselectCdnUrl,
     YMAPS_JSONP_CALLBACK,
 } from '../../config';
 import {YMAPS_API_KEY} from '../../config/private';
@@ -57,6 +58,7 @@ export default initialState => `<!DOCTYPE html>
 <script src="${reduxCdnUrl}"></script>
 <script src="${reactReduxCdnUrl}"></script>
 <script src="${reduxThunkCdnUrl}"></script>
+<script src="${reselectCdnUrl}"></script>
 <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
 <script src="${bundleRoot}app.js"></script>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=${YMAPS_API_KEY}&mode=${ymapsMode}&onload=${YMAPS_JSONP_CALLBACK}&lang=ru_RU"></script>

@@ -20,6 +20,7 @@ const {
     reduxCdnUrl,
     reactReduxCdnUrl,
     reduxThunkCdnUrl,
+    reselectCdnUrl,
     DOMAIN,
 } = config;
 
@@ -33,6 +34,7 @@ export {
     reduxCdnUrl,
     reactReduxCdnUrl,
     reduxThunkCdnUrl,
+    reselectCdnUrl,
     YMAPS_JSONP_CALLBACK,
     STRAVA_CLIENT_ID,
     DOMAIN,

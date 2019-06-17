@@ -17,6 +17,7 @@ module.exports = {
         redux: 'Redux',
         'react-redux': 'ReactRedux',
         'redux-thunk': 'ReduxThunk',
+        reselect: 'Reselect',
         window: 'window',
     },
     output: {

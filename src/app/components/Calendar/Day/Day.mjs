@@ -67,9 +67,11 @@ const renderActivity = (activity) => {
 
 class Day extends PureComponent {
     render() {
-        const {timestamp, title, isWeekEnd, isFutureDay, isEmpty, activities} = this.props;
+        const {dayKey, title, isWeekEnd, isFutureDay, isEmpty, activities} = this.props;
 
-        const activity = activities[timestamp];
+        const dayActivities = activities[dayKey];
+
+        const activity = dayActivities ? dayActivities[0] : null;
 
         const activityNode = renderActivity(activity);
 
@@ -100,7 +102,7 @@ class Day extends PureComponent {
         );
 
         return (
-            <div className={css.dayWrapper} key={timestamp}>
+            <div className={css.dayWrapper} key={dayKey}>
                 <div className={css.spacer}/>
                 {dayNode}
             </div>

@@ -31,10 +31,10 @@ const StravaAuth = ({origin}) => (
     <div className={css.stravaAuth}>
         <div className={css.block}>
             <div className={css.textBlock}>
-                На этом сайте можно смотреть и анализировать свои пробежки в сервисе Strava
+                На этом сайте можно смотреть и анализировать свои тренировки в сервисе Strava
             </div>
             <div className={css.textBlock}>
-                Для того чтобы сделать это, откройте доступ к вашим тренировкам
+                Нужен доступ к вашим тренировкам
             </div>
             <div className={css.btnWrapper}>
                 <Button

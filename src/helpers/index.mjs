@@ -17,3 +17,5 @@ export {default as stringifyQueryParams} from './stringifyQueryParams';
 export {default as parseQueryParams} from './parseQueryParams';
 
 export {default as toCamelCase} from './toCamelCase';
+
+export {default as memoizeByStringParam} from './memoizeByStringParam';

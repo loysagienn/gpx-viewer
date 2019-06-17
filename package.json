@@ -49,6 +49,7 @@
     "redux-thunk": "^2.2.0",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.7",
+    "reselect": "^4.0.0",
     "style-loader": "^0.20.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
