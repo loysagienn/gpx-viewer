@@ -5,7 +5,7 @@ import {compose, withProps} from 'recompose';
 import {connect} from 'react-redux';
 import {selectMonthActivities} from 'app/selectors';
 import {memoizedGetMonth} from './helpers';
-import Day from './Day';
+import Day from '../Day';
 import css from './Calendar.styl';
 
 
@@ -29,7 +29,11 @@ class Month extends PureComponent {
                 </div>
                 <div className={css.monthDays}>
                     {
-                        days.map(day => createElement(Day, {key: day.dayKey, activities, ...day}))
+                        days.map(day => createElement(Day, {
+                            key: day.dayKey,
+                            activities: activities[day.dayKey],
+                            ...day,
+                        }))
                     }
                 </div>
             </div>

@@ -6,6 +6,10 @@ const MONTH_NAMES = [
     'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
     'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
 ];
+const MONTH_NAMES_GENITIVE = [
+    'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа',
+    'Сентября', 'Октября', 'Ноября', 'Декабря',
+];
 
 const setWeekStart = (date) => {
     while (date.getDay() !== 1) {
@@ -48,11 +52,12 @@ const getMonthDay = (date, {isEmpty = false, currentYear, currentMonth, currentM
 
     const isFutureDay = !isEmpty && isCurrentMonth && monthDay > currentMonthDay;
     // const title = date.toLocaleDateString('ru', {month: 'long', day: 'numeric'});
-    const title = monthDay;
+    const monthGenitive = MONTH_NAMES_GENITIVE[month];
 
     return daysCache[hash] = {
         dayKey,
-        title,
+        monthDay,
+        monthGenitive,
         isFutureDay,
         // суббота или воскресенье
         isWeekEnd: weekDay === 6 || weekDay === 0,

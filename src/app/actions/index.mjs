@@ -10,18 +10,18 @@ export const initYmaps = ymaps => ({
     ymaps,
 });
 
-export const CHANGE_MONTH = 'CHANGE_MONTH';
+export const SHOW_DAY = 'SHOW_DAY';
 
-export const changeMonth = month => (dispatch, getState) => {
-    const {activeMonth} = getState();
+export const showDay = dayKey => (dispatch, getState) => {
+    const {activeDayKey} = getState();
 
-    if (activeMonth === month) {
+    if (activeDayKey === dayKey) {
         return;
     }
 
     dispatch({
-        type: CHANGE_MONTH,
-        month,
+        type: SHOW_DAY,
+        dayKey,
     });
 };
 
