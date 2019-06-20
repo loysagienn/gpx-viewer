@@ -3,6 +3,7 @@
 import {createElement, PureComponent, createRef} from 'react';
 import {connect} from 'react-redux';
 import {pushMonth as pushMonthAction} from 'app/actions';
+import DayModal from '../DayModal';
 import Month from './Month';
 import css from './Calendar.styl';
 
@@ -49,6 +50,7 @@ class Calendar extends PureComponent {
                 onScroll={this.scrollHandler}
                 ref={this.wrapperRef}
             >
+                <DayModal/>
                 <div
                     className={css.calendar}
                 >

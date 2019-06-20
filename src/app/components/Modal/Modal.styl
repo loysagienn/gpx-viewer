@@ -1,0 +1,36 @@
+@import '../common.styl'
+
+.wrapper
+    position: fixed
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    z-index: modal-z-index
+    overflow: auto
+
+.overlay
+    position: fixed
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    background-color: rgba(0,0,0,0.7);
+
+.modalWrapper
+    box-sizing: border-box
+    min-height: 100%
+    padding: 10px
+    display: flex
+    justify-content: center
+    align-items: center
+
+.modal
+    position: relative
+    box-sizing: border-box
+    max-width: 600px
+    width: 100%
+    min-height: 200px
+    background-color: #ffffff
+    border-radius: 4px
+    box-shadow: 0 1px 5px rgba(0,0,0,0.3)

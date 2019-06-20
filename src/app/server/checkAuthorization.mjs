@@ -7,12 +7,12 @@ export default async (koaCtx, next) => {
 
     koaCtx.state.session = session;
 
-    log.info('\n-------------------- start request handle --------------------');
-    log.info(`session id: ${session.sessionId}`);
+    // log.info('\n-------------------- start request handle --------------------');
+    // log.info(`session id: ${session.sessionId}`);
 
     const result = await next();
 
-    log.info('--------------------- end request handle ---------------------\n');
+    // log.info('--------------------- end request handle ---------------------\n');
 
     return result;
 };

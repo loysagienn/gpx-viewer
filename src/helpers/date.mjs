@@ -8,3 +8,9 @@ export const getDateFromMonth = (str) => {
 };
 
 export const stringifyDateDay = date => `${stringifyDateMonth(date)}-${date.getDate()}`;
+
+export const getDateFromDayKey = (dayKey) => {
+    const [year, month, day] = dayKey.split('-');
+
+    return new Date(year, month, day);
+};

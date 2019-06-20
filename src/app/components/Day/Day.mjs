@@ -1,6 +1,6 @@
 /** @jsx createElement */
 
-import {createElement, PureComponent, Fragment} from 'react';
+import {createElement, PureComponent} from 'react';
 import {cn} from 'helpers';
 import {connect} from 'react-redux';
 import {showDay as showDayAction} from 'app/actions';

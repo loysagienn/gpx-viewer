@@ -14,15 +14,6 @@ export const getTimeStr = (time) => {
         return `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
     }
 
-    // if (seconds > 30) {
-    //     if (minutes < 59) {
-    //         minutes++;
-    //     } else {
-    //         hours++;
-    //         minutes = 0;
-    //     }
-    // }
-
     return `${hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 };
 
