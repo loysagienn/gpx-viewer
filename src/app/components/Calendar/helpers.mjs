@@ -1,15 +1,8 @@
 
 import {stringifyDateMonth, stringifyDateDay} from 'helpers/date';
 import {memoizeByStringParam} from 'helpers';
+import {MONTH_NAMES, MONTH_NAMES_GENITIVE} from 'constants';
 
-const MONTH_NAMES = [
-    'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
-    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
-];
-const MONTH_NAMES_GENITIVE = [
-    'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа',
-    'Сентября', 'Октября', 'Ноября', 'Декабря',
-];
 
 const setWeekStart = (date) => {
     while (date.getDay() !== 1) {

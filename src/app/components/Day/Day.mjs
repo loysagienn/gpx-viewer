@@ -35,8 +35,6 @@ class Day extends PureComponent {
             );
         }
 
-        // https://www.strava.com/activities/${activity.id}
-
         const dayClassName = cn(
             css.day,
             isWeekEnd && css.isWeekEnd,

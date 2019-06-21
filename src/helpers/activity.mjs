@@ -1,3 +1,5 @@
+import {ACTIVITY_TYPES} from 'constants';
+
 
 export const getTimeStr = (time) => {
     const totalTimeInSeconds = Math.round(time);
@@ -28,3 +30,23 @@ export const getDistanceStr = (distance) => {
 
     return `${val} км`;
 };
+
+export const getHeartrateStr = heartrate => Math.round(heartrate);
+
+export const getActivityTypeStr = type => ACTIVITY_TYPES[type] || type;
+
+export const getSpeedStr = speed => `${Math.round(speed * 36) / 10} км/ч`;
+
+export const getPaseStr = (speed) => {
+    const secondsPerKm = Math.round(1000 / speed);
+
+    const seconds = secondsPerKm % 60;
+
+    const minutes = Math.round((secondsPerKm - seconds) / 60);
+
+    const secondsStr = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+    return `${minutes}:${secondsStr}`;
+};
+
+export {default as decodePolyline} from './decodePolyline';

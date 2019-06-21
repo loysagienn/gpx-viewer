@@ -1,17 +1,17 @@
 /** @jsx createElement */
 
 import {createElement} from 'react';
-import {getTimeStr, getDistanceStr} from './helpers';
+import {getDistanceStr} from 'helpers/activity';
 import css from './Day.styl';
 
 
-const Activity = ({name, distance, elapsedTime}) => (
+const Activity = ({name, distance}) => (
     <div className={css.activity}>
         <div className={css.activityName}>
             {name}
         </div>
         <div className={css.activityDistance}>
-            {`${getDistanceStr(distance)} / ${getTimeStr(elapsedTime)}`}
+            {`${getDistanceStr(distance)}`}
         </div>
         {/* <div className={css.activityTime}>
             {getTimeStr(elapsedTime)}
