@@ -9,6 +9,10 @@ export default [
         pattern: '/strava-auth',
     },
     {
+        id: 'STRAVA_UNAUTH',
+        pattern: '/strava-unauth',
+    },
+    {
         id: 'ACTIVITY',
         pattern: '/activity/:activityId',
     },

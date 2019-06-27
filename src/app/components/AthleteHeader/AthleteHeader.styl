@@ -1,0 +1,73 @@
+@import '../common.styl'
+
+
+.header
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    height: 50px
+    box-sizing: border-box
+    padding: 0 20px
+    background-color: main-color
+    shadow: default
+    color: white
+    z-index: 10
+
+    // +maxWidth(600px)
+    //     padding: 0 20px
+
+    +maxWidth(400px)
+        padding: 0 10px
+
+.headerInner
+    margin: 0 auto
+    display: flex
+    justify-content: space-between
+    max-width: max-width
+
+.headerButton
+    padding: 15px 0
+    line-height: 20px
+
+    &.action
+        cursor: pointer
+        &:hover
+            text-decoration: underline;
+
+.menuBtn
+    height: 24px
+    width: 24px
+    margin: -2px
+    cursor: pointer
+    position: relative
+    outline: 0
+
+    .menuBtnSvg
+        display: block
+
+        path
+            fill: #ffffff
+
+    .popup
+        display: none
+        top: calc(100% + 5px)
+        right: 0
+        padding: 7px 0
+
+        .menuItem
+            display: block
+            text-decoration: none
+            color: #404040
+            white-space: nowrap
+            padding: 7px 15px
+            &:hover
+                background-color: rgba(0,0,0,0.05);
+
+    &:focus
+        .popup
+            display: block
+
+.rightButtons
+    .headerButton
+        margin-left: 20px

@@ -7,6 +7,7 @@ import initRoute from './initRoute';
 import authStrava from './authStrava';
 import stravaCredentials from './stravaCredentials';
 import handleApiRequest from './handleApiRequest';
+import unauthStrava from './unauthStrava';
 
 const handleHtmlRequest = async (koaCtx) => {
     const {initialState, route} = koaCtx.state;
@@ -23,6 +24,7 @@ export const initApp = (koaServer) => {
     koaServer.use(initRoute);
     koaServer.use(authStrava);
     koaServer.use(stravaCredentials);
+    koaServer.use(unauthStrava);
     koaServer.use(handleApiRequest);
     koaServer.use(buildInitialState);
     koaServer.use(handleHtmlRequest);

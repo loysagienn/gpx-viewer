@@ -1,7 +1,8 @@
 
 import {connect} from 'react-redux';
 import {compose} from 'recompose';
-import AthleteLayout from './AthleteLayout';
+import AthleteHeader from './AthleteHeader';
+
 
 const mapStateToProps = ({
     athlete: athleteInfo,
@@ -9,6 +10,7 @@ const mapStateToProps = ({
     athleteInfo,
 });
 
+
 export default compose(
     connect(mapStateToProps),
-)(AthleteLayout);
+)(AthleteHeader);
