@@ -1,6 +1,6 @@
 
-import {stringifyDateMonth, stringifyDateDay} from 'helpers/date';
-import {memoizeByStringParam} from 'helpers';
+import {stringifyDateMonth, stringifyDateDay, getDateFromDayKey} from 'helpers/date';
+import {memoize} from 'helpers';
 import {MONTH_NAMES, MONTH_NAMES_GENITIVE} from 'constants';
 
 
@@ -12,25 +12,8 @@ const setWeekStart = (date) => {
     return date;
 };
 
-const daysCache = {};
-
-const getToday = () => {
-    const date = new Date();
-
-    date.setHours(0, 0, 0, 0);
-
-    return date;
-};
-
-const getMonthDay = (date, {isEmpty = false, currentYear, currentMonth, currentMonthDay} = {}) => {
+const getMonthDay = (date, currentYear, currentMonth, currentMonthDay, isEmpty = false) => {
     const dayKey = stringifyDateDay(date);
-
-    const hash = `${dayKey}-${isEmpty}`;
-
-    if (daysCache[hash]) {
-        return daysCache[hash];
-    }
-
     const weekDay = date.getDay();
     const monthDay = date.getDate();
     const year = date.getFullYear();
@@ -44,10 +27,9 @@ const getMonthDay = (date, {isEmpty = false, currentYear, currentMonth, currentM
     }
 
     const isFutureDay = !isEmpty && isCurrentMonth && monthDay > currentMonthDay;
-    // const title = date.toLocaleDateString('ru', {month: 'long', day: 'numeric'});
     const monthGenitive = MONTH_NAMES_GENITIVE[month];
 
-    return daysCache[hash] = {
+    return {
         dayKey,
         monthDay,
         monthGenitive,
@@ -59,8 +41,8 @@ const getMonthDay = (date, {isEmpty = false, currentYear, currentMonth, currentM
     };
 };
 
-export const getMonth = (offset = 0) => {
-    const date = getToday();
+export const getMonth = (offset, todayKey) => {
+    const date = getDateFromDayKey(todayKey);
 
     const currentYear = date.getFullYear();
     const currentMonth = date.getMonth();
@@ -83,13 +65,13 @@ export const getMonth = (offset = 0) => {
     setWeekStart(date);
 
     while (activeMonth !== date.getMonth()) {
-        days.push(getMonthDay(date, {currentYear, currentMonth, currentMonthDay, isEmpty: true}));
+        days.push(getMonthDay(date, currentYear, currentMonth, currentMonthDay, true));
 
         date.setHours(24);
     }
 
     while (activeMonth === date.getMonth()) {
-        const day = (getMonthDay(date, {currentYear, currentMonth, currentMonthDay}));
+        const day = (getMonthDay(date, currentYear, currentMonth, currentMonthDay));
 
         if (day === null) {
             break;
@@ -103,4 +85,7 @@ export const getMonth = (offset = 0) => {
     return {title, days, monthKey};
 };
 
-export const memoizedGetMonth = memoizeByStringParam(getMonth);
+// кэшируем на сутки
+const memoizeTimeout = 1000 * 60 * 60 * 24;
+
+export const memoizedGetMonth = memoize(getMonth, memoizeTimeout);

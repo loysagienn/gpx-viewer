@@ -1,12 +1,11 @@
 import {createSelector} from 'reselect';
 import {stringifyDateDay, stringifyDateMonth, getDateFromDayKey} from 'helpers/date';
-import {memoizeByStringParam} from 'helpers';
+import {memoize} from 'helpers';
 
 
 export const selectActivities = monthKey => state => state.activities[monthKey];
 
-
-export const selectMonthActivities = memoizeByStringParam(monthKey => createSelector(
+export const selectMonthActivities = memoize(monthKey => createSelector(
     [selectActivities(monthKey)],
     (activities) => {
         if (!activities) {
@@ -48,3 +47,5 @@ export const selectActiveDayActivities = (state) => {
 
     return selectDayActivities(activeDayKey)(state);
 };
+
+export const selectTodayKey = state => state.todayKey;

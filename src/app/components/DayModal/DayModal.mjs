@@ -11,7 +11,7 @@ import {getDateStr} from './helpers';
 import css from './DayModal.styl';
 
 
-const renderActivity = activity => console.log(activity) || createElement(ActivityInfo, {key: activity.id, ...activity});
+const renderActivity = activity => createElement(ActivityInfo, {key: activity.id, ...activity});
 
 const DayModal = ({dayKey, activities, close}) => {
     if (!dayKey) {

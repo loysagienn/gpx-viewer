@@ -1,5 +1,6 @@
 
 import {combineReducers} from 'redux';
+import {stringifyDateDay} from 'helpers/date';
 import {SHOW_DAY, PUSH_MONTH, ADD_ACTIVITIES} from 'app/actions';
 import {DEFAULT_MONTH_COUNT} from 'constants';
 import ymaps from './ymaps';
@@ -37,6 +38,8 @@ const monthCount = (state = DEFAULT_MONTH_COUNT, action) => {
     return state;
 };
 
+const todayKey = (state = stringifyDateDay(new Date())) => state;
+
 export const rootReducer = combineReducers({
     ymaps,
     route,
@@ -45,4 +48,5 @@ export const rootReducer = combineReducers({
     meta,
     activeDayKey,
     monthCount,
+    todayKey,
 });

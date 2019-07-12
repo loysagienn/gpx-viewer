@@ -18,4 +18,4 @@ export {default as parseQueryParams} from './parseQueryParams';
 
 export {default as toCamelCase} from './toCamelCase';
 
-export {default as memoizeByStringParam} from './memoizeByStringParam';
+export {default as memoize} from './memoize';

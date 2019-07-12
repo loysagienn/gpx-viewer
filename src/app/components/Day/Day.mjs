@@ -35,18 +35,22 @@ class Day extends PureComponent {
             );
         }
 
+        const disabled = isFutureDay || !activities;
+
         const dayClassName = cn(
             css.day,
             isWeekEnd && css.isWeekEnd,
-            (isFutureDay || !activities) && css.disabled,
+            disabled && css.disabled,
         );
+
+        const onClick = () => !disabled && showDay(dayKey);
 
         return (
             <div className={css.dayWrapper} key={dayKey}>
                 <div className={css.spacer}/>
                 <div
                     className={dayClassName}
-                    onClick={() => showDay(dayKey)}
+                    onClick={onClick}
                 >
                     <div className={css.dayTitle}>
                         <span>{monthDay}</span>

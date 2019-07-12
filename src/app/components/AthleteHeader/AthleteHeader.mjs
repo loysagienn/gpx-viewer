@@ -13,7 +13,7 @@ const getUserName = ({firstname, lastname, username}) => {
     return firstname || username || 'Undefined user';
 };
 
-const AthleteHeader = ({athleteInfo}) => console.log(athleteInfo) || (
+const AthleteHeader = ({athleteInfo}) => (
     <div className={css.header}>
         <div className={css.headerInner}>
             <div className={css.leftButtons}>
