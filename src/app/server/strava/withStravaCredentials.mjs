@@ -1,19 +1,21 @@
 import {mergeRight} from 'ramda';
 import {updateToken} from 'stravaApi';
 import log from 'logger';
-import unauthorizeStravaUser from './unauthorizeStravaUser';
+import removeAthleteCredentials from './removeAthleteCredentials';
 
 const EXPIRES_SHIFT = 60; // one minute
 
-export default async (koaCtx, next) => {
+const withStravaCredentials = async (koaCtx, next) => {
     const {session: {athleteId}} = koaCtx.state;
 
+    // если в сессии нет athleteId - пользователь не авторизован
     if (!athleteId) {
         return next();
     }
 
     const credentials = await koaCtx.db.getAthleteCredentials(athleteId);
 
+    // athleteId есть, но по какой-то причине мы деавторизовали пользователя
     if (!credentials) {
         return next();
     }
@@ -22,6 +24,7 @@ export default async (koaCtx, next) => {
 
     const now = Date.now() / 1000;
 
+    // если срок действия токена больше минуты - все ок, иначе обновляем токен
     if (expiresAt - EXPIRES_SHIFT > now) {
         koaCtx.state.stravaCredentials = credentials;
 
@@ -35,7 +38,7 @@ export default async (koaCtx, next) => {
     } catch (err) {
         log.error(err);
 
-        await unauthorizeStravaUser(koaCtx.db, credentials);
+        await removeAthleteCredentials(koaCtx.db, credentials);
 
         return next();
     }
@@ -50,3 +53,5 @@ export default async (koaCtx, next) => {
 
     return next();
 };
+
+export default withStravaCredentials;

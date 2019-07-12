@@ -1,6 +1,7 @@
 import {generateRandomString} from 'helpers';
 import {DOMAIN} from 'config';
 
+
 const SESSION_ID_COOKIE_NAME = 'session_id';
 const SESSION_ID_LENGTH = 32;
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
@@ -11,7 +12,7 @@ const createSession = koaCtx => ({
     timestamp: Date.now(),
 });
 
-export default async (koaCtx) => {
+const getSession = async (koaCtx) => {
     const {cookies} = koaCtx;
 
     const sessionId = cookies.get(SESSION_ID_COOKIE_NAME);
@@ -37,3 +38,16 @@ export default async (koaCtx) => {
 
     return session;
 };
+
+
+const withSession = async (koaCtx, next) => {
+    const session = await getSession(koaCtx);
+
+    koaCtx.state.session = session;
+
+    const result = await next();
+
+    return result;
+};
+
+export default withSession;

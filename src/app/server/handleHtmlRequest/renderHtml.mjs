@@ -12,9 +12,9 @@ import {
     isProductionMode,
     reselectCdnUrl,
     YMAPS_JSONP_CALLBACK,
-} from '../../config';
-import {YMAPS_API_KEY} from '../../config/private';
-import {renderApp, getStore} from '../common';
+} from 'config';
+import {YMAPS_API_KEY} from 'config/private';
+import {renderApp, getStore} from 'app/common';
 
 const bodyStyle = 'background-color: #f0f0f0;';
 

@@ -17,7 +17,7 @@ const auth = async (koaCtx, sessionId, code, scope) => {
     ]);
 };
 
-export default async (koaCtx, next) => {
+const authStrava = async (koaCtx, next) => {
     const {route, session: {sessionId}} = koaCtx.state;
 
     if (route.id !== ROUTES_IDS.STRAVA_AUTH) {
@@ -42,3 +42,5 @@ export default async (koaCtx, next) => {
 
     return redirectToIndex(koaCtx);
 };
+
+export default authStrava;

@@ -1,6 +1,6 @@
 import {ROUTES_IDS, getUrlByRoute} from 'router';
 import {deauthorize} from 'stravaApi';
-import unauthorizeStravaUser from './unauthorizeStravaUser';
+import removeAthleteCredentials from './removeAthleteCredentials';
 
 
 const redirectToIndex = ctx => ctx.redirect(getUrlByRoute({id: ROUTES_IDS.INDEX}));
@@ -14,7 +14,7 @@ export default async (koaCtx, next) => {
     const {stravaCredentials} = koaCtx.state;
 
     await deauthorize(stravaCredentials);
-    await unauthorizeStravaUser(koaCtx.db, stravaCredentials);
+    await removeAthleteCredentials(koaCtx.db, stravaCredentials);
 
     return redirectToIndex(koaCtx);
 };
