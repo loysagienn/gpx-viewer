@@ -13,8 +13,8 @@ window.ym = window.ym || ((...args) => {
 const getAthlete = ({athlete}) => {
     if (!athlete) {
         return {
-            id: 0,
-            username: '',
+            id: null,
+            username: null,
         };
     }
 
@@ -24,15 +24,18 @@ const getAthlete = ({athlete}) => {
 };
 
 export const initMetrika = (store) => {
-    const {id: athleteId, username: athleteUsername} = getAthlete(store.getState());
+    const {id: athleteId} = getAthlete(store.getState());
+
+    const userParams = {};
+
+    if (athleteId) {
+        userParams.UserID = athleteId;
+    }
 
     window.ym(metrikaCounterId, 'init', {
         clickmap: false,
         trackLinks: true,
         accurateTrackBounce: false,
-        userParams: {
-            athleteId,
-            athleteUsername,
-        },
+        userParams,
     });
 };
