@@ -22,6 +22,7 @@ const {
     reduxThunkCdnUrl,
     reselectCdnUrl,
     DOMAIN,
+    metrikaCounterId,
 } = config;
 
 export {
@@ -38,4 +39,5 @@ export {
     YMAPS_JSONP_CALLBACK,
     STRAVA_CLIENT_ID,
     DOMAIN,
+    metrikaCounterId,
 };

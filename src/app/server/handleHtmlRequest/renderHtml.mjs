@@ -15,6 +15,7 @@ import {
 } from 'config';
 import {YMAPS_API_KEY} from 'config/private';
 import {renderApp, getStore} from 'app/common';
+import {metrikaCounter} from './metrika';
 
 const bodyStyle = 'background-color: #f0f0f0;';
 
@@ -62,5 +63,8 @@ export default initialState => `<!DOCTYPE html>
 <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
 <script src="${bundleRoot}app.js"></script>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=${YMAPS_API_KEY}&mode=${ymapsMode}&onload=${YMAPS_JSONP_CALLBACK}&lang=ru_RU"></script>
+
+${metrikaCounter}
+
 </body>
 </html>`;
