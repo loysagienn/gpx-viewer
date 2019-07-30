@@ -4,7 +4,6 @@ import {createElement, PureComponent, createRef} from 'react';
 import {connect} from 'react-redux';
 import {pushMonth as pushMonthAction} from 'app/actions';
 import DayModal from '../DayModal';
-import {Popup, PopupTarget} from '../PopupNew';
 import Month from './Month';
 import css from './Calendar.styl';
 
@@ -24,10 +23,6 @@ const getOffsets = (count) => {
 class Calendar extends PureComponent {
     constructor(props) {
         super(props);
-
-        this.state = {
-            popupVisible: true,
-        };
 
         this.scrollHandler = event => this.onScroll(event);
         this.wrapperRef = createRef();
@@ -57,36 +52,6 @@ class Calendar extends PureComponent {
             >
                 <DayModal/>
 
-                <div className={css.popupTargetWrapper}>
-                    <PopupTarget className={css.popupTarget}>
-                        <span onClick={() => this.setState({popupVisible: !this.state.popupVisible})}>
-                            popup anchor
-                        </span>
-                        <Popup
-                            className={css.popup}
-                            active={this.state.popupVisible}
-                            onClose={() => this.setState({popupVisible: false})}
-                            targetOrigin="left bottom"
-                            popupOrigin="left top"
-                        >
-                            {
-                                () => (
-                                    <div>
-                                        <div>popup content popup content popup content popup content</div>
-                                        <div>popup content popup content popup content popup content</div>
-                                        <div>popup content popup content popup content popup content</div>
-                                        <div>popup content popup content popup content popup content</div>
-                                        <div>popup content popup content</div>
-                                        <div>popup content popup content popup content</div>
-                                        <div>popup content popup content popup content</div>
-                                        <div>popup content popup content popup content popup</div>
-                                        <div>popup content popup content popup</div>
-                                    </div>
-                                )
-                            }
-                        </Popup>
-                    </PopupTarget>
-                </div>
                 <div
                     className={css.calendar}
                 >
