@@ -17,3 +17,8 @@ export const ACTIVITY_TYPES = {
     Run: 'бег',
     Ride: 'велосипед',
 };
+
+export const KEY_CODE = {
+    ESC: 27,
+    ENTER: 13,
+};
