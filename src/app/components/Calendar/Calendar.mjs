@@ -49,8 +49,6 @@ class Calendar extends PureComponent {
                 onScroll={this.scrollHandler}
                 ref={this.wrapperRef}
             >
-                <DayModal/>
-
                 <div
                     className={css.calendar}
                 >
