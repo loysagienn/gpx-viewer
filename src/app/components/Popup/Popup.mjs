@@ -46,12 +46,14 @@ class Popup extends Component {
 
     addWindowEvents = () => {
         addWindowEvent('scroll', this.onScroll, true);
+        addWindowEvent('resize', this.onScroll, true);
         addWindowEvent('click', this.onWindowClick);
         addWindowEvent('keydown', this.onKeyDown);
     }
 
     removeWindowEvents = () => {
         removeWindowEvent('scroll', this.onScroll, true);
+        removeWindowEvent('resize', this.onScroll, true);
         removeWindowEvent('click', this.onWindowClick);
         removeWindowEvent('keydown', this.onKeyDown);
     }

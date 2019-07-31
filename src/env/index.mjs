@@ -19,3 +19,6 @@ export const removeWindowEvent = (event, handler, options) => {
     // eslint-disable-next-line no-undef
     window.removeEventListener(event, handler, options);
 };
+
+// eslint-disable-next-line no-undef
+export const locationAssign = url => (typeof window === 'undefined' ? null : window.location.assign(url));

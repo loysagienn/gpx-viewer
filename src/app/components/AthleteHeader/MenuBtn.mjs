@@ -3,12 +3,13 @@
 import {createElement} from 'react';
 import {withStateHandlers} from 'recompose';
 import {ROUTES_IDS, getUrlByRoute} from 'router';
+import {locationAssign} from 'env';
 import {SvgMenu} from '../Svg';
 import {Popup, PopupTarget} from '../Popup';
 import css from './AthleteHeader.styl';
 
 
-const unauthorize = () => window.location.assign(getUrlByRoute({id: ROUTES_IDS.STRAVA_UNAUTH}));
+const unauthorize = () => locationAssign(getUrlByRoute({id: ROUTES_IDS.STRAVA_UNAUTH}));
 
 const MenuBtn = ({active, hide, toggle}) => (
     <PopupTarget
@@ -23,19 +24,11 @@ const MenuBtn = ({active, hide, toggle}) => (
             popupOrigin="right top"
             onClose={hide}
         >
-            <div className={css.menuItem}>
-                Мои подписки
-            </div>
-            <div
-                onClick={unauthorize}
-                className={css.menuItem}
-            >
-                Выйти
-            </div>
+            <div className={css.menuItem}>Мои подписки</div>
+            <div className={css.menuItem} onClick={unauthorize}>Выйти</div>
         </Popup>
     </PopupTarget>
 );
-
 
 const withActive = withStateHandlers(
     {active: false},

@@ -1,9 +1,10 @@
 /** @jsx createElement */
 
 import {createElement, PureComponent} from 'react';
+import {withStateHandlers} from 'recompose';
 import {cn} from 'helpers';
-import {connect} from 'react-redux';
-import {showDay as showDayAction} from 'app/actions';
+import {Popup, PopupTarget} from '../Popup';
+import DayPopup from '../DayPopup';
 import css from './Day.styl';
 import Activity from './Activity';
 
@@ -25,9 +26,11 @@ const renderActivities = (activities) => {
 
 class Day extends PureComponent {
     render() {
-        const {dayKey, monthDay, monthGenitive, isWeekEnd, isFutureDay, isEmpty, activities, showDay} = this.props;
-
-        const activitiesNode = renderActivities(activities);
+        const {
+            dayKey, monthDay, monthGenitive, isWeekEnd,
+            isFutureDay, isEmpty, activities,
+            popupActive, hidePopup, togglePopup,
+        } = this.props;
 
         if (isEmpty) {
             return (
@@ -43,15 +46,12 @@ class Day extends PureComponent {
             disabled && css.disabled,
         );
 
-        const onClick = () => !disabled && showDay(dayKey);
+        const activitiesNode = renderActivities(activities);
 
         return (
-            <div className={css.dayWrapper} key={dayKey}>
+            <PopupTarget className={css.dayWrapper}>
                 <div className={css.spacer}/>
-                <div
-                    className={dayClassName}
-                    onClick={onClick}
-                >
+                <div className={dayClassName} onClick={() => !disabled && togglePopup()}>
                     <div className={css.dayTitle}>
                         <span>{monthDay}</span>
                         <span className={css.monthGenitive}>{` ${monthGenitive}`}</span>
@@ -60,12 +60,40 @@ class Day extends PureComponent {
                         {activitiesNode}
                     </div>
                 </div>
-            </div>
+                {
+                    !disabled && (
+                        <Popup
+                            className={css.popup}
+                            active={popupActive}
+                            onClose={hidePopup}
+                            targetOrigin="center center"
+                            popupOrigin="center center"
+                        >
+                            {
+                                () => (
+                                    <DayPopup
+                                        dayKey={dayKey}
+                                        activities={activities}
+                                        close={hidePopup}
+                                    />
+                                )
+                            }
+                        </Popup>
+                    )
+                }
+            </PopupTarget>
         );
     }
 }
 
+const withActive = withStateHandlers(
+    {popupActive: false},
+    {
+        showPopup: () => () => ({popupActive: true}),
+        hidePopup: () => () => ({popupActive: false}),
+        togglePopup: ({popupActive}) => () => ({popupActive: !popupActive}),
+    },
+);
 
-const enhance = connect(null, {showDay: showDayAction});
 
-export default enhance(Day);
+export default withActive(Day);

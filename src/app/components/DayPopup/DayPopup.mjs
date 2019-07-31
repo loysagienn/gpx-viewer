@@ -1,25 +1,22 @@
 /** @jsx createElement */
 
 import {createElement} from 'react';
-import {connect} from 'react-redux';
-import {showDay as showDayAction} from 'app/actions';
-import {selectActiveDayKey, selectActiveDayActivities} from 'app/selectors';
+import {withStateHandlers} from 'recompose';
 import {SvgCross} from '../Svg';
-import Modal from '../Modal';
 import ActivityInfo from '../ActivityInfo';
 import {getDateStr} from './helpers';
-import css from './DayModal.styl';
+import css from './DayPopup.styl';
 
 
 const renderActivity = activity => createElement(ActivityInfo, {key: activity.id, ...activity});
 
-const DayModal = ({dayKey, activities, close}) => {
+const DayPopup = ({dayKey, activities, close}) => {
     if (!dayKey) {
         return null;
     }
 
     return (
-        <Modal onClose={close} className={css.modal}>
+        <div className={css.popup}>
             <div className={css.header}>
                 <div>
                     {getDateStr(dayKey)}
@@ -32,15 +29,18 @@ const DayModal = ({dayKey, activities, close}) => {
                 </div>
             </div>
             {activities.map(renderActivity)}
-        </Modal>
+        </div>
     );
 };
 
-const mapStateToProps = state => ({
-    dayKey: selectActiveDayKey(state),
-    activities: selectActiveDayActivities(state),
-});
+const withActive = withStateHandlers(
+    {popupActive: false},
+    {
+        showPopup: () => () => ({popupActive: true}),
+        hidePopup: () => () => ({popupActive: false}),
+        togglePopup: ({popupActive}) => () => ({popupActive: !popupActive}),
+    },
+);
 
-const enhance = connect(mapStateToProps, {close: () => showDayAction(null)});
 
-export default enhance(DayModal);
+export default withActive(DayPopup);
