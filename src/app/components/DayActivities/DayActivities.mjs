@@ -1,16 +1,15 @@
 /** @jsx createElement */
 
 import {createElement} from 'react';
-import {withStateHandlers} from 'recompose';
 import {SvgCross} from '../Svg';
 import ActivityInfo from '../ActivityInfo';
 import {getDateStr} from './helpers';
-import css from './DayPopup.styl';
+import css from './DayActivities.styl';
 
 
 const renderActivity = activity => createElement(ActivityInfo, {key: activity.id, ...activity});
 
-const DayPopup = ({dayKey, activities, close}) => {
+const DayActivities = ({dayKey, activities, close}) => {
     if (!dayKey) {
         return null;
     }
@@ -33,14 +32,5 @@ const DayPopup = ({dayKey, activities, close}) => {
     );
 };
 
-const withActive = withStateHandlers(
-    {popupActive: false},
-    {
-        showPopup: () => () => ({popupActive: true}),
-        hidePopup: () => () => ({popupActive: false}),
-        togglePopup: ({popupActive}) => () => ({popupActive: !popupActive}),
-    },
-);
 
-
-export default withActive(DayPopup);
+export default DayActivities;

@@ -6,6 +6,7 @@ import {nextFrame, addWindowEvent, removeWindowEvent} from 'env';
 import {KEY_CODE} from 'constants';
 import setPopupPosition from './setPopupPosition';
 import popupContext from './popupContext';
+import withOrigins from './withOrigins';
 import css from './Popup.styl';
 
 
@@ -200,4 +201,4 @@ class Popup extends Component {
 }
 
 
-export default Popup;
+export default withOrigins(Popup);

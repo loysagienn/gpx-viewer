@@ -1,3 +1,4 @@
+import {getWindowSize} from 'env';
 
 const getClosedTransform = (targetRect, popup) => {
     const scaleX = Math.round(100 * (targetRect.width / popup.offsetWidth)) / 100;
@@ -8,48 +9,53 @@ const getClosedTransform = (targetRect, popup) => {
     return `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
 };
 
-const getTargetX = (origin, width) => {
-    if (origin === 'right') {
-        return width;
-    }
-
-    if (origin === 'left') {
+const getTargetShift = (origin, size) => {
+    if (origin === 'start') {
         return 0;
     }
 
+    if (origin === 'end') {
+        return size;
+    }
+
     if (origin === 'center') {
-        return width / 2;
+        return size / 2;
     }
 
     return 0;
 };
 
-const getTargetY = (origin, height) => {
-    if (origin === 'top') {
+const getPopupShift = (origin, targetPos, targetSize, popupSize, windowSize) => {
+    if (origin === 'start') {
         return 0;
     }
 
-    if (origin === 'bottom') {
-        return height;
+    if (origin === 'end') {
+        return popupSize;
     }
 
     if (origin === 'center') {
-        return height / 2;
+        return popupSize / 2;
     }
 
-    return 0;
+    const shiftSize = (popupSize - targetSize) / 2;
+    const halfSpace = (windowSize - targetSize) / 2;
+    const coef = (halfSpace - targetPos) / halfSpace;
+    const shift = shiftSize * coef;
+
+    return (popupSize / 2) - shift;
 };
 
-
-const getShownTransform = (targetRect, popupNode, targetOrigin = '', popupOrigin = '') => {
+const getShownTransform = (targetRect, popupNode, targetOrigin, popupOrigin) => {
     const {offsetWidth: popupWidth, offsetHeight: popupHeight} = popupNode;
-    const [xTargetOrigin = 'left', yTargetOrigin = 'bottom'] = targetOrigin.split(' ');
-    const [xPopupOrigin = 'left', yPopupOrigin = 'top'] = popupOrigin.split(' ');
+    const [xTargetOrigin, yTargetOrigin] = targetOrigin;
+    const [xPopupOrigin, yPopupOrigin] = popupOrigin;
+    const [windowWidth, windowHeight] = getWindowSize();
 
-    const targetX = getTargetX(xTargetOrigin, targetRect.width);
-    const targetY = getTargetY(yTargetOrigin, targetRect.height);
-    const popupX = getTargetX(xPopupOrigin, popupWidth);
-    const popupY = getTargetY(yPopupOrigin, popupHeight);
+    const targetX = getTargetShift(xTargetOrigin, targetRect.width);
+    const targetY = getTargetShift(yTargetOrigin, targetRect.height);
+    const popupX = getPopupShift(xPopupOrigin, targetRect.left, targetRect.width, popupWidth, windowWidth);
+    const popupY = getPopupShift(yPopupOrigin, targetRect.top, targetRect.height, popupHeight, windowHeight);
 
     const translateX = targetX - popupX;
     const translateY = targetY - popupY;

@@ -22,3 +22,14 @@ export const removeWindowEvent = (event, handler, options) => {
 
 // eslint-disable-next-line no-undef
 export const locationAssign = url => (typeof window === 'undefined' ? null : window.location.assign(url));
+
+export const getWindowSize = () => {
+    if (typeof window === 'undefined') {
+        return [1000, 1000];
+    }
+
+    // eslint-disable-next-line no-undef
+    const {innerWidth, innerHeight} = window;
+
+    return [innerWidth, innerHeight];
+};

@@ -33,7 +33,7 @@ class Month extends PureComponent {
                         days.map(day => createElement(Day, {
                             key: day.dayKey,
                             activities: activities[day.dayKey],
-                            ...day,
+                            dayInfo: day,
                         }))
                     }
                 </div>
