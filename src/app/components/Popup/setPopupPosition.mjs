@@ -40,7 +40,7 @@ const getPopupShift = (origin, targetPos, targetSize, popupSize, windowSize) => 
 
     const shiftSize = (popupSize - targetSize) / 2;
     const halfSpace = (windowSize - targetSize) / 2;
-    const coef = (halfSpace - targetPos) / halfSpace;
+    const coef = ((halfSpace - targetPos) / halfSpace) * 1.05;
     const shift = shiftSize * coef;
 
     return (popupSize / 2) - shift;
@@ -64,7 +64,6 @@ const getShownTransform = (targetRect, popupNode, targetOrigin, popupOrigin) => 
 
 const setPopupPosition = (targetNode, popupNode, shown, targetOrigin, popupOrigin) => {
     const targetRect = targetNode.getBoundingClientRect();
-    // const popupRect = popupNode.getBoundingClientRect();
 
     if (shown) {
         popupNode.style.opacity = '1';

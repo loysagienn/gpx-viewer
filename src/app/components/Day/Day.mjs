@@ -10,7 +10,7 @@ import css from './Day.styl';
 
 class Day extends PureComponent {
     render() {
-        if (this.props.isEmpty) {
+        if (this.props.dayInfo.isEmpty) {
             return (
                 <div className={css.dayWrapper}><div className={css.spacer}/></div>
             );

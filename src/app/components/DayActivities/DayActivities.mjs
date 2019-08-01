@@ -7,7 +7,11 @@ import {getDateStr} from './helpers';
 import css from './DayActivities.styl';
 
 
-const renderActivity = activity => createElement(ActivityInfo, {key: activity.id, ...activity});
+const renderActivity = activity => createElement(ActivityInfo, {
+    key: activity.id,
+    className: css.activityInfo,
+    ...activity,
+});
 
 const DayActivities = ({dayKey, activities, close}) => {
     if (!dayKey) {

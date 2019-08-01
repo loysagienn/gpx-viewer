@@ -15,7 +15,7 @@ const DayPopup = ({disabled, active, onClose, dayKey, activities}) => {
         <Popup
             className={css.popup}
             active={active}
-            onClose={reason => (reason !== 'scroll') && onClose()}
+            onClose={onClose}
             popupOrigin="auto auto"
         >
             {

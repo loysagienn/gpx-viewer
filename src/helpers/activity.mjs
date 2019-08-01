@@ -35,7 +35,7 @@ export const getHeartrateStr = heartrate => Math.round(heartrate);
 
 export const getActivityTypeStr = type => ACTIVITY_TYPES[type] || type;
 
-export const getSpeedStr = speed => `${Math.round(speed * 36) / 10} км/ч`;
+export const getSpeedStr = speed => `${Math.round(speed * 36) / 10}`;
 
 export const getPaseStr = (speed) => {
     const secondsPerKm = Math.round(1000 / speed);

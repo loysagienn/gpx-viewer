@@ -18,7 +18,19 @@ import css from './ActivityInfo.styl';
 const renderSpeed = (speed) => {
     if (!speed) return null;
 
-    return (<div>{`Средняя скорость: ${getSpeedStr(speed)}`}</div>);
+    return (
+        <div className={css.option}>
+            <div className={css.optionValue}>
+                {getSpeedStr(speed)}
+                <span className={css.optionValueUnit}>
+                    {' км/ч'}
+                </span>
+            </div>
+            <div className={css.optionTitle}>
+                средняя скорость
+            </div>
+        </div>
+    );
 };
 
 const renderPace = (speed) => {
@@ -26,7 +38,20 @@ const renderPace = (speed) => {
         return null;
     }
 
-    return (<div>{`Средний темп: ${getPaseStr(speed)} мин/км`}</div>);
+    // return (<div>{`Средний темп: ${getPaseStr(speed)} мин/км`}</div>);
+    return (
+        <div className={css.option}>
+            <div className={css.optionValue}>
+                {`${getPaseStr(speed)}`}
+                <span className={css.optionValueUnit}>
+                    {' мин/км'}
+                </span>
+            </div>
+            <div className={css.optionTitle}>
+                средний темп
+            </div>
+        </div>
+    );
 };
 
 const renderElevationGain = (elevationGain) => {
@@ -43,10 +68,11 @@ const renderPolyline = (encodedPolyline) => {
     return null;
 };
 
-const Modal = ({
+const ActivityInfo = ({
     id,
     name,
     distance,
+    className,
     elapsedTime,
     movingTime,
     averageHeartrate,
@@ -55,27 +81,66 @@ const Modal = ({
     totalElevationGain,
     map: {summaryPolyline},
 }) => (
-    <div className={css.activityInfo}>
+    <div className={className}>
         <div className={css.activityName}>
             {name}
             <span className={css.activityType}>{` (${getActivityTypeStr(type)})`}</span>
         </div>
-
-        <div className={css.activityParams}>
-            <div>
-                {`Общее расстояние: ${getDistanceStr(distance)}`}
-            </div>
-            <div>
-                {`Общее время: ${getTimeStr(elapsedTime)}`}
-            </div>
-            <div>
-                {`Время в движении: ${getTimeStr(movingTime)}`}
+        <div className={css.params}>
+            <div className={css.option}>
+                <div className={css.optionValue}>
+                    {getDistanceStr(distance)}
+                </div>
+                <div className={css.optionTitle}>
+                    общее расстояние
+                </div>
             </div>
             {
-                averageHeartrate && (<div>{`Средний пульс: ${getHeartrateStr(averageHeartrate)}`}</div>)
+                type === 'Ride' ? renderSpeed(averageSpeed) : renderPace(averageSpeed)
             }
-            {type === 'Ride' ? renderSpeed(averageSpeed) : renderPace(averageSpeed)}
-            {renderElevationGain(totalElevationGain)}
+            <div className={css.option}>
+                <div className={css.optionValue}>
+                    {getTimeStr(elapsedTime)}
+                </div>
+                <div className={css.optionTitle}>
+                    общее время
+                </div>
+            </div>
+            <div className={css.option}>
+                <div className={css.optionValue}>
+                    {getTimeStr(movingTime)}
+                </div>
+                <div className={css.optionTitle}>
+                    время в движении
+                </div>
+            </div>
+            {
+                averageHeartrate && (
+                    <div className={css.option}>
+                        <div className={css.optionValue}>
+                            {getHeartrateStr(averageHeartrate)}
+                        </div>
+                        <div className={css.optionTitle}>
+                            средний пульс
+                        </div>
+                    </div>
+                )
+            }
+            {
+                totalElevationGain && (
+                    <div className={css.option}>
+                        <div className={css.optionValue}>
+                            {totalElevationGain}
+                            <span className={css.optionValueUnit}>
+                                {' метров'}
+                            </span>
+                        </div>
+                        <div className={css.optionTitle}>
+                            общий набор высоты
+                        </div>
+                    </div>
+                )
+            }
         </div>
 
         <div className={css.buttons}>
@@ -90,4 +155,4 @@ const Modal = ({
     </div>
 );
 
-export default Modal;
+export default ActivityInfo;
