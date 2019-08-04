@@ -115,7 +115,7 @@ const ActivityInfo = ({
                 </div>
             </div>
             {
-                averageHeartrate && (
+                Boolean(totalElevationGain) && (
                     <div className={css.option}>
                         <div className={css.optionValue}>
                             {getHeartrateStr(averageHeartrate)}
@@ -127,7 +127,7 @@ const ActivityInfo = ({
                 )
             }
             {
-                totalElevationGain && (
+                Boolean(totalElevationGain) && (
                     <div className={css.option}>
                         <div className={css.optionValue}>
                             {totalElevationGain}

@@ -10,22 +10,33 @@
     justify-content: center
     align-items: center
     padding: 10px
-    background-color: main-color
 
 .block
     padding: 30px
     width: 100%
-    max-width: 400px
+    max-width: 450px
     background-color: white-color
     border-radius: 4px
     shadow: default
     +maxWidth(500px)
-        padding: 20px
+        padding: 25px 20px
 
 .btnWrapper
     margin-top: 20px
     display: flex
-    justify-content: center
+    justify-content: flex-start
+    flex-direction: row-reverse
+    flex-wrap: wrap
 
 .textBlock
     margin-bottom: 15px
+
+.loginBtn
+.demoBtn
+    +maxWidth(500px)
+        width: 100%
+
+.demoBtn
+    margin: 0 15px 0 0
+    +maxWidth(500px)
+        margin: 10px 0 0 0

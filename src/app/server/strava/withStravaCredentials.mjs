@@ -3,10 +3,11 @@ import {updateToken} from 'stravaApi';
 import log from 'logger';
 import removeAthleteCredentials from './removeAthleteCredentials';
 
+
 const EXPIRES_SHIFT = 60; // one minute
 
 const withStravaCredentials = async (koaCtx, next) => {
-    const {session: {athleteId}} = koaCtx.state;
+    const {athleteId} = koaCtx.state;
 
     // если в сессии нет athleteId - пользователь не авторизован
     if (!athleteId) {

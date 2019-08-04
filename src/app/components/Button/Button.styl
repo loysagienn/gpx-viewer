@@ -1,24 +1,40 @@
 @import '../common.styl'
 
 .button
+    box-sizing: border-box
     display: block
     border-radius: 4px
-    background-color: action-color
-    color: white-color
     text-align: center
     cursor: pointer
-    shadow: default
     text-decoration: none
-    &:hover
-        background-color: action-color-hover
+    user-select: none
+    border: 1px solid white
     &:active
-        background-color: action-color
-        shadow: active
+        transform: scale(0.98, 0.98)
 
     &.size_m
         padding: 10px 15px
         font-size: 16px
-
     &.size_s
         padding: 8px 15px
         font-size: 14px
+
+    &.theme_action
+        color: white-color
+        background-color: action-color
+        border-color: action-color
+        &:hover
+            background-color: action-color-hover
+            border-color: action-color-hover
+        &:active
+            background-color: action-color
+            border-color: action-color
+
+    &.theme_white
+        color: #404040
+        background-color: white
+        border-color: background-gray-color
+        &:hover
+            border-color: background-gray-color - #101010
+        &:active
+            border-color: background-gray-color

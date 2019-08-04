@@ -11,3 +11,4 @@ export const reduxThunkCdnUrl = 'https://cdnjs.cloudflare.com/ajax/libs/redux-th
 export const reselectCdnUrl = 'https://cdnjs.cloudflare.com/ajax/libs/reselect/4.0.0/reselect.min.js';
 export const DOMAIN = 'mytracks.store';
 export const metrikaCounterId = 54472858;
+export const demoAthleteId = 8134866;

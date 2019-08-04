@@ -40,6 +40,9 @@ const monthCount = (state = DEFAULT_MONTH_COUNT, action) => {
 
 const todayKey = (state = stringifyDateDay(new Date())) => state;
 
+const isDemo = (state = false) => state;
+
+
 export const rootReducer = combineReducers({
     ymaps,
     route,
@@ -49,4 +52,5 @@ export const rootReducer = combineReducers({
     activeDayKey,
     monthCount,
     todayKey,
+    isDemo,
 });

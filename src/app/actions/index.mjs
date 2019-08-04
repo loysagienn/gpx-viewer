@@ -38,7 +38,7 @@ export const PUSH_MONTH = 'PUSH_MONTH';
 export const pushMonth = () => async (dispatch, getState, api) => {
     dispatch({type: PUSH_MONTH});
 
-    const {monthCount} = getState();
+    const {monthCount, athlete} = getState();
 
     const date = new Date();
 
@@ -48,7 +48,7 @@ export const pushMonth = () => async (dispatch, getState, api) => {
 
     const monthKey = stringifyDateMonth(date);
 
-    const {result, error} = await api.getAthleteActivities(monthKey);
+    const {result, error} = await api.getAthleteActivities(athlete.id, monthKey);
 
     if (error) {
         log.error(error);

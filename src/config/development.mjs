@@ -12,3 +12,4 @@ export const reduxThunkCdnUrl = `${hostStatic}/redux-thunk.js`;
 export const reselectCdnUrl = `${hostStatic}/reselect.js`;
 export const DOMAIN = 'localhost';
 export const metrikaCounterId = 54472921;
+export const demoAthleteId = 8134866;

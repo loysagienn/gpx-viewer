@@ -27,21 +27,33 @@ const getAuthUrl = (origin) => {
     return `${STRAVA_AUTHORIZE_URL}?${query}`;
 };
 
+const getDemoUrl = () => getUrlByRoute({
+    id: ROUTES_IDS.DEMO,
+});
+
 const StravaAuth = ({origin}) => (
     <div className={css.stravaAuth}>
         <div className={css.block}>
             <div className={css.textBlock}>
-                На этом сайте можно смотреть и анализировать свои тренировки в сервисе Strava
+                На этом сайте можно помотреть календарь своих тренировок в Strava.
+                В дальнейшем планируется добавить анализ тренировок, графики темпа, пульса и т.д.
             </div>
             <div className={css.textBlock}>
-                Нужен доступ к вашим тренировкам
+                Для работы нужен доступ к вашим тренировкам, либо можно посмотреть в демо режиме
             </div>
             <div className={css.btnWrapper}>
                 <Button
                     className={css.loginBtn}
                     href={getAuthUrl(origin)}
                 >
-                    Открыть доступ
+                    Мои тренировки в Strava
+                </Button>
+                <Button
+                    className={css.demoBtn}
+                    href={getDemoUrl()}
+                    theme="white"
+                >
+                    Демо режим
                 </Button>
             </div>
         </div>

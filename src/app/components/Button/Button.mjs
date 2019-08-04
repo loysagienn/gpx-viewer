@@ -11,8 +11,9 @@ const Button = ({
     onClick = () => {},
     target,
     size = 'm',
+    theme = 'action',
 }) => {
-    const buttonClassName = cn(css.button, className, css[`size_${size}`]);
+    const buttonClassName = cn(css.button, className, css[`size_${size}`], css[`theme_${theme}`]);
 
     if (href) {
         return (

@@ -6,8 +6,10 @@ import AthleteHeader from './AthleteHeader';
 
 const mapStateToProps = ({
     athlete: athleteInfo,
+    isDemo,
 }) => ({
     athleteInfo,
+    isDemo,
 });
 
 

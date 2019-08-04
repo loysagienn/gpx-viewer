@@ -26,6 +26,7 @@ halfSpace = space / 2
     font-size: 16px
     color: #404040
     text-decoration: none
+    cursor: pointer
 
     +maxWidth(1000px)
         padding: 10px
@@ -45,10 +46,12 @@ halfSpace = space / 2
             display: none
 
     &:hover
-        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.1);
         background-color: #ffffff
         .activities:after
             background: linear-gradient(0deg, #ffffff, rgba(255, 255, 255, 0))
+
+    &:active
+        transform: scale(0.97, 0.97)
 
     // &.isWeekEnd
     //     .dayTitle
@@ -58,6 +61,7 @@ halfSpace = space / 2
         background-color: #eaeaea
         box-shadow: none
         color: #d0d0d0
+        cursor: inherit
         .dayTitle
             color: #d0d0d0
 

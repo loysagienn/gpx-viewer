@@ -1,6 +1,7 @@
 
 import {ERRORS} from 'stravaApi/constants';
 import {DEFAULT_MONTH_COUNT} from 'constants';
+import {ROUTES_IDS} from 'router';
 import {stringifyDateMonth} from 'helpers/date';
 import log from 'logger';
 import removeAthleteCredentials from './strava/removeAthleteCredentials';
@@ -54,6 +55,8 @@ const getAthleteData = async ({state, db, api}) => {
     }
 };
 
+const isDemo = route => (route.id === ROUTES_IDS.DEMO);
+
 const withInitialState = async (koaCtx, next) => {
     const {state, origin} = koaCtx;
 
@@ -66,6 +69,7 @@ const withInitialState = async (koaCtx, next) => {
     state.initialState = {
         ymaps,
         route,
+        isDemo: isDemo(route),
         athlete: info,
         activities,
         meta: {origin},

@@ -7,7 +7,11 @@ export const ROUTE_TYPES = {
     JSON: 'JSON',
 };
 
-export const getRoutes = map(({id, pattern}) => ({id, pattern: new UrlPattern(pattern)}));
+export const getRoutes = map(({id, pattern, processParams}) => ({
+    id,
+    pattern: new UrlPattern(pattern),
+    processParams,
+}));
 
 export const getRoutesMap = reduce((acc, {id, pattern}) => assoc(id, {id, pattern}, acc), {});
 
@@ -15,11 +19,14 @@ export const getRoutesIds = reduce((acc, {id}) => assoc(id, id, acc), {});
 
 const matchRoute = (routes, path) => {
     for (let i = 0; i < routes.length; i++) {
-        const {id, pattern} = routes[i];
+        const {id, pattern, processParams} = routes[i];
 
-        const params = pattern.match(path);
+        let params = pattern.match(path);
 
         if (params) {
+            if (processParams) {
+                params = processParams(params);
+            }
             return {id, params};
         }
     }

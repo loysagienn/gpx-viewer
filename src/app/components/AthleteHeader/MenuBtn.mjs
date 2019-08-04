@@ -11,7 +11,7 @@ import css from './AthleteHeader.styl';
 
 const unauthorize = () => locationAssign(getUrlByRoute({id: ROUTES_IDS.STRAVA_UNAUTH}));
 
-const MenuBtn = ({active, hide, toggle}) => (
+const MenuBtn = ({active, hide, toggle, isDemo}) => (
     <PopupTarget
         className={css.menuBtn}
         onClick={toggle}
@@ -24,8 +24,14 @@ const MenuBtn = ({active, hide, toggle}) => (
             popupOrigin="right top"
             onClose={hide}
         >
-            <div className={css.menuItem}>Мои подписки</div>
-            <div className={css.menuItem} onClick={unauthorize}>Выйти</div>
+            <div className={css.menuItem}>Бесполезная кнопка</div>
+            {
+                isDemo ? (
+                    <a className={css.menuItem} href={getUrlByRoute({id: ROUTES_IDS.INDEX})}>Выйти из демо режима</a>
+                ) : (
+                    <a className={css.menuItem} href={getUrlByRoute({id: ROUTES_IDS.STRAVA_UNAUTH})}>Выйти</a>
+                )
+            }
         </Popup>
     </PopupTarget>
 );

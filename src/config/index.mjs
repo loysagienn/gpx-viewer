@@ -23,6 +23,7 @@ const {
     reselectCdnUrl,
     DOMAIN,
     metrikaCounterId,
+    demoAthleteId,
 } = config;
 
 export {
@@ -40,4 +41,5 @@ export {
     STRAVA_CLIENT_ID,
     DOMAIN,
     metrikaCounterId,
+    demoAthleteId,
 };
