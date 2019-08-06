@@ -21,7 +21,7 @@ const DayActivities = ({dayKey, activities, close}) => {
     return (
         <div className={css.popup}>
             <div className={css.header}>
-                <div>
+                <div className={css.title}>
                     {getDateStr(dayKey)}
                 </div>
                 <div

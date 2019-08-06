@@ -33,3 +33,6 @@ export const getWindowSize = () => {
 
     return [innerWidth, innerHeight];
 };
+
+// eslint-disable-next-line no-undef
+export const getDevicePixelRatio = () => ((typeof window === 'undefined') ? 1 : window.devicePixelRatio);

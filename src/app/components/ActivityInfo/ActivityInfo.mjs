@@ -9,11 +9,29 @@ import {
     getActivityTypeStr,
     getSpeedStr,
     getPaseStr,
-    decodePolyline,
+    getPolylineSvg,
 } from 'helpers/activity';
 import Button from '../Button';
 import css from './ActivityInfo.styl';
 
+
+const renderDistance = (distance) => {
+    const [value, unit] = getDistanceStr(distance);
+
+    return (
+        <div className={css.option}>
+            <div className={css.optionValue}>
+                {value}
+                <span className={css.optionValueUnit}>
+                    {` ${unit}`}
+                </span>
+                <div className={css.optionTitle}>
+                    общее расстояние
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const renderSpeed = (speed) => {
     if (!speed) return null;
@@ -38,7 +56,6 @@ const renderPace = (speed) => {
         return null;
     }
 
-    // return (<div>{`Средний темп: ${getPaseStr(speed)} мин/км`}</div>);
     return (
         <div className={css.option}>
             <div className={css.optionValue}>
@@ -54,18 +71,24 @@ const renderPace = (speed) => {
     );
 };
 
-const renderElevationGain = (elevationGain) => {
-    if (!elevationGain) return null;
-
-    return (<div>{`Общий набор высоты: ${elevationGain} метров`}</div>);
-};
-
 const renderPolyline = (encodedPolyline) => {
-    console.log(encodedPolyline);
-    const polyline = decodePolyline(encodedPolyline);
+    const polyline = getPolylineSvg(encodedPolyline);
     console.log(polyline);
 
-    return null;
+    return polyline;
+};
+
+const renderSvg = (polyline) => {
+    // const [width, height, points] = getPolylineSvg(polyline);
+    const str = getPolylineSvg(polyline);
+
+    return (
+        <div className={css.trackImage} style={{backgroundImage: str}}>
+            {/* <svg width={width} height={height}>
+                <polyline stroke="red" strokeWidth="2px" fill="none" points={points}/>
+            </svg> */}
+        </div>
+    );
 };
 
 const ActivityInfo = ({
@@ -81,20 +104,23 @@ const ActivityInfo = ({
     totalElevationGain,
     map: {summaryPolyline},
 }) => (
-    <div className={className}>
+    <div
+        className={cn(className, css.activityInfo)}
+    >
+        <div
+            className={css.image}
+            style={{backgroundImage: getPolylineSvg(summaryPolyline)}}
+        />
         <div className={css.activityName}>
-            {name}
-            <span className={css.activityType}>{` (${getActivityTypeStr(type)})`}</span>
+            <span className={css.activityNameText}>
+                {name}
+                <span className={css.activityType}>{` (${getActivityTypeStr(type)})`}</span>
+            </span>
         </div>
         <div className={css.params}>
-            <div className={css.option}>
-                <div className={css.optionValue}>
-                    {getDistanceStr(distance)}
-                </div>
-                <div className={css.optionTitle}>
-                    общее расстояние
-                </div>
-            </div>
+            {
+                Boolean(distance) && renderDistance(distance)
+            }
             {
                 type === 'Ride' ? renderSpeed(averageSpeed) : renderPace(averageSpeed)
             }
@@ -115,7 +141,7 @@ const ActivityInfo = ({
                 </div>
             </div>
             {
-                Boolean(totalElevationGain) && (
+                Boolean(averageHeartrate) && (
                     <div className={css.option}>
                         <div className={css.optionValue}>
                             {getHeartrateStr(averageHeartrate)}
@@ -149,7 +175,7 @@ const ActivityInfo = ({
                 target="_blank"
                 size="s"
             >
-                Посмотреть в Strava
+                Открыть в Strava
             </Button>
         </div>
     </div>

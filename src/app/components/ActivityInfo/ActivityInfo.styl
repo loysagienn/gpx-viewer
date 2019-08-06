@@ -1,25 +1,50 @@
 @import '../common.styl'
 
+.activityInfo
+    position: relative
+
+.image
+    position: absolute
+    left: 0
+    right: 0
+    top: -44px
+    bottom: 0
+    opacity: 0.4
+    background-repeat: no-repeat
+    background-position: center center
+    background-size: cover
+    border-radius: 4px
+
+.activityInfo + .activityInfo .image
+    top: -10px
 
 .activityName
+    position: relative
     font-size: 18px
+    color: #202020
+    .activityNameText
+        background: $gradient
 
 .activityType
-    color: #808080
     font-size: 14px
 
 .params
+    position: relative
     padding: 5px 0
     text-align: center
     display: flex
     flex-wrap: wrap
+    justify-content: center
+    color: #202020
     .option
-        padding: 5px 0
+        padding: 0 0 10px
         width: 50%
+        background: $gradient
+        // border-radius: 50%
     .optionValue
         line-height: 50px
         font-size: 40px
-        font-weight: 200
+        font-weight: 300
         +maxWidth(390px)
             font-size: 30px
             line-height: 40px
@@ -33,12 +58,12 @@
         margin-top: -5px
         line-height: 15px
         font-size: 12px
-        color: #a0a0a0
         +maxWidth(390px)
             margin-top: -2px
             font-size: 11px
 
 .buttons
+    position: relative
     padding: 15px 0 5px
     display: flex
-    justify-content: flex-end
+    justify-content: center

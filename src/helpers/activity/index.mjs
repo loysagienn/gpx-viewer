@@ -23,12 +23,12 @@ export const getDistanceStr = (distance) => {
     distance = Math.round(distance);
 
     if (distance < 1000) {
-        return `${distance} метров`;
+        return [distance, 'метров'];
     }
 
     const val = Math.round(distance / 100) / 10;
 
-    return `${val} км`;
+    return [val, 'км'];
 };
 
 export const getHeartrateStr = heartrate => Math.round(heartrate);
@@ -50,3 +50,4 @@ export const getPaseStr = (speed) => {
 };
 
 export {default as decodePolyline} from './decodePolyline';
+export {default as getPolylineSvg} from './getPolylineSvg';
