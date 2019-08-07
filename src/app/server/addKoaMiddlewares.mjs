@@ -7,6 +7,7 @@ import unauthStrava from './strava/unauthStrava';
 import handleApiRequest from './handleApiRequest';
 import withInitialState from './withInitialState';
 import handleHtmlRequest from './handleHtmlRequest';
+import logVisit from './logVisit';
 
 
 const addKoaMiddlewares = (koaServer) => {
@@ -24,6 +25,8 @@ const addKoaMiddlewares = (koaServer) => {
     koaServer.use(unauthStrava);
     // обработка api запросов
     koaServer.use(handleApiRequest);
+    // логгируем запрос
+    koaServer.use(logVisit);
     // добавляем koaCtx.state.initialState для html странички
     koaServer.use(withInitialState);
     // рисуем html страничку

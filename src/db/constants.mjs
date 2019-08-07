@@ -7,3 +7,7 @@ export const ATHLETE_CREDENTIALS_COLLECTION = 'user-credentials';
 export const ATHLETE_INFO_COLLECTION = 'athlete-info';
 
 export const ATHLETE_ACTIVITIES_COLLECTION = 'athlete-activities';
+
+export const LOGS_INFO_COLLECTION = 'logs-info';
+
+export const LOGS_ERROR_COLLECTION = 'logs-error';

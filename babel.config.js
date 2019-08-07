@@ -24,14 +24,27 @@ module.exports = (api) => {
     const plugins = [
         '@babel/plugin-proposal-object-rest-spread',
         '@babel/plugin-proposal-class-properties',
-        ['module-resolver', {
-            root: ['./src'],
-        }],
+
     ];
 
-    if (!isWebpack) {
+    if (isWebpack) {
+        plugins.push(
+            ['module-resolver', {
+                root: ['./src'],
+                // для клиента не используем серверный логгер, который ходит в базу, а используем клиентский
+                alias: {
+                    logger: 'log',
+                },
+            }],
+        );
+    } else {
         plugins.push('@babel/plugin-transform-modules-commonjs');
         plugins.push(cssModulesTransform);
+        plugins.push(
+            ['module-resolver', {
+                root: ['./src'],
+            }],
+        );
     }
 
     return {presets, plugins};

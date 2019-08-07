@@ -7,30 +7,34 @@ import {getSession, addSession, updateSession} from './session';
 import {getAthleteCredentials, removeAthleteCredentials, addAthleteCredentials} from './athleteCredentials';
 import {getAthleteInfo, removeAthleteInfo, addAthleteInfo} from './athleteInfo';
 import {getAthleteActivities, removeAthleteActivities, addAthleteActivities} from './athleteActivities';
+import {logInfo, logError} from './logs';
 
 const {MongoClient} = mongodb;
 
 let dbApi = null;
 
 const createDbApi = (database) => {
-    const gpxSessionDb = database.db(DATABASE_ID);
+    const gpxDb = database.db(DATABASE_ID);
 
     return {
-        getSession: sessionId => getSession(gpxSessionDb, sessionId),
-        addSession: session => addSession(gpxSessionDb, session),
-        updateSession: (sessionId, update) => updateSession(gpxSessionDb, sessionId, update),
+        getSession: sessionId => getSession(gpxDb, sessionId),
+        addSession: session => addSession(gpxDb, session),
+        updateSession: (sessionId, update) => updateSession(gpxDb, sessionId, update),
 
-        getAthleteCredentials: athleteId => getAthleteCredentials(gpxSessionDb, athleteId),
-        addAthleteCredentials: credentials => addAthleteCredentials(gpxSessionDb, credentials),
-        removeAthleteCredentials: athleteId => removeAthleteCredentials(gpxSessionDb, athleteId),
+        getAthleteCredentials: athleteId => getAthleteCredentials(gpxDb, athleteId),
+        addAthleteCredentials: credentials => addAthleteCredentials(gpxDb, credentials),
+        removeAthleteCredentials: athleteId => removeAthleteCredentials(gpxDb, athleteId),
 
-        addAthleteInfo: athleteInfo => addAthleteInfo(gpxSessionDb, athleteInfo),
-        getAthleteInfo: athleteId => getAthleteInfo(gpxSessionDb, athleteId),
-        removeAthleteInfo: athleteId => removeAthleteInfo(gpxSessionDb, athleteId),
+        addAthleteInfo: athleteInfo => addAthleteInfo(gpxDb, athleteInfo),
+        getAthleteInfo: athleteId => getAthleteInfo(gpxDb, athleteId),
+        removeAthleteInfo: athleteId => removeAthleteInfo(gpxDb, athleteId),
 
-        addAthleteActivities: athleteActivities => addAthleteActivities(gpxSessionDb, athleteActivities),
-        getAthleteActivities: (athleteId, monthKey) => getAthleteActivities(gpxSessionDb, athleteId, monthKey),
-        removeAthleteActivities: (athleteId, monthKey) => removeAthleteActivities(gpxSessionDb, athleteId, monthKey),
+        addAthleteActivities: athleteActivities => addAthleteActivities(gpxDb, athleteActivities),
+        getAthleteActivities: (athleteId, monthKey) => getAthleteActivities(gpxDb, athleteId, monthKey),
+        removeAthleteActivities: (athleteId, monthKey) => removeAthleteActivities(gpxDb, athleteId, monthKey),
+
+        logInfo: data => logInfo(gpxDb, data),
+        logError: data => logError(gpxDb, data),
     };
 };
 

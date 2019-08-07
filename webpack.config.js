@@ -19,6 +19,7 @@ module.exports = {
         'redux-thunk': 'ReduxThunk',
         reselect: 'Reselect',
         window: 'window',
+        log: 'console',
     },
     output: {
         path: publicDir,

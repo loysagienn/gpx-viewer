@@ -18,6 +18,8 @@ const createServer = async () => {
     koaServer.context.api = api;
 
     koaServer.use(bodyParser());
+    // нужно для получения нового ssl сертификата
+    // koaServer.use(confirmSshKey);
     koaServer.use(sendStatic);
     koaServer.use(requestLogger);
 

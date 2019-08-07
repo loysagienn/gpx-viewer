@@ -57,8 +57,8 @@ const getShownTransform = (targetRect, popupNode, targetOrigin, popupOrigin) => 
     const popupX = getPopupShift(xPopupOrigin, targetRect.left, targetRect.width, popupWidth, windowWidth);
     const popupY = getPopupShift(yPopupOrigin, targetRect.top, targetRect.height, popupHeight, windowHeight);
 
-    const translateX = targetX - popupX;
-    const translateY = targetY - popupY;
+    const translateX = Math.round(targetX - popupX);
+    const translateY = Math.round(targetY - popupY);
     return `translate(${translateX}px, ${translateY}px) scale(1, 1)`;
 };
 

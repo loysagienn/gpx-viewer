@@ -19,3 +19,5 @@ export {default as parseQueryParams} from './parseQueryParams';
 export {default as toCamelCase} from './toCamelCase';
 
 export {default as memoize} from './memoize';
+
+export {default as isDemoRoute} from './isDemoRoute';
