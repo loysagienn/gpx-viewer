@@ -25,9 +25,9 @@ const renderDistance = (distance) => {
                 <span className={css.optionValueUnit}>
                     {` ${unit}`}
                 </span>
-                <div className={css.optionTitle}>
-                    общее расстояние
-                </div>
+            </div>
+            <div className={css.optionTitle}>
+                общее расстояние
             </div>
         </div>
     );
