@@ -17,9 +17,9 @@ getDb().then((db) => {
         data = prepareData(data);
 
         if (level === 'error') {
-            db.logError(data);
+            db.logError(data).catch(() => console.log('log error'));
         } else {
-            db.logInfo(data);
+            db.logInfo(data).catch(() => console.log('log error'));
         }
     };
 
@@ -27,18 +27,26 @@ getDb().then((db) => {
 });
 
 const info = (data, ...rest) => {
-    console.log(data, ...rest);
-
     if (data && typeof data === 'object' && data.key) {
+        const {key, ...params} = data;
+
+        console.log(key, params);
+
         dbLog('info', data);
+    } else {
+        console.log(data, ...rest);
     }
 };
 
 const error = (data, ...rest) => {
-    console.error(data, ...rest);
-
     if (data && typeof data === 'object' && data.key) {
+        const {key, ...params} = data;
+
+        console.log(key, params);
+
         dbLog('error', data);
+    } else {
+        console.error(data, ...rest);
     }
 };
 

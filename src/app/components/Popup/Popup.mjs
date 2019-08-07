@@ -106,8 +106,6 @@ class Popup extends Component {
         const popupNode = popupRef.current;
         const targetNode = targetRef.current;
 
-        // console.log('update position call');
-
         if (!isVisible) {
             return;
         }
@@ -172,10 +170,6 @@ class Popup extends Component {
         if (active && onClose && !event[this.context.popupTargetClickId]) {
             onClose(popupCloseReasons.outsideTargetClick);
         }
-    }
-
-    onTargetOutsideClick = () => {
-        console.log('target outside click');
     }
 
     render() {

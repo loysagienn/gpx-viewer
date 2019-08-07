@@ -3,13 +3,10 @@
 import {createElement} from 'react';
 import {withStateHandlers} from 'recompose';
 import {ROUTES_IDS, getUrlByRoute} from 'router';
-import {locationAssign} from 'env';
 import {SvgMenu} from '../Svg';
 import {Popup, PopupTarget} from '../Popup';
 import css from './AthleteHeader.styl';
 
-
-const unauthorize = () => locationAssign(getUrlByRoute({id: ROUTES_IDS.STRAVA_UNAUTH}));
 
 const MenuBtn = ({active, hide, toggle, isDemo}) => (
     <PopupTarget

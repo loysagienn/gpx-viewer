@@ -61,6 +61,9 @@ module.exports = {
             files: [
                 'src/app/**/*.mjs',
                 'src/helpers/**/*.mjs',
+                'src/config/**/*.mjs',
+                'src/env/**/*.mjs',
+                'src/router/**/*.mjs',
             ],
             env: {
                 'shared-node-browser': true,
@@ -69,6 +72,7 @@ module.exports = {
         {
             files: [
                 'src/app/client/**/*.mjs',
+                'src/clientLogger/**/*.mjs',
             ],
             env: {
                 browser: true,

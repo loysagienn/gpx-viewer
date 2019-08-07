@@ -44,10 +44,13 @@ const getAthleteData = async ({state, db, api}) => {
         ]);
 
         return {info, activities};
-    } catch (err) {
-        log.error(err);
+    } catch (error) {
+        log.error({
+            key: 'get-athlete-data',
+            error,
+        });
 
-        if (err.type === ERRORS.AUTHORIZATION_ERROR) {
+        if (error.type === ERRORS.AUTHORIZATION_ERROR) {
             await removeAthleteCredentials(db, credentials);
         }
 

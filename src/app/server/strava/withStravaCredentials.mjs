@@ -36,8 +36,11 @@ const withStravaCredentials = async (koaCtx, next) => {
 
     try {
         result = await updateToken(refreshToken);
-    } catch (err) {
-        log.error(err);
+    } catch (error) {
+        log.error({
+            key: 'strava-update-token',
+            error,
+        });
 
         await removeAthleteCredentials(koaCtx.db, credentials);
 
@@ -48,7 +51,10 @@ const withStravaCredentials = async (koaCtx, next) => {
 
     await koaCtx.db.addAthleteCredentials(newCredentials);
 
-    log.info('Strava credentials updated: ', newCredentials);
+    log.info({
+        key: 'strava-credentials-updated',
+        athleteId,
+    });
 
     koaCtx.state.stravaCredentials = newCredentials;
 

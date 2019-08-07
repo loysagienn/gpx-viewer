@@ -11,8 +11,11 @@ const getAthleteActivities = async (api, state) => {
     return api.getAthleteActivities(credentials, route.params.monthKey, route.queryParams.ignoreCache);
 };
 
+const clientLog = async (api, state, requestBody) => api.clientLog(state.route.params.level, requestBody);
+
 const apiMap = {
     [ROUTES_IDS.API_GET_ACTIVITIES]: getAthleteActivities,
+    [ROUTES_IDS.LOG]: clientLog,
 };
 
 export default async (koaCtx, next) => {
@@ -26,16 +29,21 @@ export default async (koaCtx, next) => {
     const handler = apiMap[route.id];
 
     if (handler) {
-        try {
-            const result = await handler(api, state);
+        const requestBody = koaCtx.method === 'POST' ? koaCtx.request.body : null;
 
-            if (result.error) {
+        try {
+            const result = await handler(api, state, requestBody);
+
+            if (result && result.error) {
                 return koaCtx.body = result;
             }
 
             return koaCtx.body = {result};
         } catch (error) {
-            log.error(error);
+            log.error({
+                key: 'handle-api-request',
+                error,
+            });
 
             return koaCtx.body = {error: 'Internal error'};
         }

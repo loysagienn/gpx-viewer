@@ -48,10 +48,19 @@ export const pushMonth = () => async (dispatch, getState, api) => {
 
     const monthKey = stringifyDateMonth(date);
 
+    log.info({
+        key: 'load-month-activities',
+        athleteId: athlete.id,
+        monthKey,
+    });
+
     const {result, error} = await api.getAthleteActivities(athlete.id, monthKey);
 
     if (error) {
-        log.error(error);
+        log.error({
+            key: 'get-athlete-activities',
+            error,
+        });
     } else if (result) {
         dispatch(addActivities(monthKey, result));
     }

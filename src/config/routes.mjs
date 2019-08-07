@@ -30,6 +30,10 @@ export default [
         processParams: ({monthKey, athleteId}) => ({monthKey, athleteId: Number(athleteId)}),
     },
     {
+        id: 'LOG',
+        pattern: '/api/log/:level',
+    },
+    {
         id: 'NOT_FOUND',
         pattern: '*',
     },

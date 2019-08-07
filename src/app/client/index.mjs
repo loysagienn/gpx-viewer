@@ -1,6 +1,7 @@
 
 import {render} from 'react-dom';
 import {compose} from 'redux';
+import log from 'logger';
 import {renderApp, getStore} from '../common';
 import ymaps from './ymaps';
 import api from './api';

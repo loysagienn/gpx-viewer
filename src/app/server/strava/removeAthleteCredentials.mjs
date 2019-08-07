@@ -4,7 +4,10 @@ import log from 'logger';
 const removeAthleteCredentials = (db, credentials) => {
     const {athleteId} = credentials;
 
-    log.info(`Remove athlete credentials: ${athleteId}`);
+    log.info({
+        key: 'remove-athlete-credentials',
+        athleteId,
+    });
 
     return db.removeAthleteCredentials(athleteId);
 };

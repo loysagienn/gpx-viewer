@@ -8,6 +8,7 @@ module.exports = {
     mode: isProductionMode ? 'production' : 'development',
     entry: {
         app: './src/app/client/index.mjs',
+        logger: './src/clientLogger/index.mjs',
     },
     externals: {
         ramda: 'R',
@@ -19,7 +20,7 @@ module.exports = {
         'redux-thunk': 'ReduxThunk',
         reselect: 'Reselect',
         window: 'window',
-        log: 'console',
+        log: 'logger',
     },
     output: {
         path: publicDir,

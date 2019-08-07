@@ -71,26 +71,6 @@ const renderPace = (speed) => {
     );
 };
 
-const renderPolyline = (encodedPolyline) => {
-    const polyline = getPolylineSvg(encodedPolyline);
-    console.log(polyline);
-
-    return polyline;
-};
-
-const renderSvg = (polyline) => {
-    // const [width, height, points] = getPolylineSvg(polyline);
-    const str = getPolylineSvg(polyline);
-
-    return (
-        <div className={css.trackImage} style={{backgroundImage: str}}>
-            {/* <svg width={width} height={height}>
-                <polyline stroke="red" strokeWidth="2px" fill="none" points={points}/>
-            </svg> */}
-        </div>
-    );
-};
-
 const ActivityInfo = ({
     id,
     name,
