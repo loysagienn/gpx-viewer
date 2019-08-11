@@ -25,6 +25,10 @@ export default [
         pattern: '/activity/:activityId',
     },
     {
+        id: 'DEMO_ACTIVITY',
+        pattern: '/demo/activity/:activityId',
+    },
+    {
         id: 'API_GET_ACTIVITIES',
         pattern: '/api/athlete/:athleteId/activities/:monthKey',
         processParams: ({monthKey, athleteId}) => ({monthKey, athleteId: Number(athleteId)}),

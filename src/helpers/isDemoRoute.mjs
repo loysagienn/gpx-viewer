@@ -1,4 +1,10 @@
 import {ROUTES_IDS} from 'router';
 
 
-export default route => (route.id === ROUTES_IDS.DEMO);
+const isDemoRoute = route => (
+    route.id === ROUTES_IDS.DEMO ||
+    route.id === ROUTES_IDS.DEMO_ACTIVITY
+);
+
+
+export default isDemoRoute;

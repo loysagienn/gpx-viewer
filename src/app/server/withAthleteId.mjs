@@ -1,9 +1,10 @@
 import {ROUTES_IDS} from 'router';
+import {isDemoRoute} from 'helpers';
 import {demoAthleteId} from 'config';
 
 
 const getAthleteId = (session, route) => {
-    if (route.id === ROUTES_IDS.DEMO) {
+    if (isDemoRoute(route)) {
         return demoAthleteId;
     }
 

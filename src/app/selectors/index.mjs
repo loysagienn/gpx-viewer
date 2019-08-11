@@ -1,6 +1,7 @@
 import {createSelector} from 'reselect';
 import {stringifyDateDay, stringifyDateMonth, getDateFromDayKey} from 'helpers/date';
-import {memoize} from 'helpers';
+import {memoize, isDemoRoute} from 'helpers';
+import {ROUTES_IDS, getUrlByRoute} from 'router';
 
 
 export const selectActivities = state => state.activities;
@@ -66,3 +67,11 @@ export const selectActiveDayActivities = (state) => {
 };
 
 export const selectTodayKey = state => state.todayKey;
+
+export const selectActivityUrl = activityId => createSelector(
+    selectRoute,
+    route => getUrlByRoute(
+        isDemoRoute(route) ? ROUTES_IDS.DEMO_ACTIVITY : ROUTES_IDS.ACTIVITY,
+        {activityId},
+    ),
+);

@@ -84,6 +84,7 @@ const ActivityInfo = ({
     averageSpeed,
     totalElevationGain,
     map: {summaryPolyline},
+    activityUrl,
 }) => (
     <div
         className={cn(className, css.activityInfo)}
@@ -153,7 +154,7 @@ const ActivityInfo = ({
         <div className={css.buttons}>
             <Button
                 className={css.activityBtn}
-                href={getUrlByRoute(ROUTES_IDS.ACTIVITY, {activityId: id})}
+                href={activityUrl}
                 size="s"
                 theme="action"
             >

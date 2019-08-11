@@ -16,10 +16,10 @@ const AthleteLayout = ({route}) => (
 
         <div className={css.content}>
             {
-                route.id === ROUTES_IDS.INDEX && <Calendar />
+                (route.id === ROUTES_IDS.INDEX || route.id === ROUTES_IDS.DEMO) && <Calendar />
             }
             {
-                route.id === ROUTES_IDS.ACTIVITY && <Activity />
+                (route.id === ROUTES_IDS.ACTIVITY || route.id === ROUTES_IDS.DEMO_ACTIVITY) && <Activity />
             }
         </div>
     </div>
