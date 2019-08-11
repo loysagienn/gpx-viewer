@@ -1,6 +1,7 @@
 /** @jsx createElement */
 
 import {createElement, Component, createRef} from 'react';
+import {calculateBounds} from 'helpers/activity';
 import css from './TrackMap.styl';
 import {cn} from '../../../helpers';
 
@@ -15,24 +16,22 @@ class TrackMap extends Component {
         const {
             props: {
                 map: {Map, Polyline},
-                gpxContent: {track},
+                polylinePoints,
             },
             mapRef: {current: node},
         } = this;
 
-        const [{lat: startLat, lon: startLon}] = track;
+        const bounds = calculateBounds(polylinePoints);
 
-        this.map = new Map(node, {
-            center: [startLat, startLon],
-            zoom: 14,
-        });
+        this.map = new Map(node, {bounds});
 
         const trackLine = new Polyline(
-            track.map(({lat, lon}) => ([lat, lon])),
+            polylinePoints,
             {},
             {
                 strokeWidth: 3,
                 strokeOpacity: 0.8,
+                strokeColor: '#ff0000',
             },
         );
 

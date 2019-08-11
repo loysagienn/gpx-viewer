@@ -31,6 +31,7 @@ module.exports = {
         'object-curly-spacing': ['error', 'never'],
         'object-curly-newline': 'off',
         'no-use-before-define': 'off',
+        'no-sequences': 'off',
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.mjs', '.js'] }],

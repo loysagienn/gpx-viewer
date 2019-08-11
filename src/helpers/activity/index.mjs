@@ -50,4 +50,5 @@ export const getPaseStr = (speed) => {
 };
 
 export {default as decodePolyline} from './decodePolyline';
-export {default as getPolylineSvg} from './getPolylineSvg';
+export {default as getPolylineMapUrl} from './getPolylineMapUrl';
+export {default as calculateBounds} from './calculateBounds';

@@ -3,16 +3,31 @@ import {stringifyDateDay, stringifyDateMonth, getDateFromDayKey} from 'helpers/d
 import {memoize} from 'helpers';
 
 
-export const selectActivities = monthKey => state => state.activities[monthKey];
+export const selectActivities = state => state.activities;
+
+export const selectActivitiesByMonth = state => state.activitiesByMonth;
+
+export const selectActivityById = memoize(activityId => createSelector(
+    selectActivities,
+    activities => activities[activityId],
+));
+
+export const selectMonthActivitiesIds = memoize(monthKey => createSelector(
+    selectActivitiesByMonth,
+    activitiesByMonth => activitiesByMonth[monthKey],
+));
 
 export const selectMonthActivities = memoize(monthKey => createSelector(
-    [selectActivities(monthKey)],
-    (activities) => {
-        if (!activities) {
+    selectMonthActivitiesIds(monthKey),
+    selectActivities,
+    (activitiesIds, activities) => {
+        if (!activitiesIds) {
             return {};
         }
 
-        return activities.reduce((acc, activity) => {
+        return activitiesIds.reduce((acc, activityId) => {
+            const activity = activities[activityId];
+
             const activityDate = new Date(activity.startDate);
 
             const monthDayKey = stringifyDateDay(activityDate);
@@ -27,6 +42,8 @@ export const selectMonthActivities = memoize(monthKey => createSelector(
         }, {});
     },
 ));
+
+export const selectRoute = state => state.route;
 
 export const selectActiveDayKey = state => state.activeDayKey;
 

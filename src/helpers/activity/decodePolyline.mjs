@@ -1,5 +1,7 @@
+import {memoize} from 'helpers';
 
-export default (str, precision) => {
+
+const decodePolyline = (str, precision) => {
     let index = 0,
         lat = 0,
         lng = 0,
@@ -46,3 +48,6 @@ export default (str, precision) => {
 
     return coordinates;
 };
+
+
+export default memoize(decodePolyline);

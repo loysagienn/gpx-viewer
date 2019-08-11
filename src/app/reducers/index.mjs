@@ -14,11 +14,23 @@ const athlete = (state = null) => state;
 
 const activities = (state = {}, action) => {
     if (action.type === ADD_ACTIVITIES) {
-        const {monthKey, activities: activityList} = action;
+        const {activities: activityList} = action;
 
-        return Object.assign({}, state, {[monthKey]: activityList});
+        return activityList.reduce(
+            (acc, activity) => (acc[activity.id] = activity, acc),
+            Object.assign({}, state),
+        );
     }
 
+    return state;
+};
+
+const activitiesByMonth = (state = {}, action) => {
+    if (action.type === ADD_ACTIVITIES) {
+        const {monthKey, activities: activityList} = action;
+
+        return Object.assign({}, state, {[monthKey]: activityList.map(({id}) => id)});
+    }
     return state;
 };
 
@@ -48,6 +60,7 @@ export const rootReducer = combineReducers({
     route,
     athlete,
     activities,
+    activitiesByMonth,
     meta,
     activeDayKey,
     monthCount,

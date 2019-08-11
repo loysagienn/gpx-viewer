@@ -24,13 +24,9 @@ const AppContent = ({route, athlete}) => {
         );
     }
 
-    if (route.id === ROUTES_IDS.ACTIVITY) {
-        return route.params.activityId;
-    }
-
     if (athlete) {
         return (
-            <AthleteLayout/>
+            <AthleteLayout route={route}/>
         );
     }
 

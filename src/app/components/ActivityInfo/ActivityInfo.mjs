@@ -2,6 +2,7 @@
 
 import {createElement} from 'react';
 import {cn} from 'helpers';
+import {ROUTES_IDS, getUrlByRoute} from 'router';
 import {
     getTimeStr,
     getDistanceStr,
@@ -9,7 +10,7 @@ import {
     getActivityTypeStr,
     getSpeedStr,
     getPaseStr,
-    getPolylineSvg,
+    getPolylineMapUrl,
 } from 'helpers/activity';
 import Button from '../Button';
 import css from './ActivityInfo.styl';
@@ -89,7 +90,7 @@ const ActivityInfo = ({
     >
         <div
             className={css.image}
-            style={{backgroundImage: getPolylineSvg(summaryPolyline)}}
+            style={{backgroundImage: `url(${getPolylineMapUrl(summaryPolyline)})`}}
         />
         <div className={css.activityName}>
             <span className={css.activityNameText}>
@@ -151,9 +152,18 @@ const ActivityInfo = ({
 
         <div className={css.buttons}>
             <Button
+                className={css.activityBtn}
+                href={getUrlByRoute(ROUTES_IDS.ACTIVITY, {activityId: id})}
+                size="s"
+                theme="action"
+            >
+                Подробнее
+            </Button>
+            <Button
                 href={`https://www.strava.com/activities/${id}`}
                 target="_blank"
                 size="s"
+                theme="strava"
             >
                 Открыть в Strava
             </Button>

@@ -1,19 +1,20 @@
 
 import {connect} from 'react-redux';
-import {compose, branch, renderNothing} from 'recompose';
+import {compose, branch, renderNothing, withProps} from 'recompose';
+import {decodePolyline} from 'helpers/activity';
 import TrackMap from './TrackMap';
 
 const mapStateToProps = ({
-    gpxContent,
     ymaps: {
         initialized,
         map,
     },
 }) => ({
-    gpxContent,
     initialized,
     map,
 });
+
+const withPolylineProps = withProps(({polyline}) => ({polylinePoints: decodePolyline(polyline)}));
 
 export default compose(
     connect(mapStateToProps),
@@ -21,4 +22,5 @@ export default compose(
         ({initialized}) => !initialized,
         renderNothing,
     ),
+    withPolylineProps,
 )(TrackMap);

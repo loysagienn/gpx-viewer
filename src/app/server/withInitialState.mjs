@@ -27,7 +27,19 @@ const getActivitiesByMonth = async (state, api, monthCount = DEFAULT_MONTH_COUNT
         months.map(month => api.getAthleteActivities(credentials, month, route.queryParams.ignoreCache)),
     );
 
-    return activities.reduce((acc, list, index) => Object.assign(acc, {[months[index]]: list}), {});
+    return activities.reduce(([collection, activitiesByMonth], list, index) => {
+        const monthKey = months[index];
+        const ids = [];
+
+        list.forEach((activity) => {
+            collection[activity.id] = activity;
+            ids.push(activity.id);
+        });
+
+        activitiesByMonth[monthKey] = ids;
+
+        return [collection, activitiesByMonth];
+    }, [{}, {}]);
 };
 
 const getAthleteData = async ({state, db, api}) => {
@@ -38,12 +50,12 @@ const getAthleteData = async ({state, db, api}) => {
     }
 
     try {
-        const [info, activities] = await Promise.all([
+        const [info, [activities, activitiesByMonth]] = await Promise.all([
             api.getAthleteInfo(credentials, route.queryParams.ignoreCache),
             getActivitiesByMonth(state, api, DEFAULT_MONTH_COUNT),
         ]);
 
-        return {info, activities};
+        return {info, activities, activitiesByMonth};
     } catch (error) {
         log.error({
             key: 'get-athlete-data',
@@ -65,7 +77,7 @@ const withInitialState = async (koaCtx, next) => {
 
     const {route} = state;
 
-    const {info, activities} = await getAthleteData(koaCtx);
+    const {info, activities, activitiesByMonth} = await getAthleteData(koaCtx);
 
     state.initialState = {
         ymaps,
@@ -73,6 +85,7 @@ const withInitialState = async (koaCtx, next) => {
         isDemo: isDemoRoute(route),
         athlete: info,
         activities,
+        activitiesByMonth,
         meta: {origin},
     };
 
