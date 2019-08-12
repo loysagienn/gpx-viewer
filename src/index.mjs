@@ -6,7 +6,7 @@ import {httpPort} from 'config';
 import {getDb} from 'db';
 import {getApi} from 'api';
 import log from 'logger';
-import {requestLogger, sendStatic} from 'koaMiddlewares';
+import {errorHandler, requestLogger, sendStatic} from 'koaMiddlewares';
 
 const createServer = async () => {
     const koaServer = new Koa();
@@ -21,6 +21,7 @@ const createServer = async () => {
     // нужно для получения нового ssl сертификата
     // koaServer.use(confirmSshKey);
     koaServer.use(sendStatic);
+    koaServer.use(errorHandler);
     koaServer.use(requestLogger);
 
     initApp(koaServer);

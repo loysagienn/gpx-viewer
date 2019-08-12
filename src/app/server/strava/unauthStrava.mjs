@@ -10,10 +10,10 @@ const clearAthleteIdFromSession = (koaCtx, sessionId) => koaCtx.db.updateSession
 
 
 export default async (koaCtx, next) => {
-    const {route, stravaCredentials, session: {sessionId}, athleteId} = koaCtx.state;
+    const {route, stravaCredentials, session: {sessionId, isDemo}, athleteId} = koaCtx.state;
 
     if (route.id === ROUTES_IDS.STRAVA_UNAUTH) {
-        if (stravaCredentials) {
+        if (stravaCredentials && !isDemo) {
             // демо режим не ломаем :)
             if (athleteId !== demoAthleteId) {
                 // закрываем доступ у стравы, сносим учетные данные и athleteId из сессии
@@ -28,7 +28,7 @@ export default async (koaCtx, next) => {
     }
 
     if (route.id === ROUTES_IDS.LOGOUT) {
-        if (stravaCredentials) {
+        if (stravaCredentials && !isDemo) {
             // на логаут просто сносим athleteId из сессии
             await clearAthleteIdFromSession(koaCtx, sessionId);
         }

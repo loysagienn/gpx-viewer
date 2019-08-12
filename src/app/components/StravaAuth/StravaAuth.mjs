@@ -28,7 +28,7 @@ const getAuthUrl = (origin) => {
 };
 
 const getDemoUrl = () => getUrlByRoute({
-    id: ROUTES_IDS.DEMO,
+    id: ROUTES_IDS.DEMO_LOGIN,
 });
 
 const StravaAuth = ({origin}) => (

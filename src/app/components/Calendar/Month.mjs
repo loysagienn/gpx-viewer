@@ -3,14 +3,14 @@
 import {createElement, PureComponent} from 'react';
 import {compose, withProps} from 'recompose';
 import {connect} from 'react-redux';
-import {selectMonthActivities, selectTodayKey} from 'app/selectors';
+import {selectMonthActivitiesSummary, selectTodayKey} from 'app/selectors';
 import {memoizedGetMonth} from './helpers';
 import Day from '../Day';
 import css from './Calendar.styl';
 
 
 const mapStateToProps = (state, {monthKey}) => ({
-    activities: selectMonthActivities(monthKey)(state),
+    activities: selectMonthActivitiesSummary(monthKey)(state),
 });
 
 const enhance = compose(

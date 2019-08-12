@@ -24,9 +24,13 @@ const MenuBtn = ({active, hide, toggle, isDemo}) => (
             <div className={css.menuItem}>Бесполезная кнопка</div>
             {
                 isDemo ? (
-                    <a className={css.menuItem} href={getUrlByRoute({id: ROUTES_IDS.INDEX})}>Выйти из демо режима</a>
+                    <a className={css.menuItem} href={getUrlByRoute({id: ROUTES_IDS.DEMO_LOGOUT})}>
+                        Выйти из демо режима
+                    </a>
                 ) : (
-                    <a className={css.menuItem} href={getUrlByRoute({id: ROUTES_IDS.STRAVA_UNAUTH})}>Выйти</a>
+                    <a className={css.menuItem} href={getUrlByRoute({id: ROUTES_IDS.STRAVA_UNAUTH})}>
+                        Выйти
+                    </a>
                 )
             }
         </Popup>

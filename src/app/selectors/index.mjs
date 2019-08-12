@@ -1,15 +1,15 @@
 import {createSelector} from 'reselect';
 import {stringifyDateDay, stringifyDateMonth, getDateFromDayKey} from 'helpers/date';
-import {memoize, isDemoRoute} from 'helpers';
+import {memoize} from 'helpers';
 import {ROUTES_IDS, getUrlByRoute} from 'router';
 
 
-export const selectActivities = state => state.activities;
+export const selectActivitiesSummary = state => state.activitiesSummary;
 
 export const selectActivitiesByMonth = state => state.activitiesByMonth;
 
 export const selectActivityById = memoize(activityId => createSelector(
-    selectActivities,
+    selectActivitiesSummary,
     activities => activities[activityId],
 ));
 
@@ -18,9 +18,9 @@ export const selectMonthActivitiesIds = memoize(monthKey => createSelector(
     activitiesByMonth => activitiesByMonth[monthKey],
 ));
 
-export const selectMonthActivities = memoize(monthKey => createSelector(
+export const selectMonthActivitiesSummary = memoize(monthKey => createSelector(
     selectMonthActivitiesIds(monthKey),
-    selectActivities,
+    selectActivitiesSummary,
     (activitiesIds, activities) => {
         if (!activitiesIds) {
             return {};
@@ -48,13 +48,13 @@ export const selectRoute = state => state.route;
 
 export const selectActiveDayKey = state => state.activeDayKey;
 
-export const selectDayActivities = dayKey => (state) => {
+export const selectDayActivities = memoize(dayKey => (state) => {
     const monthKey = stringifyDateMonth(getDateFromDayKey(dayKey));
 
-    const monthActivities = selectMonthActivities(monthKey)(state);
+    const monthActivitiesSummary = selectMonthActivitiesSummary(monthKey)(state);
 
-    return monthActivities[dayKey] || [];
-};
+    return monthActivitiesSummary[dayKey] || [];
+});
 
 export const selectActiveDayActivities = (state) => {
     const activeDayKey = selectActiveDayKey(state);
@@ -68,10 +68,7 @@ export const selectActiveDayActivities = (state) => {
 
 export const selectTodayKey = state => state.todayKey;
 
-export const selectActivityUrl = activityId => createSelector(
-    selectRoute,
-    route => getUrlByRoute(
-        isDemoRoute(route) ? ROUTES_IDS.DEMO_ACTIVITY : ROUTES_IDS.ACTIVITY,
-        {activityId},
-    ),
+export const selectActivityUrl = activityId => () => getUrlByRoute(
+    ROUTES_IDS.ACTIVITY,
+    {activityId},
 );

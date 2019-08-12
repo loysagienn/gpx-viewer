@@ -2,7 +2,6 @@
 
 import {createElement} from 'react';
 import {cn} from 'helpers';
-import {ROUTES_IDS, getUrlByRoute} from 'router';
 import {
     getTimeStr,
     getDistanceStr,

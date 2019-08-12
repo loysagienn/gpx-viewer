@@ -25,6 +25,7 @@ const bundleRoot = isProductionMode ? '/static/' : '/static/';
 const ymapsMode = isProductionMode ? 'release' : 'debug';
 
 const serverRenderingOn = always(isProductionMode);
+// const serverRenderingOn = () => true;
 
 const renderAppContent = compose(renderToString, renderApp, getStore);
 
