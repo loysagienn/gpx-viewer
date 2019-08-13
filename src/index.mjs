@@ -22,13 +22,18 @@ const createServer = async () => {
     // koaServer.use(confirmSshKey);
     koaServer.use(sendStatic);
     koaServer.use(errorHandler);
-    koaServer.use(requestLogger);
+    // koaServer.use(requestLogger);
 
     initApp(koaServer);
 
     koaServer.listen(httpPort);
 };
 
+const logServerStart = () => console.log(
+    '\x1b[36m%s\x1b[0m',
+    '\n--------------- server is ready for requests ---------------\n',
+);
+
 createServer()
-    .then(() => log.info('server is ready for requests'))
-    .catch(error => log.error('error init server', error));
+    .then(logServerStart)
+    .catch(error => log.initServerError({error}));

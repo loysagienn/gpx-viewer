@@ -6,18 +6,14 @@ const errorHandler = async (ctx, next) => {
 
         return result;
     } catch (error) {
-        const err = {
-            key: 'global-handler-error',
-        };
-
         if (error instanceof Error) {
-            err.message = error.message;
-            err.stack = error.stack;
+            log.globalHandlerError({
+                message: error.message,
+                stack: error.stack,
+            });
         } else {
-            err.error = error;
+            log.globalHandlerError({error});
         }
-
-        log.error(err);
 
         ctx.status = 500;
 

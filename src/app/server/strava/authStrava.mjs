@@ -27,10 +27,7 @@ const authStrava = async (koaCtx, next) => {
     const {queryParams: {code, error, scope: scopeStr}} = route;
 
     if (error) {
-        log.error({
-            key: 'error-from-strava-auth',
-            error,
-        });
+        log.stravaAuthFailed({error});
 
         return redirectToIndex(koaCtx);
     }
@@ -40,10 +37,7 @@ const authStrava = async (koaCtx, next) => {
     try {
         await auth(koaCtx, sessionId, code, scope);
     } catch (err) {
-        log.error({
-            key: 'strava-auth-request',
-            error: err,
-        });
+        log.stravaAuthError({error: err});
     }
 
     return redirectToIndex(koaCtx);

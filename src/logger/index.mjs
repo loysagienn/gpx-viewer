@@ -1,18 +1,41 @@
+import {infoLogmarks, errorLogmarks} from 'config/logmarks';
 import logDb from './logDb';
-import logConsole from './logConsole';
 
+const getConsoleStyle = level => (level === 'error' ? '\x1b[31m%s\x1b[0m' : '\x1b[32m%s\x1b[0m');
 
-const log = level => (data, ...rest) => {
-    if (data && typeof data === 'object' && data.key) {
-        logConsole(level, data);
-        logDb(level, data);
+const applyLog = (level, key, data) => {
+    let dbData;
+    console.log(getConsoleStyle(level), `--------------- ${key} ---------------`);
+
+    if (typeof data !== 'object' || data === null) {
+        console.log(data);
+
+        dbData = {data, key};
     } else {
-        console.log(data, ...rest);
+        // eslint-disable-next-line no-restricted-syntax,guard-for-in
+        for (const prop in data) console.log(`${prop}:`, data[prop]);
+
+        dbData = Object.assign({}, data, {key});
     }
+
+    console.log('');
+
+    logDb(level, dbData);
 };
 
-const info = log('info');
+const createLogmarksLogger = (level, logmarks) => Object.entries(logmarks).reduce(
+    (acc, [name, key]) => {
+        acc[name] = data => applyLog(level, key, data);
 
-const error = log('error');
+        return acc;
+    },
+    {},
+);
 
-export default {info, error};
+const log = {
+    ...createLogmarksLogger('info', infoLogmarks),
+    ...createLogmarksLogger('error', errorLogmarks),
+};
+
+
+export default log;

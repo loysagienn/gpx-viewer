@@ -7,16 +7,9 @@ export default async (koaCtx, next) => {
 
     if (athleteId) {
         if (isDemo) {
-            log.info({
-                key: 'visit-demo',
-                sessionId,
-            });
+            log.visitDemo({sessionId});
         } else {
-            log.info({
-                key: 'visit-athlete',
-                athleteId,
-                sessionId,
-            });
+            log.visitAthlete({athleteId, sessionId});
         }
     }
 

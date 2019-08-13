@@ -1,13 +1,27 @@
 import log from 'logger';
 
-const clientLog = (db, level, body) => {
-    body.isClientLog = true;
+const prepareData = (body) => {
+    const data = Object.assign({}, body);
 
-    if (level === 'error') {
-        return log.error(body);
+    data.isClientLog = true;
+
+    return data;
+};
+
+const clientLog = async (db, {method, data}) => {
+    // eslint-disable-next-line no-prototype-builtins
+    if (log.hasOwnProperty(method)) {
+        log[method](prepareData(data));
+
+        return 'ok';
     }
 
-    return log.info(body);
+    const error = {
+        status: 404,
+        message: `Log method "${method}" is not found`,
+    };
+
+    return {error};
 };
 
 export default clientLog;

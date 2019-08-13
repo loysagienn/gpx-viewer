@@ -3,11 +3,13 @@ import {getDb} from 'db';
 const logsQueue = [];
 
 const prepareData = (data) => {
-    if (!data.timestamp) {
-        data.timestamp = Date.now();
+    if (data.timestamp) {
+        return data;
     }
 
-    return data;
+    const timestamp = Date.now();
+
+    return Object.assign({timestamp}, data);
 };
 
 let logDb = (level, data) => logsQueue.push([level, data]);

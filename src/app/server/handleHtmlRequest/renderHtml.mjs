@@ -20,7 +20,6 @@ import {metrikaCounter} from './metrika';
 
 const bodyStyle = 'background-color: #f0f0f0;';
 
-// const bundleRoot = isProductionMode ? '/static/' : 'http://localhost:8080/';
 const bundleRoot = isProductionMode ? '/static/' : '/static/';
 const ymapsMode = isProductionMode ? 'release' : 'debug';
 
@@ -64,7 +63,6 @@ export default initialState => `<!DOCTYPE html>
 <script src="${reactReduxCdnUrl}"></script>
 <script src="${reduxThunkCdnUrl}"></script>
 <script src="${reselectCdnUrl}"></script>
-<script src="${bundleRoot}logger.js?hash=${randomHash}"></script>
 <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
 <script src="${bundleRoot}app.js?hash=${randomHash}"></script>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=${YMAPS_API_KEY}&mode=${ymapsMode}&onload=${YMAPS_JSONP_CALLBACK}&lang=ru_RU"></script>

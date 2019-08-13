@@ -7,7 +7,10 @@ export default async (ctx, next) => {
 
     const processTime = Date.now() - startTime;
 
-    log.info(`request ${ctx.host}${ctx.url} process in ${processTime} ms`);
+    log.requestTiming({
+        url: `${ctx.host}${ctx.url}`,
+        time: processTime,
+    });
 
     return result;
 };

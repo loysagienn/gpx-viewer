@@ -11,7 +11,7 @@ const getAthleteActivities = async (api, state) => {
     return api.getAthleteActivities(credentials, route.params.monthKey, route.queryParams.ignoreCache);
 };
 
-const clientLog = async (api, state, requestBody) => api.clientLog(state.route.params.level, requestBody);
+const clientLog = async (api, state, requestBody) => api.clientLog(requestBody);
 
 const apiMap = {
     [ROUTES_IDS.API_GET_ACTIVITIES]: getAthleteActivities,
@@ -35,19 +35,22 @@ export default async (koaCtx, next) => {
             const result = await handler(api, state, requestBody);
 
             if (result && result.error) {
+                if (result.error.status) {
+                    koaCtx.status = result.error.status;
+                }
+
                 return koaCtx.body = result;
             }
 
             return koaCtx.body = {result};
         } catch (error) {
-            log.error({
-                key: 'handle-api-request',
-                error,
-            });
+            log.handleApiRequestError({error});
 
+            koaCtx.status = 500;
             return koaCtx.body = {error: 'Internal error'};
         }
     }
 
+    koaCtx.status = 404;
     return koaCtx.body = {error: 'Not found'};
 };

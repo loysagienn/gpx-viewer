@@ -35,7 +35,7 @@ export default [
     },
     {
         id: 'LOG',
-        pattern: '/api/log/:level',
+        pattern: '/api/log',
     },
     {
         id: 'NOT_FOUND',

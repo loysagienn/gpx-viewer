@@ -1,12 +1,16 @@
 
-const logConsole = (level, data) => {
-    const {key, ...rest} = data;
-
+const logConsole = (key, data) => {
     console.log('');
     console.log(`--------------- ${key} ---------------`);
 
-    // eslint-disable-next-line no-restricted-syntax,guard-for-in
-    for (const prop in rest) console.log(`${prop}:`, rest[prop]);
+    if (data) {
+        if (typeof data === 'object') {
+            // eslint-disable-next-line no-restricted-syntax,guard-for-in
+            for (const prop in data) console.log(`${prop}:`, data[prop]);
+        } else {
+            console.log(data);
+        }
+    }
 
     console.log('');
 };

@@ -1,3 +1,4 @@
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isProductionMode = process.env.NODE_ENV === 'production';
@@ -8,7 +9,6 @@ module.exports = {
     mode: isProductionMode ? 'production' : 'development',
     entry: {
         app: './src/app/client/index.mjs',
-        logger: './src/clientLogger/index.mjs',
     },
     externals: {
         ramda: 'R',
@@ -20,23 +20,23 @@ module.exports = {
         'redux-thunk': 'ReduxThunk',
         reselect: 'Reselect',
         window: 'window',
-        // в файлах пишем import from 'logger', но в src есть папка logger,
-        // это серверный логгер, который пишет в базу,
-        // и babel переделывает это в что-то вроде import from '../../../logger'
-        // а на клиенте нам нужен клиентский логгер, который отправляет запрос, поэтому
-        // в babel сделан отдельный алиас, который переделывает это в import from 'log'
-        // тут мы уже говорим вебпаку, что этот log надо брать из window.logger
-        log: 'logger',
+    },
+    resolve: {
+        alias: {
+            // в файлах пишем import from 'logger', но в src есть папка logger,
+            // это серверный логгер, который пишет в базу,
+            // и babel переделывает это в что-то вроде import from '../../../logger'
+            // а на клиенте нам нужен клиентский логгер, который отправляет запрос, поэтому
+            // в babel сделан отдельный алиас для клиентской сборки,
+            // который переделывает это в import from 'log',
+            // а тут мы уже говорим вебпаку, откуда брать этот лог
+            log$: path.resolve(__dirname, 'src/clientLogger'),
+        },
     },
     output: {
         path: publicDir,
         filename: '[name].js',
     },
-    // watchOptions: {
-    //     aggregateTimeout: 300,
-    //     poll: 1000,
-    //     ignored: /node_modules/,
-    // },
     module: {
         rules: [
             {

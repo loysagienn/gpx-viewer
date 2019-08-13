@@ -27,10 +27,7 @@ const getAthleteData = async (koaCtx) => {
 
         return {info, activitiesSummary, activitiesByMonth};
     } catch (error) {
-        log.error({
-            key: 'get-athlete-data',
-            error,
-        });
+        log.getAthleteDataError({error});
 
         if (error.type === ERRORS.AUTHORIZATION_ERROR) {
             await removeAthleteCredentials(db, credentials);
