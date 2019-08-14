@@ -16,7 +16,7 @@ const getMonthKeys = (monthCount) => {
 };
 
 const normalizeActivities = (monthsKeys, activities) => activities.reduce(
-    ({activitiesSummary = {}, activitiesByMonth = {}}, monthActivities, index) => {
+    ({activitiesSummary, activitiesByMonth}, monthActivities, index) => {
         const monthKey = monthsKeys[index];
         const monthActivitiesIds = [];
 
@@ -29,12 +29,10 @@ const normalizeActivities = (monthsKeys, activities) => activities.reduce(
 
         return {activitiesSummary, activitiesByMonth};
     },
-    {},
+    {activitiesSummary: {}, activitiesByMonth: {}},
 );
 
-const getActivitiesData = async ({state, api}, monthCount = DEFAULT_MONTH_COUNT) => {
-    const {stravaCredentials: credentials, route} = state;
-
+const getActivitiesSummary = async (api, credentials, route, monthCount = DEFAULT_MONTH_COUNT) => {
     const monthsKeys = getMonthKeys(monthCount);
 
     const activities = await Promise.all(
@@ -45,4 +43,4 @@ const getActivitiesData = async ({state, api}, monthCount = DEFAULT_MONTH_COUNT)
 };
 
 
-export default getActivitiesData;
+export default getActivitiesSummary;
