@@ -22,3 +22,7 @@ export const KEY_CODE = {
     ESC: 27,
     ENTER: 13,
 };
+
+export const loading = '_entity_is_loading_';
+
+export const loadError = '_entity_load_error_';

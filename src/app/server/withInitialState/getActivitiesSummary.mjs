@@ -15,22 +15,27 @@ const getMonthKeys = (monthCount) => {
     return months;
 };
 
-const normalizeActivities = (monthsKeys, activities) => activities.reduce(
-    ({activitiesSummary, activitiesByMonth}, monthActivities, index) => {
-        const monthKey = monthsKeys[index];
-        const monthActivitiesIds = [];
+const normalizeActivities = (monthsKeys, activities) => {
+    const {activitiesSummary, activitiesByMonth} = activities.reduce(
+        // eslint-disable-next-line no-shadow
+        ({activitiesSummary = {}, activitiesByMonth = {}}, monthActivities, index) => {
+            const monthKey = monthsKeys[index];
+            const monthActivitiesIds = [];
 
-        monthActivities.forEach((activity) => {
-            activitiesSummary[activity.id] = activity;
-            monthActivitiesIds.push(activity.id);
-        });
+            monthActivities.forEach((activity) => {
+                activitiesSummary[activity.id] = activity;
+                monthActivitiesIds.push(activity.id);
+            });
 
-        activitiesByMonth[monthKey] = monthActivitiesIds;
+            activitiesByMonth[monthKey] = monthActivitiesIds;
 
-        return {activitiesSummary, activitiesByMonth};
-    },
-    {activitiesSummary: {}, activitiesByMonth: {}},
-);
+            return {activitiesSummary, activitiesByMonth};
+        },
+        {},
+    );
+
+    return {activitiesSummary, activitiesByMonth, monthsKeys};
+};
 
 const getActivitiesSummary = async (api, credentials, route, monthCount = DEFAULT_MONTH_COUNT) => {
     const monthsKeys = getMonthKeys(monthCount);

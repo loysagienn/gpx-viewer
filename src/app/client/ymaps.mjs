@@ -1,9 +1,9 @@
 
 import {YMAPS_JSONP_CALLBACK} from '../../config';
-import {initYmaps} from '../actions';
+import {initYmaps as initYmapsAction} from '../actions';
 
-const initYmapsCallback = ({dispatch}) => ymaps => dispatch(initYmaps(ymaps));
+const initYmapsCallback = ({dispatch}) => ymaps => dispatch(initYmapsAction(ymaps));
 
-export default (store) => {
+export const initYmaps = (store) => {
     window[YMAPS_JSONP_CALLBACK] = initYmapsCallback(store);
 };

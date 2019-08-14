@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect';
+import {last, length} from 'ramda';
 import {stringifyDateDay, stringifyDateMonth, getDateFromDayKey} from 'helpers/date';
 import {memoize} from 'helpers';
 import {ROUTES_IDS, getUrlByRoute} from 'router';
@@ -9,6 +10,14 @@ export const selectActivitiesSummary = state => state.activitiesSummary;
 export const selectActivitiesInfo = state => state.activitiesInfo;
 
 export const selectActivitiesByMonth = state => state.activitiesByMonth;
+
+export const selectRoute = state => state.route;
+
+export const selectMonthsKeys = state => state.monthsKeys;
+
+export const selectLastMonthKey = createSelector(selectMonthsKeys, last);
+
+export const selectMonthsKeysCount = createSelector(selectMonthsKeys, length);
 
 export const selectActivitySummaryById = memoize(activityId => createSelector(
     selectActivitiesSummary,
@@ -25,6 +34,8 @@ export const selectMonthActivitiesIds = memoize(monthKey => createSelector(
     activitiesByMonth => activitiesByMonth[monthKey],
 ));
 
+// memoize - для того чтобы для одинаковых monthKey переиспользовать уже созданный селектор
+// и не создавать новый
 export const selectMonthActivitiesSummary = memoize(monthKey => createSelector(
     selectMonthActivitiesIds(monthKey),
     selectActivitiesSummary,
@@ -51,10 +62,6 @@ export const selectMonthActivitiesSummary = memoize(monthKey => createSelector(
     },
 ));
 
-export const selectRoute = state => state.route;
-
-export const selectActiveDayKey = state => state.activeDayKey;
-
 export const selectDayActivities = memoize(dayKey => (state) => {
     const monthKey = stringifyDateMonth(getDateFromDayKey(dayKey));
 
@@ -62,16 +69,6 @@ export const selectDayActivities = memoize(dayKey => (state) => {
 
     return monthActivitiesSummary[dayKey] || [];
 });
-
-export const selectActiveDayActivities = (state) => {
-    const activeDayKey = selectActiveDayKey(state);
-
-    if (!activeDayKey) {
-        return null;
-    }
-
-    return selectDayActivities(activeDayKey)(state);
-};
 
 export const selectTodayKey = state => state.todayKey;
 

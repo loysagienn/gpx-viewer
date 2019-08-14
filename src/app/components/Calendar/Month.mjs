@@ -11,12 +11,12 @@ import css from './Calendar.styl';
 
 const mapStateToProps = (state, {monthKey}) => ({
     activities: selectMonthActivitiesSummary(monthKey)(state),
+    todayKey: selectTodayKey(state),
 });
 
 const enhance = compose(
-    connect(state => ({todayKey: selectTodayKey(state)})),
-    withProps(({offset, todayKey}) => memoizedGetMonth(offset, todayKey)),
     connect(mapStateToProps),
+    withProps(({monthKey, todayKey}) => memoizedGetMonth(monthKey, todayKey)),
 );
 
 class Month extends PureComponent {

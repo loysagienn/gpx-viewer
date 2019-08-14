@@ -16,9 +16,9 @@ const addActivitiesSummary = async (api, credentials, route, initialState) => {
         return initialState;
     }
 
-    const {activitiesSummary, activitiesByMonth} = await getActivitiesSummary(api, credentials, route);
+    const {activitiesSummary, activitiesByMonth, monthsKeys} = await getActivitiesSummary(api, credentials, route);
 
-    return assignState(initialState, {activitiesSummary, activitiesByMonth});
+    return assignState(initialState, {activitiesSummary, activitiesByMonth, monthsKeys});
 };
 
 const addActivitiesInfo = async (api, credentials, route, initialState) => {

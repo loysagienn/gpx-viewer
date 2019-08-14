@@ -1,7 +1,7 @@
 
 export const stringifyDateMonth = date => `${date.getFullYear()}-${date.getMonth()}`;
 
-export const getDateFromMonth = (str) => {
+export const getDateFromMonthKey = (str) => {
     const [year, month] = str.split('-');
 
     return new Date(year, month);
