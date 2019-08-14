@@ -6,11 +6,18 @@ import {ROUTES_IDS, getUrlByRoute} from 'router';
 
 export const selectActivitiesSummary = state => state.activitiesSummary;
 
+export const selectActivitiesInfo = state => state.activitiesInfo;
+
 export const selectActivitiesByMonth = state => state.activitiesByMonth;
 
-export const selectActivityById = memoize(activityId => createSelector(
+export const selectActivitySummaryById = memoize(activityId => createSelector(
     selectActivitiesSummary,
     activities => activities[activityId],
+));
+
+export const selectActivityInfo = memoize(activityId => createSelector(
+    selectActivitiesInfo,
+    activitiesInfo => activitiesInfo[activityId],
 ));
 
 export const selectMonthActivitiesIds = memoize(monthKey => createSelector(

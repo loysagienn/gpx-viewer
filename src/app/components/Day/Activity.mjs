@@ -11,7 +11,7 @@ const Activity = ({name, distance}) => (
             {name}
         </div>
         <div className={css.activityDistance}>
-            {`${getDistanceStr(distance)}`}
+            {`${getDistanceStr(distance).join(' ')}`}
         </div>
         {/* <div className={css.activityTime}>
             {getTimeStr(elapsedTime)}

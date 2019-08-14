@@ -8,6 +8,7 @@ export const errorLogmarks = {
     getAthleteDataError: 'GET_ATHLETE_DATA_ERROR',
     globalHandlerError: 'GLOBAL_HANDLER_ERROR',
     initServerError: 'INIT_SERVER_ERROR',
+    duplicateStateKeys: 'DUPLICATE_STATE_KEYS',
 };
 
 export const infoLogmarks = {

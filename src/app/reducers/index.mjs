@@ -25,6 +25,8 @@ const activitiesSummary = (state = {}, action) => {
     return state;
 };
 
+const activitiesInfo = (state = {}) => state;
+
 const activitiesByMonth = (state = {}, action) => {
     if (action.type === ADD_ACTIVITIES) {
         const {monthKey, activities: activityList} = action;
@@ -60,6 +62,7 @@ export const rootReducer = combineReducers({
     route,
     athlete,
     activitiesSummary,
+    activitiesInfo,
     activitiesByMonth,
     meta,
     activeDayKey,
