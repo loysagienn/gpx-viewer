@@ -10,7 +10,7 @@ const Activity = ({activity, className}) => (
     <div className={cn(css.activity, className)}>
         <TrackMap
             className={css.map}
-            polyline={activity.map.summaryPolyline}
+            polyline={activity.map.polyline}
         />
     </div>
 );
