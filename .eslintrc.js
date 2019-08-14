@@ -73,7 +73,6 @@ module.exports = {
         {
             files: [
                 'src/app/client/**/*.mjs',
-                'src/clientLogger/**/*.mjs',
             ],
             env: {
                 browser: true,

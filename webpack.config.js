@@ -30,7 +30,7 @@ module.exports = {
             // в babel сделан отдельный алиас для клиентской сборки,
             // который переделывает это в import from 'log',
             // а тут мы уже говорим вебпаку, откуда брать этот лог
-            log$: path.resolve(__dirname, 'src/clientLogger'),
+            log$: path.resolve(__dirname, 'src/app/client/logger'),
         },
     },
     output: {
