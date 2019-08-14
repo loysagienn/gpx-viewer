@@ -1,19 +1,32 @@
 
 import {combineReducers} from 'redux';
+import {loading, loadError} from 'constants';
 import {stringifyDateDay} from 'helpers/date';
-import {SHOW_DAY, PUSH_MONTH, ADD_ACTIVITIES} from 'app/actions';
-import {DEFAULT_MONTH_COUNT} from 'constants';
+import {
+    PUSH_MONTH,
+    PUSH_ROUTE,
+    ADD_ACTIVITIES_SUMMARY,
+    LOAD_ACTIVITY_INFO,
+    LOAD_ACTIVITY_INFO_DONE,
+    LOAD_ACTIVITY_INFO_FAIL,
+} from 'app/actions';
 import ymaps from './ymaps';
 
 
-const route = (state = {}) => state;
+const route = (state = {}, action) => {
+    if (action.type === PUSH_ROUTE) {
+        return action.route;
+    }
+
+    return state;
+};
 
 const meta = (state = {}) => state;
 
 const athlete = (state = null) => state;
 
 const activitiesSummary = (state = {}, action) => {
-    if (action.type === ADD_ACTIVITIES) {
+    if (action.type === ADD_ACTIVITIES_SUMMARY) {
         const {activities: activityList} = action;
 
         return activityList.reduce(
@@ -25,10 +38,30 @@ const activitiesSummary = (state = {}, action) => {
     return state;
 };
 
-const activitiesInfo = (state = {}) => state;
+const activitiesInfo = (state = {}, action) => {
+    if (action.type === LOAD_ACTIVITY_INFO) {
+        return Object.assign({}, state, {
+            [action.activityId]: {[loading]: true},
+        });
+    }
+
+    if (action.type === LOAD_ACTIVITY_INFO_DONE) {
+        return Object.assign({}, state, {
+            [action.activityId]: action.activityInfo,
+        });
+    }
+
+    if (action.type === LOAD_ACTIVITY_INFO_FAIL) {
+        return Object.assign({}, state, {
+            [action.activityId]: {[loadError]: action.error || 'error'},
+        });
+    }
+
+    return state;
+};
 
 const activitiesByMonth = (state = {}, action) => {
-    if (action.type === ADD_ACTIVITIES) {
+    if (action.type === ADD_ACTIVITIES_SUMMARY) {
         const {monthKey, activities: activityList} = action;
 
         return Object.assign({}, state, {[monthKey]: activityList.map(({id}) => id)});
@@ -36,17 +69,9 @@ const activitiesByMonth = (state = {}, action) => {
     return state;
 };
 
-const activeDayKey = (state = null, action) => {
-    if (action.type === SHOW_DAY) {
-        return action.dayKey;
-    }
-
-    return state;
-};
-
-const monthCount = (state = DEFAULT_MONTH_COUNT, action) => {
+const monthsKeys = (state = [], action) => {
     if (action.type === PUSH_MONTH) {
-        return state + 1;
+        return state.concat(action.monthKey);
     }
 
     return state;
@@ -65,8 +90,7 @@ export const rootReducer = combineReducers({
     activitiesInfo,
     activitiesByMonth,
     meta,
-    activeDayKey,
-    monthCount,
+    monthsKeys,
     todayKey,
     isDemo,
 });

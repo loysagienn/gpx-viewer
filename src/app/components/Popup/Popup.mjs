@@ -45,6 +45,10 @@ class Popup extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.removeWindowEvents();
+    }
+
     addWindowEvents = () => {
         addWindowEvent('scroll', this.onScroll, true);
         addWindowEvent('resize', this.onScroll, true);

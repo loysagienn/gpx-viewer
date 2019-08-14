@@ -1,5 +1,5 @@
 
-import {stringifyDateMonth, stringifyDateDay, getDateFromDayKey} from 'helpers/date';
+import {stringifyDateDay, getDateFromDayKey, getDateFromMonthKey} from 'helpers/date';
 import {memoize} from 'helpers';
 import {MONTH_NAMES, MONTH_NAMES_GENITIVE} from 'constants';
 
@@ -41,19 +41,14 @@ const getMonthDay = (date, currentYear, currentMonth, currentMonthDay, isEmpty =
     };
 };
 
-export const getMonth = (offset, todayKey) => {
-    const date = getDateFromDayKey(todayKey);
+export const getMonth = (monthKey, todayKey) => {
+    const todayDate = getDateFromDayKey(todayKey);
 
-    const currentYear = date.getFullYear();
-    const currentMonth = date.getMonth();
-    const currentMonthDay = date.getDate();
+    const currentYear = todayDate.getFullYear();
+    const currentMonth = todayDate.getMonth();
+    const currentMonthDay = todayDate.getDate();
 
-    // сдвигаем на нужное количество месяцев
-    date.setMonth(date.getMonth() - offset);
-    // устанавливаем первый день месяца
-    date.setDate(1);
-
-    const monthKey = stringifyDateMonth(date);
+    const date = getDateFromMonthKey(monthKey);
 
     const title = `${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
 
@@ -82,7 +77,7 @@ export const getMonth = (offset, todayKey) => {
         date.setHours(24);
     }
 
-    return {title, days, monthKey};
+    return {title, days};
 };
 
 // кэшируем на сутки

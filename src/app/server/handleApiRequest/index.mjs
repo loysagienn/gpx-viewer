@@ -11,11 +11,22 @@ const getAthleteActivities = async (api, state) => {
     return api.getAthleteActivities(credentials, route.params.monthKey, route.queryParams.ignoreCache);
 };
 
-const clientLog = async (api, state, requestBody) => api.clientLog(requestBody);
+const clientLog = (api, state, requestBody) => api.clientLog(requestBody);
+
+const getActivityInfo = async (api, state) => {
+    const {stravaCredentials: credentials, route} = state;
+
+    if (!credentials) {
+        return {error: 'Unauthorized'};
+    }
+
+    return api.getActivityInfo(credentials, route.params.activityId);
+};
 
 const apiMap = {
     [ROUTES_IDS.API_GET_ACTIVITIES]: getAthleteActivities,
     [ROUTES_IDS.LOG]: clientLog,
+    [ROUTES_IDS.API_GET_ACTIVITY_INFO]: getActivityInfo,
 };
 
 export default async (koaCtx, next) => {

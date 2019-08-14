@@ -9,16 +9,6 @@ import css from './Calendar.styl';
 
 const MIN_BOTTOM_SPACE = 200;
 
-const getOffsets = (count) => {
-    const offsets = [];
-
-    for (let i = 0; i < count; i++) {
-        offsets.push(i);
-    }
-
-    return offsets;
-};
-
 class Calendar extends PureComponent {
     constructor(props) {
         super(props);
@@ -39,9 +29,7 @@ class Calendar extends PureComponent {
     }
 
     render() {
-        const {monthCount} = this.props;
-
-        const monthsOffset = getOffsets(monthCount);
+        const {monthsKeys} = this.props;
 
         return (
             <div
@@ -53,7 +41,7 @@ class Calendar extends PureComponent {
                     className={css.calendar}
                 >
                     {
-                        monthsOffset.map(offset => <Month offset={offset} key={offset}/>)
+                        monthsKeys.map(monthKey => <Month monthKey={monthKey} key={monthKey}/>)
                     }
                 </div>
             </div>
@@ -61,7 +49,7 @@ class Calendar extends PureComponent {
     }
 }
 
-const mapStateToProps = ({monthCount}) => ({monthCount});
+const mapStateToProps = ({monthsKeys}) => ({monthsKeys});
 
 const enhance = connect(mapStateToProps, {pushMonth: pushMonthAction});
 

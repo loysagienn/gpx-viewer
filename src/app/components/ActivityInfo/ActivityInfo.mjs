@@ -84,6 +84,7 @@ const ActivityInfo = ({
     totalElevationGain,
     map: {summaryPolyline},
     activityUrl,
+    showActivity,
 }) => (
     <div
         className={cn(className, css.activityInfo)}
@@ -153,7 +154,7 @@ const ActivityInfo = ({
         <div className={css.buttons}>
             <Button
                 className={css.activityBtn}
-                href={activityUrl}
+                onClick={showActivity}
                 size="s"
                 theme="action"
             >
