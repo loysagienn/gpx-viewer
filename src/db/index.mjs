@@ -7,6 +7,7 @@ import {getSession, addSession, updateSession} from './session';
 import {getAthleteCredentials, removeAthleteCredentials, addAthleteCredentials} from './athleteCredentials';
 import {getAthleteInfo, removeAthleteInfo, addAthleteInfo} from './athleteInfo';
 import {getAthleteActivities, removeAthleteActivities, addAthleteActivities} from './athleteActivities';
+import {getActivityInfo, addActivityInfo, removeActivityInfo} from './activityInfo';
 import {logInfo, logError} from './logs';
 
 const {MongoClient} = mongodb;
@@ -28,6 +29,10 @@ const createDbApi = (database) => {
         addAthleteInfo: athleteInfo => addAthleteInfo(gpxDb, athleteInfo),
         getAthleteInfo: athleteId => getAthleteInfo(gpxDb, athleteId),
         removeAthleteInfo: athleteId => removeAthleteInfo(gpxDb, athleteId),
+
+        addActivityInfo: activityInfo => addActivityInfo(gpxDb, activityInfo),
+        getActivityInfo: activityId => getActivityInfo(gpxDb, activityId),
+        removeActivityInfo: activityId => removeActivityInfo(gpxDb, activityId),
 
         addAthleteActivities: athleteActivities => addAthleteActivities(gpxDb, athleteActivities),
         getAthleteActivities: (athleteId, monthKey) => getAthleteActivities(gpxDb, athleteId, monthKey),

@@ -9,6 +9,7 @@ export const errorLogmarks = {
     globalHandlerError: 'GLOBAL_HANDLER_ERROR',
     initServerError: 'INIT_SERVER_ERROR',
     duplicateStateKeys: 'DUPLICATE_STATE_KEYS',
+    cacheActivityInfoError: 'CACHE_ACTIVITY_INFO_ERROR',
 };
 
 export const infoLogmarks = {

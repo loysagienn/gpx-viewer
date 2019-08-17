@@ -8,6 +8,8 @@ export const ATHLETE_INFO_COLLECTION = 'athlete-info';
 
 export const ATHLETE_ACTIVITIES_COLLECTION = 'athlete-activities';
 
+export const ACTIVITIES_INFO_COLLECTION = 'activities-info';
+
 export const LOGS_INFO_COLLECTION = 'logs-info';
 
 export const LOGS_ERROR_COLLECTION = 'logs-error';

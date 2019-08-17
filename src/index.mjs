@@ -22,7 +22,7 @@ const createServer = async () => {
     // koaServer.use(confirmSshKey);
     koaServer.use(sendStatic);
     koaServer.use(errorHandler);
-    // koaServer.use(requestLogger);
+    koaServer.use(requestLogger);
 
     initApp(koaServer);
 

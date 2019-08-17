@@ -18,6 +18,9 @@ const Activity = ({activity, className}) => {
 
     return (
         <div className={cn(css.activity, className)}>
+            <div className={css.header}>
+                {activity.name}
+            </div>
             <TrackMap
                 className={css.map}
                 polyline={activity.map.polyline}

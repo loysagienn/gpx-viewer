@@ -27,6 +27,7 @@ export default [
     {
         id: 'ACTIVITY',
         pattern: '/activity/:activityId',
+        processParams: ({activityId}) => ({activityId: Number(activityId)}),
     },
     {
         id: 'API_GET_ACTIVITIES',

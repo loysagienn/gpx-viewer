@@ -20,7 +20,7 @@ const getActivityInfo = async (api, state) => {
         return {error: 'Unauthorized'};
     }
 
-    return api.getActivityInfo(credentials, route.params.activityId);
+    return api.getActivityInfo(credentials, route.params.activityId, route.queryParams.ignoreCache);
 };
 
 const apiMap = {
