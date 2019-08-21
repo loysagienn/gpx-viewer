@@ -31,7 +31,7 @@ const createServer = async () => {
 
 const logServerStart = () => console.log(
     '\x1b[36m%s\x1b[0m',
-    '\n--------------- server is ready for requests ---------------\n',
+    `\n--------------- server start on port ${httpPort} ---------------\n`,
 );
 
 createServer()

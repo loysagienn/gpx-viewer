@@ -1,8 +1,8 @@
 
 import {renderToString} from 'react-dom/server';
 import {compose, always} from 'ramda';
-import {generateRandomString} from 'helpers';
 import {
+    appVersion,
     ramdaCdnUrl,
     reactCdnUrl,
     reactDomCdnUrl,
@@ -28,8 +28,6 @@ const serverRenderingOn = always(isProductionMode);
 
 const renderAppContent = compose(renderToString, renderApp, getStore);
 
-const randomHash = generateRandomString(5);
-
 const render = initialState => (
     serverRenderingOn()
         ? renderAppContent(initialState)
@@ -48,7 +46,7 @@ export default initialState => `<!DOCTYPE html>
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="address=no">
     <meta name="theme-color" content="#1f2c3b">
-    <link rel="stylesheet" href="${bundleRoot}app.css?hash=${randomHash}">
+    <link rel="stylesheet" href="${bundleRoot}app.${appVersion}.css">
     <link rel="icon" type="image/png" href="/static/favicon.png" sizes="32x32">
 </head>
 <body style="${bodyStyle}">
@@ -64,7 +62,7 @@ export default initialState => `<!DOCTYPE html>
 <script src="${reduxThunkCdnUrl}"></script>
 <script src="${reselectCdnUrl}"></script>
 <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
-<script src="${bundleRoot}app.js?hash=${randomHash}"></script>
+<script src="${bundleRoot}app.${appVersion}.js"></script>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=${YMAPS_API_KEY}&mode=${ymapsMode}&onload=${YMAPS_JSONP_CALLBACK}&lang=ru_RU"></script>
 
 ${metrikaCounter}

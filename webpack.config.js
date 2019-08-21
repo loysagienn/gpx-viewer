@@ -1,9 +1,11 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const {staticDir} = require('./serverConfig');
+const appVersion = require('./version');
 
 const isProductionMode = process.env.NODE_ENV === 'production';
 
-const publicDir = isProductionMode ? '/home/vajs/public/gpx-viewer' : '/Users/vajs/projects/wweb/gpx/static';
+// const publicDir = isProductionMode ? '/home/vajs/public/mytracks' : path.resolve(__dirname, 'static');
 
 module.exports = {
     mode: isProductionMode ? 'production' : 'development',
@@ -34,8 +36,8 @@ module.exports = {
         },
     },
     output: {
-        path: publicDir,
-        filename: '[name].js',
+        path: staticDir,
+        filename: `[name].${appVersion}.js`,
     },
     module: {
         rules: [
@@ -73,7 +75,7 @@ module.exports = {
         ],
     },
     plugins: [
-        new ExtractTextPlugin('[name].css'),
+        new ExtractTextPlugin(`[name].${appVersion}.css`),
     ],
     devtool: isProductionMode ? 'none' : 'cheap-eval-source-map',
 };

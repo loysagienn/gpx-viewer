@@ -1,5 +1,7 @@
+import {generateRandomString} from 'helpers';
+import serverConfig from '../../serverConfig';
 
-export const httpPort = 3123;
+export const {httpPort} = serverConfig;
 export const dbUrl = 'mongodb://127.0.0.1:27017';
 export const ramdaCdnUrl = 'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js';
 export const reactCdnUrl = 'https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js';

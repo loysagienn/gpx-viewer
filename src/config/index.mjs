@@ -1,6 +1,7 @@
 
 import * as developmentConfig from './development';
 import * as productionConfig from './production';
+import appVersion from '../../version';
 
 export const isProductionMode = process.env.NODE_ENV === 'production';
 
@@ -42,4 +43,5 @@ export {
     DOMAIN,
     metrikaCounterId,
     demoAthleteId,
+    appVersion,
 };

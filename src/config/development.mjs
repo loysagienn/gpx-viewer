@@ -1,6 +1,7 @@
+import serverConfig from '../../serverConfig';
 
-export const httpPort = 3000;
-const hostStatic = 'http://localhost:3000/static';
+export const {httpPort} = serverConfig;
+const hostStatic = `http://localhost:${httpPort}/static`;
 export const dbUrl = 'mongodb://localhost:27017';
 export const ramdaCdnUrl = `${hostStatic}/ramda.js`;
 export const reactCdnUrl = `${hostStatic}/react.development.js`;

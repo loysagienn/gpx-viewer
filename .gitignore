@@ -6,3 +6,5 @@ static
 src/config/private*
 .DS_Store
 .npmrc
+serverConfig.js
+version.js
