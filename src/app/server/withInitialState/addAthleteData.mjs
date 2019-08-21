@@ -28,7 +28,7 @@ const addActivitiesInfo = async (api, credentials, route, initialState) => {
 
     const {activityId} = route.params;
 
-    const activityInfo = await api.getActivityInfo(credentials, activityId);
+    const activityInfo = await api.getActivityInfo(credentials, activityId, route.queryParams.ignoreCache);
 
     const activitiesInfo = {[activityId]: activityInfo};
 

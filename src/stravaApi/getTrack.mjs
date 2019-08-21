@@ -1,5 +1,6 @@
 import request from 'request-promise-native';
 import {toCamelCase} from 'helpers';
+import {getSpeed} from 'helpers/track';
 import {API_URL} from './constants';
 import processError from './processError';
 
@@ -11,9 +12,27 @@ const streamTypes = [
     // 'velocity_smooth',
     'heartrate',
     // 'cadence',
-    'temp',
+    // 'temp',
     // 'moving',
 ];
+
+const processResult = ({time, latlng, altitude, heartrate, temp, cadence}) => {
+    const size = latlng.data.length;
+
+    const track = {
+        size,
+        time: time ? time.data : null,
+        coords: latlng ? latlng.data : null,
+        altitude: altitude ? altitude.data : null,
+        heartrate: heartrate ? heartrate.data : null,
+        temp: temp ? temp.data : null,
+        cadence: cadence ? cadence.data : null,
+    };
+
+    track.speed = getSpeed(track);
+
+    return track;
+};
 
 export default ({accessToken}, activityId) => request({
     method: 'GET',
@@ -24,4 +43,7 @@ export default ({accessToken}, activityId) => request({
         key_by_type: true,
     },
     json: true,
-}).then(toCamelCase).catch(processError);
+})
+    .then(toCamelCase)
+    .then(processResult)
+    .catch(processError);
