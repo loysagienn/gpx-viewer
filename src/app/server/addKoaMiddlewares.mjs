@@ -9,9 +9,12 @@ import withInitialState from './withInitialState';
 import handleHtmlRequest from './handleHtmlRequest';
 import applyDemoAuth from './applyDemoAuth';
 import logVisit from './logVisit';
+import handleInstance from './handleInstance';
 
 
 const addKoaMiddlewares = (koaServer) => {
+    // добавляем в куки id инстанса, чтобы nginx при последующих вызовах проксировал в этот инстанс
+    koaServer.use(handleInstance);
     // добавляем koaCtx.state.session
     koaServer.use(withSession);
     // добавляем koaCtx.state.route

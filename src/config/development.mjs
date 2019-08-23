@@ -1,6 +1,5 @@
-import serverConfig from '../../serverConfig';
+import {httpPort} from '../../serverConfig';
 
-export const {httpPort} = serverConfig;
 const hostStatic = `http://localhost:${httpPort}/static`;
 export const dbUrl = 'mongodb://localhost:27017';
 export const ramdaCdnUrl = `${hostStatic}/ramda.js`;

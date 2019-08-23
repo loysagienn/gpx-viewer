@@ -5,8 +5,6 @@ const appVersion = require('./version');
 
 const isProductionMode = process.env.NODE_ENV === 'production';
 
-// const publicDir = isProductionMode ? '/home/vajs/public/mytracks' : path.resolve(__dirname, 'static');
-
 module.exports = {
     mode: isProductionMode ? 'production' : 'development',
     entry: {
