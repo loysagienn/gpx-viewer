@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "flow": "flow",
-    "start": "export NODE_ENV=production && node index.js",
-    "start-dev": "export NODE_ENV=development && nodemon index.js",
+    "start": "export NODE_ENV=production && node startServer.js",
+    "start-dev": "export NODE_ENV=development && nodemon startServer.js",
     "clear-lib": "rm -rf './lib'",
     "babel": "npm run clear-lib && BABEL_ENV=production babel src --out-dir lib",
     "babel-dev": "npm run clear-lib && BABEL_ENV=development babel src --out-dir lib -w",

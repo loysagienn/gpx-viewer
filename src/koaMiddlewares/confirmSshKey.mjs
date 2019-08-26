@@ -1,8 +1,6 @@
-import {SSH_CONFIRM} from 'config/private';
-
 const confirmSshKey = async (ctx, next) => {
-    if (ctx.request.url in SSH_CONFIRM) {
-        return ctx.body = SSH_CONFIRM[ctx.request.url];
+    if (ctx.request.url in ctx.sshConfirm) {
+        return ctx.body = ctx.sshConfirm[ctx.request.url];
     }
 
     return next();

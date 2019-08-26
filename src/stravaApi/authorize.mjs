@@ -1,18 +1,17 @@
 
 import request from 'request-promise-native';
 import {STRAVA_CLIENT_ID} from 'config';
-import {STRAVA_CLIENT_SECRET} from 'config/private';
 import {OAUTH_TOKEN_URL, GRANT_TYPES} from './constants';
 
 
-export default async (code) => {
+export default async (code, stravaClientSecret) => {
     const options = {
         method: 'POST',
         uri: OAUTH_TOKEN_URL,
         qs: {
             code,
             client_id: STRAVA_CLIENT_ID,
-            client_secret: STRAVA_CLIENT_SECRET,
+            client_secret: stravaClientSecret,
             grant_type: GRANT_TYPES.AUTHORIZATION_CODE,
         },
         json: true,

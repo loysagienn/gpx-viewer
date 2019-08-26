@@ -35,7 +35,7 @@ const withStravaCredentials = async (koaCtx, next) => {
     let result;
 
     try {
-        result = await updateToken(refreshToken);
+        result = await updateToken(refreshToken, koaCtx.stravaClientSecret);
     } catch (error) {
         log.stravaUpdateTokenError({error});
 

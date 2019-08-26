@@ -7,7 +7,13 @@ import log from 'logger';
 const redirectToIndex = ctx => ctx.redirect(getUrlByRoute({id: ROUTES_IDS.INDEX}));
 
 const auth = async (koaCtx, sessionId, code, scope) => {
-    const {tokenType, accessToken, athlete, refreshToken, expiresAt} = await authorize(code);
+    const {
+        tokenType,
+        accessToken,
+        athlete,
+        refreshToken,
+        expiresAt,
+    } = await authorize(code, koaCtx.stravaClientSecret);
 
     const {id: athleteId} = athlete;
 

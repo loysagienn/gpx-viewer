@@ -14,7 +14,6 @@ import {
     reselectCdnUrl,
     YMAPS_JSONP_CALLBACK,
 } from 'config';
-import {YMAPS_API_KEY} from 'config/private';
 import {renderApp, getStore} from 'app/common';
 import {metrikaCounter} from './metrika';
 
@@ -37,7 +36,7 @@ const render = initialState => (
 // <meta name="apple-mobile-web-app-capable" content="yes">
 // <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-export default initialState => `<!DOCTYPE html>
+export default koaCtx => `<!DOCTYPE html>
 <html lang="ru-RU">
 <head>
     <meta charset="utf-8">
@@ -51,7 +50,7 @@ export default initialState => `<!DOCTYPE html>
 </head>
 <body style="${bodyStyle}">
 
-<div id="app">${render(initialState)}</div>
+<div id="app">${render(koaCtx.state.initialState)}</div>
 
 <script src="${ramdaCdnUrl}"></script>
 <script src="${reactCdnUrl}"></script>
@@ -61,9 +60,9 @@ export default initialState => `<!DOCTYPE html>
 <script src="${reactReduxCdnUrl}"></script>
 <script src="${reduxThunkCdnUrl}"></script>
 <script src="${reselectCdnUrl}"></script>
-<script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
+<script>window.__INITIAL_STATE__ = ${JSON.stringify(koaCtx.state.initialState)}</script>
 <script src="${bundleRoot}app.${buildVersion}.js"></script>
-<script src="https://api-maps.yandex.ru/2.1/?apikey=${YMAPS_API_KEY}&mode=${ymapsMode}&onload=${YMAPS_JSONP_CALLBACK}&lang=ru_RU"></script>
+<script src="https://api-maps.yandex.ru/2.1/?apikey=${koaCtx.ymapsApiKey}&mode=${ymapsMode}&onload=${YMAPS_JSONP_CALLBACK}&lang=ru_RU"></script>
 
 ${metrikaCounter}
 

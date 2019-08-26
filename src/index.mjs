@@ -7,7 +7,7 @@ import {getApi} from 'api';
 import log from 'logger';
 import {errorHandler, requestLogger, sendStatic} from 'koaMiddlewares';
 
-const createServer = async ({httpPort, instanceId}) => {
+const createServer = async ({httpPort, instanceId, ymapsApiKey, stravaClientSecret}) => {
     const koaServer = new Koa();
 
     const db = await getDb();
@@ -16,6 +16,8 @@ const createServer = async ({httpPort, instanceId}) => {
     koaServer.context.db = db;
     koaServer.context.api = api;
     koaServer.context.instanceId = instanceId;
+    koaServer.context.ymapsApiKey = ymapsApiKey;
+    koaServer.context.stravaClientSecret = stravaClientSecret;
 
     koaServer.use(bodyParser());
     // нужно для получения нового ssl сертификата
@@ -35,9 +37,9 @@ const logServerStart = httpPort => console.log(
 );
 
 
-export const startServer = async ({httpPort, instanceId}) => {
+export const startServer = async ({httpPort, instanceId, ymapsApiKey, stravaClientSecret}) => {
     try {
-        const result = await createServer({httpPort, instanceId});
+        const result = await createServer({httpPort, instanceId, ymapsApiKey, stravaClientSecret});
 
         logServerStart(httpPort);
 

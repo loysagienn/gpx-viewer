@@ -8,3 +8,4 @@ src/config/private*
 .npmrc
 serverConfig.js
 buildVersion.js
+startServer.js
