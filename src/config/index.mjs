@@ -1,8 +1,7 @@
 
 import * as developmentConfig from './development';
 import * as productionConfig from './production';
-import appVersion from '../../version';
-import {httpPort, instanceId} from '../../serverConfig';
+import buildVersion from '../../buildVersion';
 
 export const isProductionMode = process.env.NODE_ENV === 'production';
 
@@ -28,8 +27,6 @@ const {
 } = config;
 
 export {
-    httpPort,
-    instanceId,
     dbUrl,
     reactCdnUrl,
     ramdaCdnUrl,
@@ -44,5 +41,5 @@ export {
     DOMAIN,
     metrikaCounterId,
     demoAthleteId,
-    appVersion,
+    buildVersion,
 };

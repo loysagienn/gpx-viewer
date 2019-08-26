@@ -1,15 +1,13 @@
-import {httpPort} from '../../serverConfig';
 
-const hostStatic = `http://localhost:${httpPort}/static`;
 export const dbUrl = 'mongodb://localhost:27017';
-export const ramdaCdnUrl = `${hostStatic}/ramda.js`;
-export const reactCdnUrl = `${hostStatic}/react.development.js`;
-export const reactDomCdnUrl = `${hostStatic}/react-dom.development.js`;
-export const recomposeCdnUrl = `${hostStatic}/Recompose.js`;
-export const reduxCdnUrl = `${hostStatic}/redux.js`;
-export const reactReduxCdnUrl = `${hostStatic}/react-redux.js`;
-export const reduxThunkCdnUrl = `${hostStatic}/redux-thunk.js`;
-export const reselectCdnUrl = `${hostStatic}/reselect.js`;
+export const ramdaCdnUrl = '/static/ramda.js';
+export const reactCdnUrl = '/static/react.development.js';
+export const reactDomCdnUrl = '/static/react-dom.development.js';
+export const recomposeCdnUrl = '/static/Recompose.js';
+export const reduxCdnUrl = '/static/redux.js';
+export const reactReduxCdnUrl = '/static/react-redux.js';
+export const reduxThunkCdnUrl = '/static/redux-thunk.js';
+export const reselectCdnUrl = '/static/reselect.js';
 export const DOMAIN = 'localhost';
 export const metrikaCounterId = 54472921;
 export const demoAthleteId = 8134866;

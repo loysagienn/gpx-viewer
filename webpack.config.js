@@ -1,9 +1,10 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const {staticDir} = require('./serverConfig');
-const appVersion = require('./version');
+const buildVersion = require('./buildVersion');
 
 const isProductionMode = process.env.NODE_ENV === 'production';
+
+const staticDir = isProductionMode ? '/home/vajs/public/mytracks' : path.resolve(__dirname, 'static');
 
 module.exports = {
     mode: isProductionMode ? 'production' : 'development',
@@ -35,7 +36,7 @@ module.exports = {
     },
     output: {
         path: staticDir,
-        filename: `[name].${appVersion}.js`,
+        filename: `[name].${buildVersion}.js`,
     },
     module: {
         rules: [
@@ -73,7 +74,7 @@ module.exports = {
         ],
     },
     plugins: [
-        new ExtractTextPlugin(`[name].${appVersion}.css`),
+        new ExtractTextPlugin(`[name].${buildVersion}.css`),
     ],
     devtool: isProductionMode ? 'none' : 'cheap-eval-source-map',
 };
