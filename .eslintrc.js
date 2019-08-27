@@ -1,3 +1,7 @@
+const path = require('path');
+// const {resolvePath} = require('./buildHelpers');
+
+
 module.exports = {
     parser: 'babel-eslint',
     extends: [
@@ -21,7 +25,13 @@ module.exports = {
                 ]
             },
             'babel-module': {
-                root: ['./src'],
+                // надо бы заюзать resolvePath из buildConfig, но он не прокидывается в babel-plugin-module-resolver
+                // https://github.com/tleunen/eslint-import-resolver-babel-module/blob/master/src/index.js#L88-L101
+                // resolvePath,
+                root: './src',
+                alias: {
+                    config: path.resolve(__dirname, `src/config/development`),
+                },
             }
         }
     },

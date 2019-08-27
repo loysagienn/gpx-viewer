@@ -1,4 +1,3 @@
-
 export const dbUrl = 'mongodb://localhost:27017';
 export const ramdaCdnUrl = '/static/ramda.js';
 export const reactCdnUrl = '/static/react.development.js';
@@ -11,3 +10,8 @@ export const reselectCdnUrl = '/static/reselect.js';
 export const DOMAIN = 'localhost';
 export const metrikaCounterId = 54472921;
 export const demoAthleteId = 8134866;
+export const YMAPS_JSONP_CALLBACK = '__YMAPS_JSONP_CALLBACK__';
+export const STRAVA_CLIENT_ID = '32976';
+export {default as buildVersion} from '../../buildVersion';
+export const INSTANCE_ID_COOKIE_NAME = 'instance_id';
+export const SESSION_ID_COOKIE_NAME = 'session_id';

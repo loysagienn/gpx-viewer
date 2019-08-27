@@ -1,4 +1,4 @@
-import {infoLogmarks, errorLogmarks} from 'config/logmarks';
+import {infoLogmarks, errorLogmarks} from 'constants/logmarks';
 import {getUrlByRoute, ROUTES_IDS} from 'router';
 
 

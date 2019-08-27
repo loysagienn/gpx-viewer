@@ -1,8 +1,7 @@
 import {generateRandomString} from 'helpers';
-import {DOMAIN} from 'config';
+import {DOMAIN, SESSION_ID_COOKIE_NAME} from 'config';
 
 
-const SESSION_ID_COOKIE_NAME = 'session_id';
 const SESSION_ID_LENGTH = 32;
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
 

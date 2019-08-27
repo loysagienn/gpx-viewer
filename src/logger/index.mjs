@@ -1,4 +1,4 @@
-import {infoLogmarks, errorLogmarks} from 'config/logmarks';
+import {infoLogmarks, errorLogmarks} from 'constants/logmarks';
 import logDb from './logDb';
 
 const getConsoleStyle = level => (level === 'error' ? '\x1b[31m%s\x1b[0m' : '\x1b[32m%s\x1b[0m');

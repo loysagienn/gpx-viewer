@@ -1,4 +1,3 @@
-
 import {getAthlete} from 'stravaApi';
 import {isProductionMode} from 'config';
 

@@ -1,9 +1,7 @@
-import {DOMAIN} from 'config';
+import {DOMAIN, INSTANCE_ID_COOKIE_NAME} from 'config';
 
 
-const INSTANCE_ID_COOKIE_NAME = 'instance_id';
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24; // 24 hours
-
 
 const handleInstance = (koaCtx, next) => {
     const {cookies, instanceId} = koaCtx;

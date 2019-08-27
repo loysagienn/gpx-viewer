@@ -4,7 +4,7 @@ import {createElement} from 'react';
 import {stringifyQueryParams} from 'helpers';
 import {ROUTES_IDS, getUrlByRoute} from 'router';
 import Button from '../Button';
-import {STRAVA_CLIENT_ID} from '../../../config';
+import {STRAVA_CLIENT_ID} from 'config';
 import css from './StravaAuth.styl';
 
 

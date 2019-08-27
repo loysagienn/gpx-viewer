@@ -1,5 +1,5 @@
 
-import routesConfig from 'config/routes';
+import routesConfig from './routes';
 import {
     getRoutes,
     getRoutesMap,

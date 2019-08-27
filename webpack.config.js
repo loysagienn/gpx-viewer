@@ -7,7 +7,10 @@ const isProductionMode = process.env.NODE_ENV === 'production';
 const staticDir = isProductionMode ? '/home/vajs/public/mytracks' : path.resolve(__dirname, 'static');
 
 module.exports = {
-    mode: isProductionMode ? 'production' : 'development',
+    mode: isProductionMode ? 'production' : 'production',
+    optimization: {
+        usedExports: true,
+    },
     entry: {
         app: './src/app/client/index.mjs',
     },
@@ -21,18 +24,6 @@ module.exports = {
         'redux-thunk': 'ReduxThunk',
         reselect: 'Reselect',
         window: 'window',
-    },
-    resolve: {
-        alias: {
-            // в файлах пишем import from 'logger', но в src есть папка logger,
-            // это серверный логгер, который пишет в базу,
-            // и babel переделывает это в что-то вроде import from '../../../logger'
-            // а на клиенте нам нужен клиентский логгер, который отправляет запрос, поэтому
-            // в babel сделан отдельный алиас для клиентской сборки,
-            // который переделывает это в import from 'log',
-            // а тут мы уже говорим вебпаку, откуда брать этот лог
-            log$: path.resolve(__dirname, 'src/app/client/logger'),
-        },
     },
     output: {
         path: staticDir,
@@ -76,5 +67,5 @@ module.exports = {
     plugins: [
         new ExtractTextPlugin(`[name].${buildVersion}.css`),
     ],
-    devtool: isProductionMode ? 'none' : 'cheap-eval-source-map',
+    devtool: isProductionMode ? 'none' : 'cheap-module-source-map',
 };

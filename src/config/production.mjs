@@ -10,3 +10,8 @@ export const reselectCdnUrl = 'https://cdnjs.cloudflare.com/ajax/libs/reselect/4
 export const DOMAIN = 'mytracks.store';
 export const metrikaCounterId = 54472858;
 export const demoAthleteId = 8134866;
+export const YMAPS_JSONP_CALLBACK = '__YMAPS_JSONP_CALLBACK__';
+export const STRAVA_CLIENT_ID = '32976';
+export {default as buildVersion} from '../../buildVersion';
+export const INSTANCE_ID_COOKIE_NAME = 'instance_id';
+export const SESSION_ID_COOKIE_NAME = 'session_id';
