@@ -4,6 +4,7 @@ import {createElement} from 'react';
 import {loading, loadError} from 'constants';
 import {cn} from 'helpers';
 import TrackMap from '../TrackMap';
+import TrackLines from '../TrackLines';
 import css from './Activity.styl';
 
 
@@ -24,6 +25,10 @@ const Activity = ({activity, className}) => {
             <TrackMap
                 className={css.map}
                 polyline={activity.map.polyline}
+            />
+            <TrackLines
+                className={css.trackLines}
+                track={activity.track}
             />
         </div>
     );

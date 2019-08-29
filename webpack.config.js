@@ -7,7 +7,7 @@ const isProductionMode = process.env.NODE_ENV === 'production';
 const staticDir = isProductionMode ? '/home/vajs/public/mytracks' : path.resolve(__dirname, 'static');
 
 module.exports = {
-    mode: isProductionMode ? 'production' : 'production',
+    mode: isProductionMode ? 'production' : 'development',
     optimization: {
         usedExports: true,
     },
@@ -67,5 +67,6 @@ module.exports = {
     plugins: [
         new ExtractTextPlugin(`[name].${buildVersion}.css`),
     ],
-    devtool: isProductionMode ? 'none' : 'cheap-module-source-map',
+    // devtool: isProductionMode ? 'none' : 'cheap-module-source-map',
+    devtool: 'none',
 };
