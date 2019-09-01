@@ -1,7 +1,6 @@
 /** @jsx createElement */
 
-import {createElement, Component, createRef} from 'react';
-import {calculateBounds} from 'helpers/activity';
+import {createElement} from 'react';
 import css from './TrackMap.styl';
 import {cn} from '../../../helpers';
 

@@ -15,3 +15,4 @@ export const STRAVA_CLIENT_ID = '32976';
 export {default as buildVersion} from '../../buildVersion';
 export const INSTANCE_ID_COOKIE_NAME = 'instance_id';
 export const SESSION_ID_COOKIE_NAME = 'session_id';
+export const isProductionMode = false;

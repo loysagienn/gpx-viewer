@@ -1,18 +1,7 @@
-import {memoize} from 'helpers';
 
-
-const smoothCoef = 4;
-
-const getMinMax = memoize((values) => {
-    // const min = Math.min(...values);
-    const min = 0;
-    const max = Math.max(...values);
-
-    return [min, max];
-});
 
 const smoothLine = (values) => {
-    const coef = 0;
+    const coef = 1;
 
     const result = [];
     const maxIndex = values.length - 1;
@@ -34,49 +23,8 @@ const smoothLine = (values) => {
     return result;
 };
 
-const prettifyLine = memoize((values, width, pixelRatio) => {
-    const pointsCount = Math.round(width / (smoothCoef * pixelRatio));
-
-    if (values.length / 2 < pointsCount) {
-        return values;
-    }
-
-    const roundPointsCount = Math.floor(values.length / pointsCount);
-
-    const result = [];
-
-    const maxIndex = values.length - roundPointsCount;
-    let index = 0;
-
-    while (index < maxIndex) {
-        let val = 0;
-        const nextIndex = index + roundPointsCount;
-        for (let j = index; j < nextIndex; j++) {
-            val += values[j];
-        }
-
-        result.push(val / roundPointsCount);
-
-        index += roundPointsCount;
-    }
-
-    let lastCount = 0;
-    let val = 0;
-
-    while (index < values.length) {
-        lastCount++;
-        val += values[index];
-        index++;
-    }
-
-    result.push(val / lastCount);
-
-    // return result;
-    return smoothLine(result);
-});
-
-const getCoords = (values, width, height) => {
-    const [min, max] = getMinMax(values);
+const getCoords = (values, width, height, max) => {
+    const min = 0;
     const valueHeight = max - min;
     const indexWidth = values.length - 1;
 
@@ -113,13 +61,8 @@ const getAngles = (coords) => {
     return angles;
 };
 
-const renderLine = (ctx, values, width, height, color, pixelRatio) => {
-    width *= pixelRatio;
-    height *= pixelRatio;
-
-    values = prettifyLine(values, width, pixelRatio);
-
-    const coords = getCoords(values, width, height);
+const renderLine = (ctx, values, width, height, color, maxValue) => {
+    const coords = getCoords(values, width, height, maxValue);
     const angles = getAngles(coords);
 
     const [firstX, firstY] = coords[0];
@@ -145,8 +88,15 @@ const renderLine = (ctx, values, width, height, color, pixelRatio) => {
         const currShiftX = currX - (shiftLength * Math.cos(currPointAngle));
         const currShiftY = currY - (shiftLength * Math.sin(currPointAngle));
 
-        // ctx.lineTo(currX, currY);
-        ctx.bezierCurveTo(prevShiftX, prevShiftY, currShiftX, currShiftY, currX, currY);
+        // ctx.lineTo(Math.round(currX), Math.round(currY));
+        ctx.bezierCurveTo(
+            Math.round(prevShiftX),
+            Math.round(prevShiftY),
+            Math.round(currShiftX),
+            Math.round(currShiftY),
+            Math.round(currX),
+            Math.round(currY),
+        );
 
         prevPointAngle = currPointAngle;
     }

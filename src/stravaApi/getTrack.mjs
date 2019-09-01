@@ -29,7 +29,9 @@ const processResult = ({time, latlng, altitude, heartrate, temp, cadence}) => {
         cadence: cadence ? cadence.data : null,
     };
 
-    track.speed = getSpeed(track);
+    const [speed, minSpeed, maxSpeed] = getSpeed(track);
+
+    Object.assign(track, {speed, minSpeed, maxSpeed});
 
     return track;
 };

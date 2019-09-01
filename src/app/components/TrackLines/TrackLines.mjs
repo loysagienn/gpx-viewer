@@ -51,31 +51,18 @@ class TrackLines extends Component {
 
         setCanvasSize(this.canvasRef.current, width, height, pixelRatio);
 
-        this.canvasCtx.lineWidth = 4;
+        this.canvasCtx.lineWidth = 2 * pixelRatio;
         this.canvasCtx.lineCap = 'round';
         this.canvasCtx.lineJoin = 'round';
 
-        const {speed, heartrate} = this.props.track;
-
-        renderLine(
+        this.props.lines.forEach(({values, color, maxValue}) => renderLine(
             this.canvasCtx,
-            speed,
-            width,
-            height,
-            '#0000ff',
-            pixelRatio,
-        );
-
-        if (heartrate) {
-            renderLine(
-                this.canvasCtx,
-                heartrate,
-                width,
-                height,
-                '#ff0000',
-                pixelRatio,
-            );
-        }
+            values,
+            width * pixelRatio,
+            height * pixelRatio,
+            color,
+            maxValue,
+        ));
 
         this.currentSize = [width, height];
     }

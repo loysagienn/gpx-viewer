@@ -1,13 +1,12 @@
 @import '../common.styl'
 
 .trackChart
-    background-color:  main-color
+    position: relative;
 
-.svg
-    width: 100%
-    polyline
-        stroke: white
-        stroke-width: 2
-        stroke-linecap: round
-        stroke-linejoin: round
-        fill: none
+    .trackLines
+        position: absolute
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
+
