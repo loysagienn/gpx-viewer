@@ -1,11 +1,45 @@
 /** @jsx createElement */
 
-import {createElement, Component, createRef} from 'react';
-import {cn} from 'helpers';
+import {createElement, Component, createRef, Fragment} from 'react';
+import {cn, memoize} from 'helpers';
+import {addWindowEvent, removeWindowEvent} from 'env';
 import {compressValues} from 'helpers/track';
 import css from './TrackChart.styl';
 import TrackLines from '../TrackLines';
+import TrackGrid from '../TrackGrid';
 
+
+const calcLines = memoize((speed, heartrate, width) => {
+    const lines = [];
+
+    if (speed) {
+        const speedValues = compressValues(speed, width);
+        const maxValue = Math.ceil(Math.max(...speedValues));
+
+        lines.push({
+            id: 'speed',
+            values: speedValues,
+            color: '#0000ff',
+            unit: 'м/с',
+            maxValue,
+        });
+    }
+
+    if (heartrate) {
+        const heartrateValues = compressValues(heartrate, width);
+        const maxValue = Math.ceil(Math.max(...heartrateValues) / 20) * 20;
+
+        lines.push({
+            id: 'heartrate',
+            values: heartrateValues,
+            color: '#ff0000',
+            unit: 'уд/мин',
+            maxValue,
+        });
+    }
+
+    return lines;
+});
 
 class TrackChart extends Component {
     constructor(props) {
@@ -14,57 +48,48 @@ class TrackChart extends Component {
         this.chartRef = createRef();
 
         this.lines = null;
+        this.initialized = false;
     }
 
     componentDidMount() {
-        this.updateLines();
+        this.calcLines();
+
+        this.initialized = true;
+
+        this.forceUpdate();
+
+        addWindowEvent('resize', this.onResize);
+    }
+
+    componentWillUnmount() {
+        removeWindowEvent('resize', this.onResize);
+    }
+
+    calcLines() {
+        const {width, props} = this;
+
+        const {speed, heartrate} = props.track;
+
+        this.lines = calcLines(speed, heartrate, width);
+    }
+
+    onResize = () => {
+        this.calcLines();
         this.forceUpdate();
     }
 
-    updateLines() {
-        const {offsetWidth: width} = this.chartRef.current;
-
-        const {speed, heartrate} = this.props.track;
-
-        const lines = [];
-
-        if (speed) {
-            const speedValues = compressValues(speed, width);
-            const maxValue = Math.max(...speedValues);
-
-            lines.push({
-                values: speedValues,
-                color: '#0000ff',
-                maxValue,
-            });
-        }
-
-        if (heartrate) {
-            const heartrateValues = compressValues(heartrate, width);
-            const maxValue = Math.max(...heartrateValues);
-
-            lines.push({
-                values: heartrateValues,
-                color: '#ff0000',
-                maxValue,
-            });
-        }
-
-        this.lines = lines;
-    }
-
     renderContent() {
-        if (!this.lines) {
+        if (!this.initialized) {
             return null;
         }
 
-        this.updateLines();
+        const {width, height, lines} = this;
 
-        return (
-            <TrackLines
-                className={css.trackLines}
-                lines={this.lines}
-            />
+        this.calcLines();
+
+        return createElement(Fragment, null,
+            createElement(TrackLines, {width, height, lines, className: css.trackLines}),
+            createElement(TrackGrid, {width, height, lines, gridCount: 4, className: css.trackGrid}),
         );
     }
 
@@ -81,6 +106,14 @@ class TrackChart extends Component {
                 }
             </div>
         );
+    }
+
+    get width() {
+        return this.chartRef.current.offsetWidth;
+    }
+
+    get height() {
+        return this.chartRef.current.offsetHeight;
     }
 }
 

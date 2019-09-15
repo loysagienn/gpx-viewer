@@ -1,41 +1,16 @@
-
-
-const smoothLine = (values) => {
-    const coef = 1;
-
-    const result = [];
-    const maxIndex = values.length - 1;
-
-    for (let i = 0; i <= maxIndex; i++) {
-        const startIndex = Math.max(i - coef, 0);
-        const endIndex = Math.min(i + coef, maxIndex);
-
-        const count = (endIndex - startIndex) + 1;
-        let summ = 0;
-
-        for (let j = startIndex; j <= endIndex; j++) {
-            summ += values[j];
-        }
-
-        result.push(summ / count);
-    }
-
-    return result;
-};
-
 const getCoords = (values, width, height, max) => {
     const min = 0;
     const valueHeight = max - min;
     const indexWidth = values.length - 1;
 
-    const yCoef = (height / valueHeight) * 0.9;
+    const yCoef = (height / valueHeight);
     const xCoef = width / indexWidth;
 
     const coords = [];
 
     for (let i = 0; i < values.length; i++) {
         const x = i * xCoef;
-        const y = (height * 0.95) - ((values[i] - min) * yCoef);
+        const y = (height) - ((values[i] - min) * yCoef);
 
         coords.push([x, y]);
     }

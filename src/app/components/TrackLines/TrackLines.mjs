@@ -1,86 +1,75 @@
 /** @jsx createElement */
 
-import {createElement, Component, createRef} from 'react';
+import {createElement, PureComponent, createRef} from 'react';
 import {cn} from 'helpers';
-import {getDevicePixelRatio, addWindowEvent, removeWindowEvent} from 'env';
+import {getDevicePixelRatio} from 'env';
 import css from './TrackLines.styl';
 import renderLine from './renderLine';
 
 
 const setCanvasSize = (canvas, width, height, pixelRatio) => {
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
     canvas.width = width * pixelRatio;
     canvas.height = height * pixelRatio;
 };
 
-class TrackLines extends Component {
+class TrackLines extends PureComponent {
     constructor(props) {
         super(props);
 
         this.canvasRef = createRef();
-        this.rootRef = createRef();
-        this.currentSize = [0, 0];
     }
 
     componentDidMount() {
         this.canvasCtx = this.canvasRef.current.getContext('2d');
 
-        this.updateSize();
-
-        addWindowEvent('resize', this.updateSize);
+        this.renderLines();
     }
 
-    componentDisUpdate() {
-        this.updateSize();
+    componentDidUpdate() {
+        this.renderLines();
     }
 
-    componentWillUnmount() {
-        removeWindowEvent('resize', this.updateSize);
-    }
-
-    updateSize = () => {
-        const [currentWidth, currentHeight] = this.currentSize;
-        const {offsetWidth: width, offsetHeight: height} = this.rootRef.current;
+    renderLines = () => {
+        const {canvasCtx, canvasNode, props} = this;
+        const {width, height, lines} = props;
 
         const pixelRatio = getDevicePixelRatio();
 
-        if (currentWidth === width && currentHeight === height) {
-            return;
-        }
+        setCanvasSize(canvasNode, width, height, pixelRatio);
 
-        setCanvasSize(this.canvasRef.current, width, height, pixelRatio);
+        canvasCtx.lineWidth = 2 * pixelRatio;
+        canvasCtx.lineCap = 'round';
+        canvasCtx.lineJoin = 'round';
 
-        this.canvasCtx.lineWidth = 2 * pixelRatio;
-        this.canvasCtx.lineCap = 'round';
-        this.canvasCtx.lineJoin = 'round';
-
-        this.props.lines.forEach(({values, color, maxValue}) => renderLine(
-            this.canvasCtx,
+        lines.forEach(({values, color, maxValue}) => renderLine(
+            canvasCtx,
             values,
             width * pixelRatio,
             height * pixelRatio,
             color,
             maxValue,
         ));
-
-        this.currentSize = [width, height];
     }
 
     render() {
-        const {className} = this.props;
+        const {className, width, height} = this.props;
 
         return (
             <div
                 className={cn(css.root, className)}
-                ref={this.rootRef}
+                style={{width, height}}
             >
                 <canvas
                     className={css.canvas}
+                    style={{width, height}}
                     ref={this.canvasRef}
                 />
             </div>
         );
+    }
+
+    get canvasNode() {
+        return this.canvasRef.current;
     }
 }
 
