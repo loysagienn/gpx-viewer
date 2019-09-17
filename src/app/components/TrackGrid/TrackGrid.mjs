@@ -2,6 +2,7 @@
 
 import {createElement} from 'react';
 import {cn} from 'helpers';
+import OutlineText from '../OutlineText';
 import css from './TrackGrid.styl';
 
 
@@ -11,11 +12,16 @@ const renderValue = ({id, unit, color}, value) => (
     <div
         key={id}
         className={css.value}
-        style={{color}}
     >
-        {
-            `${value} ${unit}`
-        }
+        <OutlineText
+            style={{
+                color,
+                outlineColor: '#f0f0f0',
+                fontSize: 14,
+                lineHeight: 20,
+            }}
+            text={`${value} ${unit}`}
+        />
     </div>
 );
 

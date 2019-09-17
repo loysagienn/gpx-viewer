@@ -26,3 +26,5 @@ export const KEY_CODE = {
 export const loading = '_entity_is_loading_';
 
 export const loadError = '_entity_load_error_';
+
+export const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif';

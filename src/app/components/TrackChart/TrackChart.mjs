@@ -19,7 +19,7 @@ const calcLines = memoize((speed, heartrate, width) => {
         lines.push({
             id: 'speed',
             values: speedValues,
-            color: '#0000ff',
+            color: '#0000ee',
             unit: 'м/с',
             maxValue,
         });
@@ -32,7 +32,7 @@ const calcLines = memoize((speed, heartrate, width) => {
         lines.push({
             id: 'heartrate',
             values: heartrateValues,
-            color: '#ff0000',
+            color: '#ee0000',
             unit: 'уд/мин',
             maxValue,
         });
