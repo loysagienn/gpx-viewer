@@ -2,28 +2,58 @@
 
 import {createElement, Component, createRef, Fragment} from 'react';
 import {cn, memoize} from 'helpers';
+import {getSpeedByPase, compressValues, getPaseBySpeed} from 'helpers/track';
 import {addWindowEvent, removeWindowEvent} from 'env';
-import {compressValues} from 'helpers/track';
 import css from './TrackChart.styl';
 import TrackLines from '../TrackLines';
 import TrackGrid from '../TrackGrid';
 
 
+const getMaxSpeed = (maxValue) => {
+    let minutes = 20;
+    let speed = getSpeedByPase([minutes, 0]);
+
+    while (speed < maxValue) {
+        minutes--;
+        speed = getSpeedByPase([minutes, 0]);
+    }
+
+    return speed;
+};
+
+const getGridCountByMinutes = (minutes) => {
+    switch (minutes) {
+    case 1:
+    case 2:
+    case 3:
+        return 4;
+
+    case 4:
+        return 3;
+
+    default:
+        return 4;
+    }
+};
+
 const calcLines = memoize((speed, heartrate, width) => {
     const lines = [];
+    let minutes;
 
     if (speed) {
         const speedValues = compressValues(speed, width);
-        const maxValue = Math.ceil(Math.max(...speedValues));
+        const maxValue = getMaxSpeed(Math.max(...speedValues));
+        [minutes] = getPaseBySpeed(maxValue);
 
         lines.push({
             id: 'speed',
             values: speedValues,
             color: '#0000ee',
-            unit: 'м/с',
             maxValue,
         });
     }
+
+    const gridCount = getGridCountByMinutes(minutes);
 
     if (heartrate) {
         const heartrateValues = compressValues(heartrate, width);
@@ -33,12 +63,11 @@ const calcLines = memoize((speed, heartrate, width) => {
             id: 'heartrate',
             values: heartrateValues,
             color: '#ee0000',
-            unit: 'уд/мин',
             maxValue,
         });
     }
 
-    return lines;
+    return [gridCount, lines];
 });
 
 class TrackChart extends Component {
@@ -70,7 +99,10 @@ class TrackChart extends Component {
 
         const {speed, heartrate} = props.track;
 
-        this.lines = calcLines(speed, heartrate, width);
+        const [gridCount, lines] = calcLines(speed, heartrate, width);
+
+        this.lines = lines;
+        this.gridCount = gridCount;
     }
 
     onResize = () => {
@@ -83,13 +115,13 @@ class TrackChart extends Component {
             return null;
         }
 
-        const {width, height, lines} = this;
-
         this.calcLines();
+
+        const {width, height, lines, gridCount} = this;
 
         return createElement(Fragment, null,
             createElement(TrackLines, {width, height, lines, className: css.trackLines}),
-            createElement(TrackGrid, {width, height, lines, gridCount: 4, className: css.trackGrid}),
+            createElement(TrackGrid, {width, height, lines, gridCount, className: css.trackGrid}),
         );
     }
 

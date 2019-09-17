@@ -2,13 +2,22 @@
 
 import {createElement} from 'react';
 import {cn} from 'helpers';
+import {getPaseBySpeed} from 'helpers/track';
 import OutlineText from '../OutlineText';
 import css from './TrackGrid.styl';
 
 
-const getValue = ({maxValue}, part) => Math.round(maxValue * part);
+const getValue = ({maxValue, id}, part) => {
+    if (id === 'speed') {
+        const [minutes, seconds] = getPaseBySpeed(maxValue * part);
 
-const renderValue = ({id, unit, color}, value) => (
+        return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds} мин/км`;
+    }
+
+    return `${Math.round(maxValue * part)} уд/мин`;
+};
+
+const renderValue = ({id, color}, value) => (
     <div
         key={id}
         className={css.value}
@@ -20,7 +29,7 @@ const renderValue = ({id, unit, color}, value) => (
                 fontSize: 14,
                 lineHeight: 20,
             }}
-            text={`${value} ${unit}`}
+            text={`${value}`}
         />
     </div>
 );
