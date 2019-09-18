@@ -69,7 +69,9 @@ class OutlineText extends PureComponent {
         canvasCtx.strokeStyle = outlineColor;
         canvasCtx.fillStyle = color;
         canvasCtx.lineWidth = fontSize / 4;
-        // canvasCtx.strokeText(text, xPadding, yPadding);
+        canvasCtx.lineCap = 'round';
+        canvasCtx.lineJoin = 'round';
+        canvasCtx.strokeText(text, xPadding, yPadding);
         canvasCtx.fillText(text, xPadding, yPadding);
     }
 
