@@ -3,6 +3,7 @@
 import {createElement} from 'react';
 import {SvgCross} from '../Svg';
 import ActivityInfo from '../ActivityInfo';
+import OutlineText from '../OutlineText';
 import {getDateStr} from './helpers';
 import css from './DayActivities.styl';
 
@@ -21,9 +22,15 @@ const DayActivities = ({dayKey, activities, close}) => {
     return (
         <div className={css.popup}>
             <div className={css.header}>
-                <div className={css.title}>
-                    {getDateStr(dayKey)}
-                </div>
+                <OutlineText
+                    style={{
+                        color: '#000000',
+                        outlineColor: '#ffffff',
+                        fontSize: 14,
+                        lineHeight: 24,
+                    }}
+                    text={getDateStr(dayKey)}
+                />
                 <div
                     className={css.closeBtn}
                     onClick={close}

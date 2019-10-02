@@ -12,43 +12,66 @@ import {
     getPolylineMapUrl,
 } from 'helpers/activity';
 import Button from '../Button';
+import OutlineText, {OutlineTextGroup} from '../OutlineText';
 import css from './ActivityInfo.styl';
 
+
+const renderOption = (desc, value, unit) => (
+    <div className={css.option}>
+        <OutlineTextGroup className={css.optionValue}>
+            <OutlineText
+                style={{
+                    color: '#202020',
+                    outlineColor: '#ffffff',
+                    fontSize: 40,
+                    lineHeight: 50,
+                    fontWeight: 300,
+                }}
+                text={value}
+            />
+            {
+                unit && (
+                    <OutlineText
+                        style={{
+                            color: '#202020',
+                            outlineColor: '#ffffff',
+                            fontSize: 14,
+                            lineHeight: 33,
+                        }}
+                        text={unit}
+                    />
+                )
+            }
+        </OutlineTextGroup>
+
+        <div className={css.optionTitle}>
+            <OutlineText
+                style={{
+                    color: '#202020',
+                    outlineColor: '#ffffff',
+                    fontSize: 12,
+                    lineHeight: 15,
+                }}
+                text={desc}
+            />
+        </div>
+
+        {/* <div className={css.optionTitle}>
+            {desc}
+        </div> */}
+    </div>
+);
 
 const renderDistance = (distance) => {
     const [value, unit] = getDistanceStr(distance);
 
-    return (
-        <div className={css.option}>
-            <div className={css.optionValue}>
-                {value}
-                <span className={css.optionValueUnit}>
-                    {` ${unit}`}
-                </span>
-            </div>
-            <div className={css.optionTitle}>
-                общее расстояние
-            </div>
-        </div>
-    );
+    return renderOption('общее расстояние', value, ` ${unit}`);
 };
 
 const renderSpeed = (speed) => {
     if (!speed) return null;
 
-    return (
-        <div className={css.option}>
-            <div className={css.optionValue}>
-                {getSpeedStr(speed)}
-                <span className={css.optionValueUnit}>
-                    {' км/ч'}
-                </span>
-            </div>
-            <div className={css.optionTitle}>
-                средняя скорость
-            </div>
-        </div>
-    );
+    return renderOption('средняя скорость', getSpeedStr(speed), ' км/ч');
 };
 
 const renderPace = (speed) => {
@@ -56,19 +79,7 @@ const renderPace = (speed) => {
         return null;
     }
 
-    return (
-        <div className={css.option}>
-            <div className={css.optionValue}>
-                {`${getPaseStr(speed)}`}
-                <span className={css.optionValueUnit}>
-                    {' мин/км'}
-                </span>
-            </div>
-            <div className={css.optionTitle}>
-                средний темп
-            </div>
-        </div>
-    );
+    return renderOption('средний темп', getPaseStr(speed), ' мин/км');
 };
 
 const ActivityInfo = ({
@@ -83,7 +94,6 @@ const ActivityInfo = ({
     averageSpeed,
     totalElevationGain,
     map: {summaryPolyline},
-    activityUrl,
     showActivity,
 }) => (
     <div
@@ -93,12 +103,27 @@ const ActivityInfo = ({
             className={css.image}
             style={{backgroundImage: `url(${getPolylineMapUrl(summaryPolyline)})`}}
         />
-        <div className={css.activityName}>
-            <span className={css.activityNameText}>
-                {name}
-                <span className={css.activityType}>{` (${getActivityTypeStr(type)})`}</span>
-            </span>
-        </div>
+        <OutlineTextGroup>
+            <OutlineText
+                style={{
+                    color: '#000000',
+                    outlineColor: '#ffffff',
+                    fontSize: 18,
+                    lineHeight: 21,
+                }}
+                text={name}
+            />
+            <OutlineText
+                style={{
+                    color: '#000000',
+                    outlineColor: '#ffffff',
+                    fontSize: 14,
+                    lineHeight: 17,
+                }}
+                text={` (${getActivityTypeStr(type)})`}
+            />
+        </OutlineTextGroup>
+
         <div className={css.params}>
             {
                 Boolean(distance) && renderDistance(distance)
@@ -106,48 +131,17 @@ const ActivityInfo = ({
             {
                 type === 'Ride' ? renderSpeed(averageSpeed) : renderPace(averageSpeed)
             }
-            <div className={css.option}>
-                <div className={css.optionValue}>
-                    {getTimeStr(elapsedTime)}
-                </div>
-                <div className={css.optionTitle}>
-                    общее время
-                </div>
-            </div>
-            <div className={css.option}>
-                <div className={css.optionValue}>
-                    {getTimeStr(movingTime)}
-                </div>
-                <div className={css.optionTitle}>
-                    время в движении
-                </div>
-            </div>
             {
-                Boolean(averageHeartrate) && (
-                    <div className={css.option}>
-                        <div className={css.optionValue}>
-                            {getHeartrateStr(averageHeartrate)}
-                        </div>
-                        <div className={css.optionTitle}>
-                            средний пульс
-                        </div>
-                    </div>
-                )
+                renderOption('общее время', getTimeStr(elapsedTime))
             }
             {
-                Boolean(totalElevationGain) && (
-                    <div className={css.option}>
-                        <div className={css.optionValue}>
-                            {totalElevationGain}
-                            <span className={css.optionValueUnit}>
-                                {' метров'}
-                            </span>
-                        </div>
-                        <div className={css.optionTitle}>
-                            общий набор высоты
-                        </div>
-                    </div>
-                )
+                renderOption('время в движении', getTimeStr(movingTime))
+            }
+            {
+                Boolean(averageHeartrate) && renderOption('средний пульс', getHeartrateStr(averageHeartrate))
+            }
+            {
+                Boolean(totalElevationGain) && renderOption('общий набор высоты', totalElevationGain, ' метров')
             }
         </div>
 

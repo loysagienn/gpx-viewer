@@ -1,2 +1,2 @@
 
-export {default} from './OutlineText';
+export {default, OutlineTextGroup} from './OutlineText';

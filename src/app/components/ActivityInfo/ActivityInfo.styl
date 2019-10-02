@@ -8,25 +8,18 @@
     left: 0
     right: 0
     top: -44px
-    bottom: 0
-    opacity: 0.4
+    bottom: 7px
+    opacity: 0.5
     background-repeat: no-repeat
     background-position: center center
     background-size: cover
     border-radius: 4px
 
 .activityInfo + .activityInfo .image
-    top: -10px
+    top: -7px
 
-.activityName
-    position: relative
-    font-size: 18px
-    color: #202020
-    .activityNameText
-        background: $gradient
-
-.activityType
-    font-size: 14px
+.activityInfo:last-child .image
+    bottom: 0
 
 .params
     position: relative
@@ -39,28 +32,13 @@
     .option
         padding: 0 0 10px
         width: 50%
-        background: $gradient
-        // border-radius: 50%
     .optionValue
-        line-height: 50px
-        font-size: 40px
-        font-weight: 300
-        +maxWidth(390px)
-            font-size: 30px
-            line-height: 40px
-    .optionValueUnit
-        line-height: 17px
-        font-size: 14px
-        font-weight: 400
-        +maxWidth(390px)
-            font-size: 12px
+        display: flex
+        justify-content: center
     .optionTitle
         margin-top: -5px
-        line-height: 15px
-        font-size: 12px
-        +maxWidth(390px)
-            margin-top: -2px
-            font-size: 11px
+        display: flex
+        justify-content: center
 
 .buttons
     position: relative

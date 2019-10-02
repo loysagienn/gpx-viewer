@@ -3,11 +3,20 @@
 import {createElement, PureComponent, createRef} from 'react';
 import {getDevicePixelRatio} from 'env';
 import {fontFamily} from 'constants';
+import {cn} from 'helpers';
 import css from './OutlineText.styl';
 
-const defaultStyle = {lineHeight: 20, fontSize: 14, color: '#000000', outlineColor: '#ffffff'};
+const defaultStyle = {fontSize: 14, color: '#000000', fontWeight: 'normal', outlineColor: '#ffffff'};
 
-const prepareStyle = (style = {}) => Object.assign({}, defaultStyle, style);
+const prepareStyle = (style = {}) => {
+    style = Object.assign({}, defaultStyle, style);
+
+    if (!style.lineHeight) {
+        style.lineHeight = Math.round(style.fontSize * 1.5);
+    }
+
+    return style;
+};
 
 const getReactStyle = ({lineHeight, fontSize, color}) => ({
     fontSize: `${fontSize}px`,
@@ -17,8 +26,8 @@ const getReactStyle = ({lineHeight, fontSize, color}) => ({
 
 const canvasPadding = 2;
 
-const getCanvasStyle = ({lineHeight, fontSize}) => (
-    `${fontSize}px ${fontFamily}`
+const getCanvasStyle = ({lineHeight, fontSize, fontWeight}) => (
+    `${fontWeight} ${fontSize}px ${fontFamily}`
 );
 
 const setCanvasSize = (canvas, width, height, pixelRatio) => {
@@ -68,7 +77,7 @@ class OutlineText extends PureComponent {
         canvasCtx.font = getCanvasStyle(style);
         canvasCtx.strokeStyle = outlineColor;
         canvasCtx.fillStyle = color;
-        canvasCtx.lineWidth = fontSize / 4;
+        canvasCtx.lineWidth = Math.min(fontSize / 4, 3 * pixelRatio);
         canvasCtx.lineCap = 'round';
         canvasCtx.lineJoin = 'round';
         canvasCtx.strokeText(text, xPadding, yPadding);
@@ -115,6 +124,12 @@ class OutlineText extends PureComponent {
         return this.canvasRef.current;
     }
 }
+
+export const OutlineTextGroup = ({className, children}) => (
+    <div className={cn(className, css.outlineTextGroup)}>
+        {children}
+    </div>
+);
 
 
 export default OutlineText;
