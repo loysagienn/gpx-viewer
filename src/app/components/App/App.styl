@@ -14,7 +14,9 @@
     font-size: 16px
     color: #404040;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    color: dark-text-color;
+    color: dark-text-color
+    ::selection
+        background: alpha(action-color, 0.5)
 
 @keyframes :global(rotation)
     from { transform:rotate(0deg) }
