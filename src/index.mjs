@@ -19,8 +19,8 @@ const createServer = async ({httpPort, instanceId, ymapsApiKey, stravaClientSecr
     koaServer.context.ymapsApiKey = ymapsApiKey;
     koaServer.context.stravaClientSecret = stravaClientSecret;
     koaServer.context.sshConfirm = {
-        '.well-known/acme-challenge/sffkS0YYcS9sRGTNvDy2HqhhsAW0htLJGFkAnEoS1OE': 'sffkS0YYcS9sRGTNvDy2HqhhsAW0htLJGFkAnEoS1OE._QEH4s1cey8y5Xv-lS9CQl4KSyhQUJypZteDnt0qAHk',
-        '.well-known/acme-challenge/Y1WqdAZoFpiHaOZgTM0iCnupnCZ_WmTd-JsLfocJ04g': 'Y1WqdAZoFpiHaOZgTM0iCnupnCZ_WmTd-JsLfocJ04g._QEH4s1cey8y5Xv-lS9CQl4KSyhQUJypZteDnt0qAHk',
+        'mytracks.store/.well-known/acme-challenge/sffkS0YYcS9sRGTNvDy2HqhhsAW0htLJGFkAnEoS1OE': 'sffkS0YYcS9sRGTNvDy2HqhhsAW0htLJGFkAnEoS1OE._QEH4s1cey8y5Xv-lS9CQl4KSyhQUJypZteDnt0qAHk',
+        'mytracks.store/.well-known/acme-challenge/Y1WqdAZoFpiHaOZgTM0iCnupnCZ_WmTd-JsLfocJ04g': 'Y1WqdAZoFpiHaOZgTM0iCnupnCZ_WmTd-JsLfocJ04g._QEH4s1cey8y5Xv-lS9CQl4KSyhQUJypZteDnt0qAHk',
     };
 
     koaServer.use(bodyParser());
